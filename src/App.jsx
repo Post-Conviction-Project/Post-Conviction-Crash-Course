@@ -1,0 +1,1619 @@
+import { useState, useEffect } from "react";
+
+const teal = "#046878";
+const tealLight = "#0a8fa5";
+const dark = "#141C26";
+const darkCard = "#1e2a38";
+const darkBorder = "#2a3a4a";
+const textMain = "#e8eef4";
+const textMuted = "#8a9bb0";
+const accent = "#f0a500";
+const green = "#2ecc71";
+const red = "#e74c3c";
+
+const styles = `
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: ${dark};
+    color: ${textMain};
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.6;
+  }
+
+  .app {
+    min-height: 100vh;
+    background: ${dark};
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #0d1620 0%, #1a2d3d 50%, #0d2030 100%);
+    padding: 60px 24px 48px;
+    text-align: center;
+    border-bottom: 1px solid ${darkBorder};
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(4,104,120,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(4,104,120,0.2);
+    border: 1px solid rgba(4,104,120,0.5);
+    color: ${tealLight};
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: #fff;
+  }
+
+  .hero h1 span {
+    color: ${teal};
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: ${textMuted};
+    max-width: 560px;
+    margin: 0 auto 32px;
+  }
+
+  .progress-bar-wrap {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: ${textMuted};
+    margin-bottom: 8px;
+  }
+
+  .progress-track {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, ${teal}, ${tealLight});
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .nav-tabs {
+    display: flex;
+    overflow-x: auto;
+    gap: 4px;
+    padding: 16px 24px;
+    background: #0f1923;
+    border-bottom: 1px solid ${darkBorder};
+    scrollbar-width: none;
+  }
+
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .nav-tab {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: transparent;
+    color: ${textMuted};
+  }
+
+  .nav-tab:hover {
+    background: rgba(4,104,120,0.1);
+    color: ${textMain};
+    border-color: rgba(4,104,120,0.3);
+  }
+
+  .nav-tab.active {
+    background: rgba(4,104,120,0.2);
+    color: ${tealLight};
+    border-color: ${teal};
+  }
+
+  .nav-tab.completed {
+    color: ${green};
+  }
+
+  .nav-tab.completed::before {
+    content: '✓ ';
+  }
+
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .module-header {
+    margin-bottom: 36px;
+  }
+
+  .module-number {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: ${teal};
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .module-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .module-intro {
+    font-size: 16px;
+    color: ${textMuted};
+    border-left: 3px solid ${teal};
+    padding-left: 16px;
+  }
+
+  .section {
+    margin-bottom: 36px;
+  }
+
+  .section h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section h3 .icon {
+    font-size: 20px;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: ${textMain};
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+
+  .card {
+    background: ${darkCard};
+    border: 1px solid ${darkBorder};
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .card-teal {
+    border-left: 4px solid ${teal};
+  }
+
+  .card-amber {
+    border-left: 4px solid ${accent};
+    background: rgba(240,165,0,0.06);
+    border-color: rgba(240,165,0,0.4);
+  }
+
+  .card-red {
+    border-left: 4px solid ${red};
+    background: rgba(231,76,60,0.06);
+    border-color: rgba(231,76,60,0.3);
+  }
+
+  .card-green {
+    border-left: 4px solid ${green};
+    background: rgba(46,204,113,0.06);
+    border-color: rgba(46,204,113,0.3);
+  }
+
+  .card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: ${textMain};
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .callout {
+    background: rgba(4,104,120,0.1);
+    border: 1px solid rgba(4,104,120,0.3);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .callout-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: ${tealLight};
+    margin-bottom: 8px;
+  }
+
+  .callout p {
+    font-size: 14px;
+    color: ${textMain};
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .reality-check {
+    background: rgba(240,165,0,0.08);
+    border: 1px solid rgba(240,165,0,0.3);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+
+  .reality-check .rc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: ${accent};
+    margin-bottom: 8px;
+  }
+
+  .reality-check p {
+    font-size: 14px;
+    color: ${textMain};
+    margin: 0 0 8px;
+    line-height: 1.6;
+  }
+
+  .reality-check p:last-child { margin-bottom: 0; }
+
+  .video-placeholder {
+    background: linear-gradient(135deg, #0d1f2d, #1a2f40);
+    border: 2px dashed rgba(4,104,120,0.4);
+    border-radius: 12px;
+    padding: 40px 24px;
+    text-align: center;
+    margin: 24px 0;
+  }
+
+  .video-placeholder .vp-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .video-placeholder h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    color: ${tealLight};
+    margin-bottom: 6px;
+  }
+
+  .video-placeholder p {
+    font-size: 13px;
+    color: ${textMuted};
+    margin: 0;
+  }
+
+  .strickland-grid {
+    display: grid;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .strickland-row {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .s-prong {
+    background: rgba(4,104,120,0.2);
+    border: 1px solid rgba(4,104,120,0.4);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: ${tealLight};
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .s-yes {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: ${textMain};
+  }
+
+  .s-no {
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: ${textMain};
+  }
+
+  .s-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+
+  .quiz-section {
+    background: ${darkCard};
+    border: 1px solid ${darkBorder};
+    border-radius: 16px;
+    padding: 28px;
+    margin: 32px 0;
+  }
+
+  .quiz-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: ${accent};
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .quiz-q {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .quiz-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid ${darkBorder};
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    color: ${textMain};
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .quiz-option:hover:not(:disabled) {
+    border-color: rgba(4,104,120,0.5);
+    background: rgba(4,104,120,0.1);
+  }
+
+  .quiz-option.correct {
+    border-color: ${green};
+    background: rgba(46,204,113,0.12);
+    color: #fff;
+  }
+
+  .quiz-option.wrong {
+    border-color: ${red};
+    background: rgba(231,76,60,0.1);
+    color: ${textMuted};
+  }
+
+  .quiz-option.revealed-correct {
+    border-color: ${green};
+    background: rgba(46,204,113,0.06);
+  }
+
+  .option-letter {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  .quiz-option.correct .option-letter {
+    background: ${green};
+    color: #fff;
+  }
+
+  .quiz-option.wrong .option-letter {
+    background: ${red};
+    color: #fff;
+  }
+
+  .quiz-feedback {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .quiz-feedback.correct-fb {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    color: #a8f5c8;
+  }
+
+  .quiz-feedback.wrong-fb {
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.3);
+    color: #f5a8a0;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .list-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .list-items li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: ${textMain};
+    line-height: 1.5;
+  }
+
+  .list-items li::before {
+    content: '→';
+    color: ${teal};
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .module-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid ${darkBorder};
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .btn-primary {
+    background: ${teal};
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: ${tealLight};
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: ${textMuted};
+    border: 1px solid ${darkBorder};
+  }
+
+  .btn-secondary:hover {
+    color: ${textMain};
+    border-color: rgba(4,104,120,0.4);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-right: 6px;
+    margin-bottom: 4px;
+  }
+
+  .tag-rule {
+    background: rgba(4,104,120,0.2);
+    color: ${tealLight};
+    border: 1px solid rgba(4,104,120,0.4);
+  }
+
+  .tag-case {
+    background: rgba(240,165,0,0.15);
+    color: ${accent};
+    border: 1px solid rgba(240,165,0,0.3);
+  }
+
+  .tag-warning {
+    background: rgba(231,76,60,0.15);
+    color: #f08080;
+    border: 1px solid rgba(231,76,60,0.3);
+  }
+
+  .divider {
+    height: 1px;
+    background: ${darkBorder};
+    margin: 32px 0;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid ${darkBorder};
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .checklist-item:hover {
+    border-color: rgba(4,104,120,0.4);
+  }
+
+  .checklist-item.checked {
+    background: rgba(46,204,113,0.06);
+    border-color: rgba(46,204,113,0.3);
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 2px solid ${darkBorder};
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+
+  .checklist-item.checked .checkbox {
+    background: ${green};
+    border-color: ${green};
+    color: #fff;
+    font-size: 12px;
+  }
+
+  .checklist-item p {
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .checklist-item .ci-note {
+    font-size: 12px;
+    color: ${textMuted};
+    margin-top: 2px;
+  }
+
+  .score-banner {
+    text-align: center;
+    padding: 32px;
+    background: ${darkCard};
+    border: 1px solid ${darkBorder};
+    border-radius: 16px;
+    margin: 32px 0;
+  }
+
+  .score-banner .score-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    color: ${teal};
+    line-height: 1;
+  }
+
+  .score-banner p {
+    color: ${textMuted};
+    margin-top: 8px;
+  }
+
+  .could-would-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 500px) {
+    .could-would-grid { grid-template-columns: 1fr; }
+    .strickland-row { grid-template-columns: 1fr; }
+  }
+`;
+
+// ─── QUIZ COMPONENT ───
+function Quiz({ id, question, options, correctIndex, explanation, onAnswer, answered }) {
+  const [selected, setSelected] = useState(null);
+
+  const handleSelect = (i) => {
+    if (selected !== null) return;
+    setSelected(i);
+    onAnswer(id, i === correctIndex);
+  };
+
+  const isCorrect = selected === correctIndex;
+
+  return (
+    <div className="quiz-section">
+      <div className="quiz-label">⚡ Quick Check</div>
+      <div className="quiz-q">{question}</div>
+      <div className="quiz-options">
+        {options.map((opt, i) => {
+          let cls = "quiz-option";
+          if (selected !== null) {
+            if (i === correctIndex) cls += " revealed-correct";
+            if (i === selected && selected === correctIndex) cls = "quiz-option correct";
+            if (i === selected && selected !== correctIndex) cls = "quiz-option wrong";
+          }
+          return (
+            <button key={i} className={cls} onClick={() => handleSelect(i)} disabled={selected !== null}>
+              <span className="option-letter">{["A","B","C","D"][i]}</span>
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+      {selected !== null && (
+        <div className={`quiz-feedback ${isCorrect ? "correct-fb" : "wrong-fb"}`}>
+          {isCorrect ? "✓ Correct! " : "✗ Not quite. "}{explanation}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── CHECKLIST COMPONENT ───
+function Checklist({ items }) {
+  const [checked, setChecked] = useState({});
+  const toggle = (i) => setChecked(p => ({ ...p, [i]: !p[i] }));
+  const count = Object.values(checked).filter(Boolean).length;
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <div style={{ fontSize: 13, color: textMuted }}>{count} of {items.length} reviewed</div>
+        <div style={{ fontSize: 13, color: tealLight }}>{Math.round((count/items.length)*100)}%</div>
+      </div>
+      {items.map((item, i) => (
+        <div key={i} className={`checklist-item ${checked[i] ? "checked" : ""}`} onClick={() => toggle(i)}>
+          <div className="checkbox">{checked[i] ? "✓" : ""}</div>
+          <div>
+            <p>{item.text}</p>
+            {item.note && <p className="ci-note">{item.note}</p>}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── MODULES ───
+
+const modules = [
+  {
+    id: 0,
+    label: "Intro",
+    title: "Welcome to Post-Conviction Land",
+    subtitle: "What this is, what it isn't, and why it matters",
+    content: ({ quiz, onAnswer }) => (
+      <>
+        <div className="section">
+          <p>You've probably heard the phrase "all appeals have been exhausted." In real life, that phrase is doing a <em>lot</em> of heavy lifting — and it's often wrong.</p>
+          <p>Post-conviction relief is what happens <strong>after</strong> the direct appeal. It's a separate legal track that allows defendants to challenge their conviction or sentence based on things that either weren't in the trial record, or weren't known at the time.</p>
+          <p>In Florida, the two main tools for this are <span className="tag tag-rule">Rule 3.850</span> and <span className="tag tag-rule">Rule 3.800</span>. Think of them as two different doors into the same building. We'll walk through both.</p>
+        </div>
+
+        <div className="video-placeholder">
+          <span className="vp-icon">🎬</span>
+          <h4>Video: Direct Appeal vs. Post-Conviction</h4>
+          <p>Doodle explainer coming soon — the basic timeline from conviction to collateral relief</p>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">🧭</span> Your Role as a Volunteer</h3>
+          <p>You are <strong>not</strong> practicing law. You are reviewing, flagging, researching, and organizing. Think of yourself as the person who figures out whether there's something worth looking at — then the attorneys take it from there.</p>
+
+          <div className="card card-amber">
+            <h4>🚩 Always escalate immediately if you see:</h4>
+            <p>Imminent deadlines (filing windows closing soon) · Active parole/probation violations · Mental health crises · Anything involving a minor victim</p>
+          </div>
+
+          <ul className="list-items">
+            <li>You can read case files, court records, and transcripts</li>
+            <li>You can research case law and statutes</li>
+            <li>You can summarize what you found and flag potential issues</li>
+            <li>You do <strong>not</strong> give legal advice to clients — ever</li>
+          </ul>
+        </div>
+
+        <Quiz
+          id="q0_1"
+          question="A client calls you and asks whether you think they have a good case. You should:"
+          options={[
+            "Give them your honest assessment — that's why you're here",
+            "Tell them you can't give legal advice, take detailed notes, and pass it to supervising staff",
+            "Tell them to call a lawyer",
+            "Review the file first, then call them back with your opinion"
+          ]}
+          correctIndex={1}
+          explanation="Your job is to gather information and flag issues — not advise clients on their legal situation. Always route to supervising staff."
+          onAnswer={onAnswer}
+          answered={quiz["q0_1"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🗺️</span> The Big Picture Timeline</h3>
+          <div className="card card-teal">
+            <h4>From Trial to Federal Court — The Roadmap</h4>
+            <p><strong>1. Trial</strong> → Conviction and sentence<br/>
+            <strong>2. Direct Appeal</strong> → Did the trial court make a legal error? (Record-based only)<br/>
+            <strong>3. Rule 3.850 / 3.800</strong> → Constitutional violations, new evidence, illegal sentences<br/>
+            <strong>4. Florida Supreme Court / 1st DCA</strong> → If you lose below<br/>
+            <strong>5. Federal Habeas (§2254)</strong> → Last stop, and only after state remedies are fully exhausted</p>
+          </div>
+          <div className="callout">
+            <div className="callout-label">⏱️ Why this order matters</div>
+            <p>The federal court won't touch a case until every state avenue has been tried. And while those state motions are pending, the federal clock is paused — but it doesn't reset. More on that in Module 5.</p>
+          </div>
+        </div>
+      </>
+    )
+  },
+
+  {
+    id: 1,
+    label: "Rule 3.850",
+    title: "Rule 3.850 — The Swiss Army Knife",
+    subtitle: "Constitutional violations, IAC, plea claims, and newly discovered evidence",
+    content: ({ quiz, onAnswer }) => (
+      <>
+        <div className="section">
+          <p>Rule 3.850 is the workhorse of post-conviction practice. It covers constitutional violations that either couldn't be raised on direct appeal or weren't known at the time of trial.</p>
+          <p>The default time limit is <strong>two years</strong> from when the judgment and sentence became "final" — meaning the direct appeal is over, or the time to appeal has run out. But there are exceptions. Important ones.</p>
+        </div>
+
+        <div className="video-placeholder">
+          <span className="vp-icon">🎬</span>
+          <h4>Video: What Goes in a 3.850?</h4>
+          <p>Doodle explainer — the categories of claims and when they fit</p>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">⏰</span> The Time Bar & Its Exceptions</h3>
+          <div className="card card-teal">
+            <h4>Two-Year Rule</h4>
+            <p>You have two years from when the conviction is final. Miss it and the motion is procedurally barred — the court won't even look at the merits.</p>
+          </div>
+
+          <p style={{marginTop:16}}>But the following claims get their <strong>own two-year window</strong> starting from the date the facts or law could reasonably have been discovered:</p>
+
+          <ul className="list-items">
+            <li><strong>Newly discovered evidence</strong> — couldn't have been found with due diligence before</li>
+            <li><strong>New law of constitutional dimension</strong> — a court decision that changed the rules and applies retroactively</li>
+            <li><strong>Manifest injustice</strong> — rare, but the courts recognize it in extreme circumstances (more below)</li>
+          </ul>
+        </div>
+
+        <Quiz
+          id="q1_1"
+          question="Your client's conviction became final in 2018. A witness just came forward in 2024 with information that could exonerate him. Is a 3.850 motion possible?"
+          options={[
+            "No — the two-year window closed in 2020",
+            "Only if the client can prove actual innocence",
+            "Yes — newly discovered evidence gets its own two-year window from discovery",
+            "Yes, but only if there's DNA involved"
+          ]}
+          correctIndex={2}
+          explanation="Newly discovered evidence restarts the clock. The two years runs from when the evidence could have been discovered with due diligence — not from when the conviction was final."
+          onAnswer={onAnswer}
+          answered={quiz["q1_1"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🔍</span> What Counts as "Newly Discovered"?</h3>
+          <p>Not just "new to you." The standard (from <span className="tag tag-case">Jones v. State</span>) requires:</p>
+          <ul className="list-items">
+            <li>The evidence must have been <strong>unknown</strong> at trial to the defendant or counsel</li>
+            <li>It could <strong>not have been discovered</strong> through due diligence</li>
+            <li>It is <strong>not merely cumulative</strong> or impeaching — it has to actually matter</li>
+            <li>It would <strong>probably produce an acquittal</strong> at a new trial</li>
+          </ul>
+
+          <div className="reality-check">
+            <div className="rc-label">⚠️ Reality Check</div>
+            <p>"I found a new witness who says the same thing three other witnesses already said" — that's cumulative. Probably not enough.</p>
+            <p>"A witness now says the key eyewitness lied, and here's the proof" — that's worth looking at.</p>
+          </div>
+
+          <div className="card card-teal" style={{marginTop:16}}>
+            <h4>Categories to look for:</h4>
+            <p>
+              <strong>Untested DNA</strong> — biological evidence that was collected but never tested, or tested with older technology<br/><br/>
+              <strong>New witnesses</strong> — someone who saw something and wasn't found before<br/><br/>
+              <strong>Recantations</strong> — a witness takes back their trial testimony (courts are skeptical, but it can work)<br/><br/>
+              <strong>Corrupt/discredited officer</strong> — the lead detective was later found to have planted evidence in other cases<br/><br/>
+              <strong>Debunked expert science</strong> — bite mark evidence, hair microscopy, arson investigation methods that science has since rejected
+            </p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q1_2"
+          question="The lead detective in your client's 1998 murder conviction was fired in 2022 for fabricating evidence in three other cases. This was just discovered. Which of the following is NOT required for this to support a 3.850 motion?"
+          options={[
+            "The misconduct wasn't known and couldn't have been found before",
+            "The detective's role was significant — not just a side witness",
+            "The defendant must have been completely innocent",
+            "The new evidence would probably change the outcome at a new trial"
+          ]}
+          correctIndex={2}
+          explanation="You don't have to prove actual innocence to file a 3.850 — you have to show the new evidence would probably produce an acquittal. Those are different standards. Actual innocence is a much higher bar used in narrow federal contexts."
+          onAnswer={onAnswer}
+          answered={quiz["q1_2"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">⚖️</span> Strickland — The IAC Test</h3>
+          <p>Ineffective Assistance of Counsel (IAC) is one of the most common 3.850 claims. The standard comes from <span className="tag tag-case">Strickland v. Washington</span> (1984), and it has three working parts. All three must be met — and courts make this deliberately hard.</p>
+
+          <div className="strickland-grid">
+            <div className="strickland-row">
+              <div className="s-prong">Prong 1</div>
+              <div className="s-yes">
+                <div className="s-label">The Question</div>
+                Did the attorney actually screw up?
+              </div>
+              <div className="s-no">
+                <div className="s-label">The Standard</div>
+                Not just a bad strategy call — <em>objectively unreasonable</em> performance below professional norms
+              </div>
+            </div>
+            <div className="strickland-row">
+              <div className="s-prong">Prong 2</div>
+              <div className="s-yes">
+                <div className="s-label">The Question</div>
+                Would the outcome have been different?
+              </div>
+              <div className="s-no">
+                <div className="s-label">The Standard</div>
+                <em>Reasonable probability</em> the result would have differed — not certainty, not just "possible"
+              </div>
+            </div>
+            <div className="strickland-row">
+              <div className="s-prong">Prong 3</div>
+              <div className="s-yes">
+                <div className="s-label">The Question</div>
+                Was the defendant actually harmed?
+              </div>
+              <div className="s-no">
+                <div className="s-label">The Standard</div>
+                The prejudice must be concrete and connect directly to the error
+              </div>
+            </div>
+          </div>
+
+          <div className="reality-check" style={{marginTop:20}}>
+            <div className="rc-label">⚠️ The Brutal Truth</div>
+            <p>You can prove Prong 1 and Prong 2 and <strong>still lose</strong> if Prong 3 doesn't land. A court might say: yes, the attorney was terrible, and yes, it probably affected things — but not in a way that changed the ultimate result. Motion denied.</p>
+            <p>The system is set up to give defense attorneys a lot of deference. That's intentional. Courts call bad decisions "strategy" more often than they should.</p>
+          </div>
+
+          <div style={{marginTop:20}}>
+            <div className="card card-green">
+              <h4>✓ Example: Probably survives all three prongs</h4>
+              <p>Attorney sleeps through key portions of trial testimony. Client is convicted. Prong 1: yes. Prong 2: yes. Prong 3: yes — the missed testimony was central to the verdict.</p>
+            </div>
+            <div className="card card-red" style={{marginTop:8}}>
+              <h4>✗ Example: Fails on Prong 3</h4>
+              <p>Attorney fails to object to one hearsay statement. But five other witnesses said the same thing. Prong 1: arguably yes. Prong 2: maybe. Prong 3: probably not — the evidence was cumulative. The outcome was the same either way.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">📋</span> Common IAC Examples — What to Flag</h3>
+          <p>Not every attorney failure is a winning IAC claim, but these are the patterns that actually move the needle. When you're reading a file, these are the things to circle:</p>
+
+          <ul className="list-items">
+            <li><strong>Failed to move for mistrial when the Golden Rule was violated</strong> — the Golden Rule is when a prosecutor asks jurors to put themselves in the victim's shoes. That's improper. If it happened and counsel didn't object or move for mistrial, that's a flag.</li>
+            <li><strong>Failed to proffer excluded testimony</strong> — if the judge excluded a witness or evidence, counsel was required to proffer what that testimony would have been for the record. No proffer = the issue is waived on appeal. That's on the attorney.</li>
+            <li><strong>Failed to file a motion to suppress or dismiss</strong> — was there an illegal search? A constitutional violation in the arrest? If so, did anyone file a motion? If not, why not? No strategic reason = IAC.</li>
+            <li><strong>Failed to investigate or disclose an alibi</strong> — if the client told their attorney "I was somewhere else and here's who can prove it," and counsel never followed up, that's textbook IAC on Prong 1. Whether it survives Prong 3 depends on how strong the alibi was.</li>
+            <li><strong>Failed to communicate a plea offer</strong> — the state extended a plea deal and the attorney never told the client, or told them too late. Under <span className="tag tag-case">Missouri v. Frye</span> and <span className="tag tag-case">Lafler v. Cooper</span>, defendants have a Sixth Amendment right to be informed of plea offers. This is a big one.</li>
+            <li><strong>Failed to object to improper closing argument</strong> — vouching, burden-shifting, inflammatory statements. If the prosecutor said something that crossed the line and counsel sat on their hands, that's worth noting.</li>
+            <li><strong>Failed to request a limiting instruction</strong> — when prejudicial evidence comes in for a limited purpose, counsel should ask the judge to instruct the jury on how to use it. Silence can be IAC.</li>
+            <li><strong>Conflict of interest</strong> — attorney was simultaneously representing a co-defendant, or had a financial relationship with a witness. If there was an actual conflict that affected the representation, that goes in a 3.850.</li>
+          </ul>
+        </div>
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🤝</span> IAC in Plea Cases — Different Rules</h3>
+          <p>Most of the IAC framework above assumes a trial. But a lot of convictions come from pleas — and IAC claims on plea cases have a different standard.</p>
+
+          <div className="card card-teal">
+            <h4>The Plea IAC Standard</h4>
+            <p>To win an IAC claim on a case that ended in a plea, it's not enough to show the attorney was bad. You have to show that <strong>but for counsel's deficient performance, the defendant would have gone to trial</strong> — or rejected a plea and taken a better one.</p>
+          </div>
+
+          <div className="reality-check" style={{marginTop:16}}>
+            <div className="rc-label">⚠️ Why This Is Harder Than It Sounds</div>
+            <p>The client almost always says "I never would have pled guilty if I'd known X." Courts are skeptical of that claim made years later from a prison cell. You need more than just the client's word.</p>
+            <p>What helps: evidence that the client was actively asking about trial options, that the attorney gave provably wrong legal advice (e.g., told the client a charge was a misdemeanor when it was a felony), or that the client pled immediately after the bad advice with no gap to reconsider.</p>
+            <p>What also helps: the state's offer was objectively good, or the alternative (trial) was objectively risky — that cuts <em>against</em> the claim that they'd have gone to trial. Flag this when you see it.</p>
+          </div>
+
+          <ul className="list-items">
+            <li><strong>Attorney gave wrong advice about the immigration consequences of a plea</strong> — <span className="tag tag-case">Padilla v. Kentucky</span> says that's IAC. Big one for non-citizen clients.</li>
+            <li><strong>Attorney failed to explain the elements of the charge</strong> — client didn't understand what they were admitting to</li>
+            <li><strong>Attorney never conveyed the state's plea offer</strong> — client pled to worse terms not knowing a better deal was on the table</li>
+            <li><strong>Attorney gave incorrect sentencing advice</strong> — told client they'd get probation, client got 10 years</li>
+          </ul>
+        </div>
+
+        <Quiz
+          id="q1_3"
+          question="Defense counsel failed to investigate and call an alibi witness who would have placed the defendant 40 miles from the crime scene. Counsel's reason: 'I just didn't get around to it.' Which Strickland prongs are clearly met?"
+          options={[
+            "Prong 1 only — the attorney was deficient but we can't know about the others yet",
+            "Prongs 1 and 2 — but Prong 3 needs more investigation",
+            "All three — this is a slam dunk",
+            "None — courts give wide deference to trial strategy"
+          ]}
+          correctIndex={1}
+          explanation="Failing to investigate an alibi witness with no strategic reason is objectively unreasonable (Prong 1). A witness placing the defendant 40 miles away probably would have changed the outcome (Prong 2). But Prong 3 — actual prejudice — requires looking at the whole trial record. What else was there? How strong was the state's case otherwise? Don't count your chickens."
+          onAnswer={onAnswer}
+          answered={quiz["q1_3"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🚨</span> Brady/Giglio Violations</h3>
+          <p><span className="tag tag-case">Brady v. Maryland</span> says the state must disclose evidence favorable to the defendant. <span className="tag tag-case">Giglio v. United States</span> extends that to deals made with witnesses — if a key witness got a deal for their testimony, you're entitled to know.</p>
+
+          <ul className="list-items">
+            <li><strong>Brady:</strong> State hid exculpatory evidence — DNA, inconsistent statements, alibi information</li>
+            <li><strong>Giglio:</strong> Witness lied about getting a deal, or the state didn't disclose the deal existed</li>
+            <li>Material if there's a <em>reasonable probability</em> disclosure would have changed the outcome</li>
+          </ul>
+
+          <div className="callout">
+            <div className="callout-label">🔎 What to look for in files</div>
+            <p>Jailhouse informants with suspiciously light sentences afterward. Witnesses with pending charges that quietly disappeared. Lab reports that weren't in the defense file. Victim statements that contradict the police report.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q1_4"
+          question="Which of the following would NOT typically support a Brady or Giglio claim?"
+          options={[
+            "The state's key witness had pending drug charges that were dropped after trial — the defense didn't know",
+            "A police report contradicting the eyewitness account was in the state's file but never given to defense",
+            "The defendant's own attorney made a deal with prosecutors without telling the client",
+            "A lab analyst's notes showed inconclusive results, but the report given to defense said 'positive match'"
+          ]}
+          correctIndex={2}
+          explanation="Brady and Giglio are about prosecution misconduct — the state suppressing or misrepresenting evidence. An attorney making unauthorized deals is an IAC (Strickland) issue, not a Brady/Giglio violation. Different doctrine, different motion strategy."
+          onAnswer={onAnswer}
+          answered={quiz["q1_4"]}
+        />
+      </>
+    )
+  },
+
+  {
+    id: 2,
+    label: "Rule 3.800",
+    title: "Rule 3.800 — When the Sentence Is Just Wrong",
+    subtitle: "Illegal sentences, no time bar, and the errors that sneak through",
+    content: ({ quiz, onAnswer }) => (
+      <>
+        <div className="section">
+          <p>Rule 3.800 is narrower than 3.850 but has one massive advantage: <strong>no time limit.</strong> If a sentence is illegal on its face, it can be challenged at any time.</p>
+          <p>The catch is that "illegal sentence" has a specific meaning. Not every bad sentence qualifies — it has to be something the judge had <em>no legal authority</em> to impose, not just something that was wrong or unfair.</p>
+        </div>
+
+        <div className="video-placeholder">
+          <span className="vp-icon">🎬</span>
+          <h4>Video: Illegal vs. Erroneous Sentences</h4>
+          <p>Doodle explainer — the difference that determines which rule applies</p>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">📋</span> Common 3.800 Scenarios</h3>
+          <ul className="list-items">
+            <li><strong>Sentence exceeds the statutory maximum</strong> — judge gave 30 years on a charge capped at 15</li>
+            <li><strong>Score sheet errors</strong> — the guidelines calculation was wrong, which affected the range</li>
+            <li><strong>Merger/double jeopardy</strong> — defendant was sentenced on two counts that should have been one</li>
+            <li><strong>Upward departure without written findings</strong> — judge went above guidelines with no departure order</li>
+            <li><strong>Retroactive statutory or case law changes</strong> — <em>Miller v. Alabama</em> (mandatory life without parole for juveniles is unconstitutional) is the big one</li>
+            <li><strong>PREA / gain time issues</strong> — credits that weren't applied correctly</li>
+          </ul>
+
+          <div className="callout">
+            <div className="callout-label">📎 The Florida Departure Requirement</div>
+            <p>In Florida, if a judge sentences above the guidelines, they must issue a written departure order with specific findings. No written order = illegal sentence, full stop — even if the judge had valid reasons in their head. The paperwork is the law.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q2_1"
+          question="A judge sentences your client to 25 years for a second-degree felony. The statutory maximum is 15 years. No departure order was filed. Which rule applies?"
+          options={[
+            "Rule 3.850 — this is a constitutional violation",
+            "Rule 3.800 — the sentence exceeds the statutory maximum and no departure order exists",
+            "Neither — the time to challenge this has passed",
+            "Both — file under both rules simultaneously"
+          ]}
+          correctIndex={1}
+          explanation="A sentence that exceeds the statutory maximum is illegal on its face — that's 3.800 territory. And 3.800 has no time bar, so it doesn't matter when this was sentenced. The missing departure order compounds it further."
+          onAnswer={onAnswer}
+          answered={quiz["q2_1"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🧮</span> Harmless Error — The Concept That Kills Claims</h3>
+          <p>You'll hear "harmless error" constantly in post-conviction work. It's the doctrine courts use to say: <em>yes, there was an error, but it didn't matter.</em></p>
+
+          <div className="card card-teal">
+            <h4>The Basic Test</h4>
+            <p>Would the result have been the same even without the error? If yes — harmless. If there's a reasonable probability the outcome would have differed — not harmless, and the error matters.</p>
+          </div>
+
+          <p style={{marginTop:16}}>For constitutional errors, the <strong>state bears the burden</strong> of proving the error was harmless beyond a reasonable doubt. That's a high bar — which is why the state fights hard to establish harmlessness.</p>
+
+          <div className="card card-teal" style={{marginTop:8}}>
+            <h4>Structural Error — The Exception</h4>
+            <p>A narrow category of errors so fundamental that harmless error analysis doesn't apply at all. The most obvious example: defendant had no lawyer at all. There's no universe in which that's harmless. These are rare but worth flagging.</p>
+          </div>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">⚡</span> Could Have vs. Would Have — This Is the One</h3>
+          <p>This distinction is subtle but it comes up all the time in sentencing challenges, and getting it wrong means losing a motion that could have won.</p>
+
+          <div className="could-would-grid">
+            <div className="card card-amber">
+              <h4>☐ "Could Have"</h4>
+              <p>The judge had the <em>legal authority</em> to impose the same sentence even without the error. The sentence was within the permissible range regardless.</p>
+              <p style={{marginTop:8, fontSize:13, color:textMuted}}>Courts often use this to find harmlessness. "Even if the scoresheet was wrong, the sentence still falls within the corrected range." Game over.</p>
+            </div>
+            <div className="card card-green">
+              <h4>☐ "Would Have"</h4>
+              <p>But <em>would this judge, on this record</em>, actually have sentenced the same way without the error?</p>
+              <p style={{marginTop:8, fontSize:13, color:textMuted}}>This is the harder, more honest question — and the one that supports a resentencing claim. If the error affected the guidelines range or the departure findings, the judge might have done something different.</p>
+            </div>
+          </div>
+
+          <div className="reality-check" style={{marginTop:4}}>
+            <div className="rc-label">⚠️ When Each Standard Applies</div>
+            <p><strong>"Could have"</strong> tends to govern statutory sentencing errors — did the judge have the legal authority to impose this sentence even if the calculation was off?</p>
+            <p><strong>"Would have"</strong> governs constitutional errors and upward departures — <em>Alleyne/Apprendi</em> issues, findings that should have gone to a jury, departure orders that require specific factual findings. Those require the court to ask what <em>this judge</em> would actually have done.</p>
+            <p><strong>The practical argument:</strong> If the scoresheet error bumped the recommended range up by 5 years and the judge sentenced at the low end of the (wrong) range — you can argue the judge was anchored to the guidelines and <em>would not have</em> given the same sentence on the corrected sheet.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q2_2"
+          question="A scoresheet error inflated the recommended sentence by 36 months. The judge sentenced at the low end of the (incorrectly calculated) range, noted she was 'following the guidelines closely,' and made no departure findings. On a corrected scoresheet, the same sentence would be an upward departure requiring written findings. What's the strongest argument?"
+          options={[
+            "Harmless — the judge could have sentenced to the same term under the correct guidelines",
+            "Not harmless — the judge anchored to the guidelines and would not have departed upward without findings",
+            "Harmless — the judge has discretion to sentence anywhere in the range",
+            "Not harmless — any scoresheet error automatically requires resentencing"
+          ]}
+          correctIndex={1}
+          explanation="This is the 'would have' argument at its strongest. The judge's own words ('following the guidelines closely') plus the lack of departure findings suggests she was not exercising independent upward discretion. On the correct scoresheet, the same sentence requires a departure order she didn't write and probably didn't intend to write. Strong resentencing claim."
+          onAnswer={onAnswer}
+          answered={quiz["q2_2"]}
+        />
+
+        <Quiz
+          id="q2_3"
+          question="Which of the following is NOT a valid 3.800 claim?"
+          options={[
+            "Defendant was sentenced to life without parole for a crime committed at age 16",
+            "The judge miscalculated the guidelines scoresheet, resulting in a higher recommended range",
+            "Defense counsel failed to argue for a lower sentence at sentencing",
+            "Two counts should have merged under double jeopardy but were sentenced separately"
+          ]}
+          correctIndex={2}
+          explanation="Counsel's failure to advocate effectively at sentencing is an IAC claim — that goes in a 3.850. Rule 3.800 is about the legality of the sentence itself, not the process that led to it. The others are all face-value illegality: Miller violation (A), scoresheet error (B), merger/double jeopardy (D)."
+          onAnswer={onAnswer}
+          answered={quiz["q2_3"]}
+        />
+      </>
+    )
+  },
+
+  {
+    id: 3,
+    label: "The Clock",
+    title: "Time Rules — The Clock Is Not Your Friend",
+    subtitle: "Filing windows, tolling, exhaustion, and the federal deadline",
+    content: ({ quiz, onAnswer }) => (
+      <>
+        <div className="section">
+          <p>Post-conviction law is merciless about deadlines. Miss one and it doesn't matter how good your claim is — the door is closed. Understanding the timing is just as important as understanding the substantive law.</p>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">📅</span> Florida State Deadlines</h3>
+          <div className="card card-teal">
+            <h4>Rule 3.850</h4>
+            <p><strong>2 years</strong> from when judgment and sentence became "final"<br/>
+            <em>Final</em> = direct appeal decided, or time to appeal expired without one filed<br/><br/>
+            <strong>Exception windows (each gets its own 2 years from discovery):</strong><br/>
+            → Newly discovered evidence: 2 years from when it could have been found with due diligence<br/>
+            → New retroactive law: 2 years from when the decision became final</p>
+          </div>
+          <div className="card card-teal" style={{marginTop:12}}>
+            <h4>Rule 3.800</h4>
+            <p><strong>No time bar.</strong> Can be raised at any time — even decades later. Courts have entertained 3.800 motions on 30-year-old sentences.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q3_1"
+          question="Your client's conviction became final on January 1, 2020. He discovers in March 2023 that the state withheld a lab report that contradicted the state's expert. The last day to file a 3.850 based on this new evidence is approximately:"
+          options={[
+            "January 1, 2022 — two years from when the conviction was final",
+            "March 2025 — two years from when the new evidence was discovered",
+            "There is no deadline — Brady violations have no time bar",
+            "The claim is already barred — he should have found this earlier"
+          ]}
+          correctIndex={1}
+          explanation="Newly discovered evidence (including Brady material discovered post-conviction) triggers its own two-year window from the date of discovery. The general two-year bar from finality doesn't apply here. The clock started running in March 2023."
+          onAnswer={onAnswer}
+          answered={quiz["q3_1"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🇺🇸</span> Federal Habeas — The Last Stop</h3>
+          <p>Once state remedies are exhausted, a defendant can file a federal habeas petition under <strong>28 U.S.C. § 2254</strong>. This is the federal court saying: did the state court violate the U.S. Constitution?</p>
+
+          <div className="card card-amber">
+            <h4>The AEDPA Deadline</h4>
+            <p>Under the Antiterrorism and Effective Death Penalty Act (AEDPA), there is a <strong>one-year deadline</strong> to file a federal habeas petition. The clock starts when the state conviction becomes final on direct review.</p>
+          </div>
+
+          <p style={{marginTop:16}}>But here's the critical part that confuses everyone:</p>
+
+          <div className="card card-green" style={{marginTop:8}}>
+            <h4>Tolling While State Motions Are Pending</h4>
+            <p>The federal one-year clock is <strong>paused (tolled)</strong> while a properly filed state post-conviction motion is pending. But — and this is important — it <strong>does not reset</strong>. It picks up exactly where it left off when the state motion is resolved.</p>
+          </div>
+
+          <div className="reality-check" style={{marginTop:16}}>
+            <div className="rc-label">⚠️ The Math Problem That Ends Federal Cases</div>
+            <p><strong>Example:</strong> Conviction final January 1, 2020. AEDPA clock starts. Client waits 8 months, then files a 3.850 in September 2020. At that point, 8 months of the federal year have already run. Clock pauses.</p>
+            <p>The 3.850 is denied. Client gets a final state ruling January 2023. Federal clock <strong>resumes</strong> — with only 4 months left. If client waits 5 months to file federal, the petition is time-barred. Forever.</p>
+            <p><strong>Flag this immediately</strong> when you're calculating timelines on any case with state motions pending or recently resolved.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q3_2"
+          question="A client's conviction became final on July 1, 2021. He filed a 3.850 on January 1, 2022 (6 months later). The 3.850 was denied and became final on July 1, 2023. How long does he have to file a federal habeas petition from July 1, 2023?"
+          options={[
+            "One full year — July 1, 2024",
+            "Six months — January 1, 2024",
+            "The federal deadline already passed while the 3.850 was pending",
+            "Two years — the federal clock resets when state proceedings end"
+          ]}
+          correctIndex={1}
+          explanation="Six months of the federal year ran before he filed the 3.850 (July 2021 to January 2022). The clock paused during the 3.850 proceedings. When the state motion concluded July 2023, the clock resumed with 6 months remaining — making the federal deadline approximately January 1, 2024. The clock never resets."
+          onAnswer={onAnswer}
+          answered={quiz["q3_2"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🚪</span> Exhaustion — You Can't Skip to Federal</h3>
+          <p>Federal courts will not consider a claim that hasn't been raised and fully litigated in state court first. This is called the <strong>exhaustion doctrine</strong>.</p>
+
+          <ul className="list-items">
+            <li>Every claim must be presented to the <strong>highest available state court</strong></li>
+            <li>If you don't raise it in state court, it's <strong>procedurally defaulted</strong> in federal court</li>
+            <li>Procedural default is almost always fatal — the federal court won't hear it</li>
+            <li>There are narrow exceptions (actual innocence, cause and prejudice) but don't count on them</li>
+          </ul>
+
+          <div className="callout">
+            <div className="callout-label">📌 Practical implication for volunteers</div>
+            <p>When you're reviewing a case for potential federal habeas, you need to know what was raised below. A great claim that was never presented to the state courts is not a great federal claim — it's a procedurally defaulted one. Flag both the issue AND whether it was preserved.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q3_3"
+          question="Your client has a strong Brady claim you've identified. Research shows this issue was never raised in his direct appeal or any prior post-conviction motion. He is now in federal habeas. What's the problem?"
+          options={[
+            "Brady claims can only be raised in state court, never federal",
+            "The claim is likely procedurally defaulted — it was never exhausted in state court",
+            "No problem — federal courts can consider any constitutional violation",
+            "He needs to file a new 3.850 first before the federal court will look at it"
+          ]}
+          correctIndex={1}
+          explanation="This is the exhaustion/procedural default trap. A Brady claim is constitutional and cognizable in federal court — but only if it was first raised in state court. If it wasn't, it's defaulted, and the federal court will likely refuse to consider it absent a showing of actual innocence or cause and prejudice. Whether a new 3.850 is still available (and not time-barred) is now a critical question."
+          onAnswer={onAnswer}
+          answered={quiz["q3_3"]}
+        />
+      </>
+    )
+  },
+
+  {
+    id: 4,
+    label: "Case Checklist",
+    title: "Case Review Checklist",
+    subtitle: "A step-by-step cold case review — from the client's account to legal posture",
+    content: ({ quiz, onAnswer }) => {
+      const [checklistState, setChecklistState] = useState({});
+      const toggleCheck = (section, i) => {
+        setChecklistState(prev => ({
+          ...prev,
+          [`${section}-${i}`]: !prev[`${section}-${i}`]
+        }));
+      };
+
+      const sections = [
+        {
+          title: "🗂️ Step 1: Read the Client's Own Account First",
+          color: "#c084fc",
+          items: [
+            { text: "What does the client say went wrong?", note: "They know their case better than anyone. Start here. Their allegations shape what you're looking for." },
+            { text: "Is the client claiming innocence, or a procedural/constitutional violation, or both?", note: "These require different investigative approaches." },
+            { text: "Has the client identified specific witnesses, evidence, or events they believe were mishandled?" },
+            { text: "Is the client's account internally consistent? Does it match the record you have so far?" },
+            { text: "Are there any factual claims in the client's account that you can verify against the file — or that contradict the file?", note: "Contradictions aren't automatically bad — they're research leads." },
+          ]
+        },
+        {
+          title: "📁 Step 2: Compare State Records to What Was Disclosed at Trial",
+          color: "#38bdf8",
+          items: [
+            { text: "Obtain the State Attorney's file if available — arrest reports, witness statements, lab reports, discovery logs." },
+            { text: "Compare the prosecution's evidence list to the defense discovery file.", note: "Anything in the SA file that wasn't in the defense file is a potential Brady violation." },
+            { text: "Compare the prosecution's witness list to the witnesses actually called at trial.", note: "Who was on the list but never called? Why? Was there a deal? Was the testimony inconsistent with something?" },
+            { text: "Review law enforcement reports — all of them. Look for inconsistencies between the arrest report, the incident report, and the trial testimony." },
+            { text: "Check whether any supplemental police reports were filed after the initial arrest and whether those were disclosed to defense." },
+          ]
+        },
+        {
+          title: "🔬 Step 3: Check for Untested or Undertested Physical Evidence",
+          color: tealLight,
+          items: [
+            { text: "Was there biological evidence collected? (blood, hair, saliva, touch DNA, semen)", note: "Was it tested? With what technology? Could current methods do more?" },
+            { text: "Were fingerprints collected? Were they run through AFIS? Were unidentified prints ever followed up on?" },
+            { text: "Were drug samples tested? Was the full sample tested or just a portion?", note: "In some cases, the 'drug' was never conclusively identified." },
+            { text: "Were weapons tested for DNA or prints beyond what was disclosed?" },
+            { text: "Was any evidence logged but never submitted to the lab?", note: "Check the evidence log against the lab submissions — gaps are flags." },
+            { text: "Has DNA testing technology advanced since the original testing that might yield new results?" },
+          ]
+        },
+        {
+          title: "🔍 Step 4: Look Up the Material Witnesses",
+          color: red,
+          items: [
+            { text: "Run every significant law enforcement officer's name.", note: "Look for: terminations, suspensions, disciplinary records, civil suits, criminal charges, Brady list designation, misconduct findings in other cases." },
+            { text: "Check whether the forensic or expert witnesses are still considered reliable in their field.", note: "Arson reconstruction, bite mark analysis, hair microscopy, blood spatter, shaken baby syndrome — all have been challenged. Has the science moved on?" },
+            { text: "Run eyewitnesses and civilian witnesses for credibility issues.", note: "Did they receive any benefit after testifying? Dropped charges? Sentence reduction? Housing assistance?" },
+            { text: "Is any eyewitness a 'professional witness' — someone who has appeared as an eyewitness in multiple unrelated criminal cases?", note: "This is a real phenomenon. More than two or three cases is a red flag worth flagging to attorneys." },
+            { text: "Were jailhouse informants used? What happened to their case after they testified?" },
+            { text: "Did any expert witness get sanctioned, decertified, or found to have testified falsely in other cases after your client's trial?" },
+          ]
+        },
+        {
+          title: "📜 Step 5: Review All Prior Post-Conviction and Appellate Filings",
+          color: accent,
+          items: [
+            { text: "Pull all prior 3.850 motions — what issues were raised?" },
+            { text: "Were those claims adjudicated on the merits, or dismissed on procedural grounds?", note: "Procedural dismissals may not bar re-raising the claim if new facts support it. Merits rulings are harder to overcome." },
+            { text: "Is the client's current claim just a restatement of something they already lost on?", note: "Successive motions raising the same claim are barred. Flag this early — it changes the whole strategy." },
+            { text: "Were any claims raised on direct appeal? Were they decided favorably or unfavorably?" },
+            { text: "Is there anything that was clearly available to raise earlier but wasn't? Why not?", note: "If prior counsel missed something obvious, that might itself be an IAC claim against post-conviction counsel." },
+            { text: "What issues have never been raised anywhere? Those are the ones to focus on." },
+          ]
+        },
+        {
+          title: "🕐 Step 6: Time & Procedural Posture",
+          color: teal,
+          items: [
+            { text: "When did conviction become final on direct review?", note: "This is Day 1 of the 3.850 clock and the AEDPA clock." },
+            { text: "Is the general 2-year 3.850 window still open?" },
+            { text: "Are there any exception windows open? (new evidence, new law)", note: "If so, when did the clock on those start?" },
+            { text: "Has a prior 3.850 been filed? Denied? Appealed?", note: "Prior motions may bar successive filings — check carefully." },
+            { text: "How much of the federal AEDPA year has already run?", note: "Calculate time between finality and first state motion, plus time since last state ruling." },
+            { text: "Are all state remedies exhausted — or is there still a state avenue available?" },
+          ]
+        },
+        {
+          title: "📋 Sentence Legality (3.800 Territory)",
+          color: accent,
+          items: [
+            { text: "Does the sentence exceed the statutory maximum for the offense?" },
+            { text: "Was there an upward departure? If so, is there a written departure order with specific findings?" },
+            { text: "Does the scoresheet calculation appear correct? Check offense level, prior record, victim injury points." },
+            { text: "Were multiple counts sentenced separately that may require merger under double jeopardy?" },
+            { text: "Was the defendant a juvenile at the time of the offense? Any mandatory minimums that Miller may affect?" },
+            { text: "Are there gain time credits or jail credit that appear miscalculated?" },
+          ]
+        },
+        {
+          title: "👨‍⚖️ Trial Counsel Performance (IAC / Strickland)",
+          color: "#a78bfa",
+          items: [
+            { text: "Did counsel conduct an adequate pretrial investigation?", note: "Look for missing witnesses, unsubpoenaed records, uninvestigated alibis." },
+            { text: "Were critical motions filed? (suppress, dismiss, change of venue)", note: "If not filed, was there a strategic reason — or just neglect?" },
+            { text: "Did counsel object at trial? Check transcript for objections missed on key issues." },
+            { text: "Was the defendant advised of plea offers and their consequences?", note: "Failure to communicate or explain a plea offer is IAC." },
+            { text: "Did counsel's performance fall below objective professional standards?", note: "Prong 1 of Strickland — deficiency." },
+            { text: "Is there a reasonable probability the outcome would have differed with competent counsel?", note: "Prong 2 — prejudice. Review the whole record." },
+          ]
+        },
+        {
+          title: "🔎 Evidence Issues",
+          color: green,
+          items: [
+            { text: "Is there any biological evidence that was untested or tested with outdated technology?" },
+            { text: "Were all witness statements in the prosecution file provided to defense?", note: "Inconsistent statements withheld = Brady." },
+            { text: "Did any prosecution witness receive a deal, reduced sentence, or dropped charges afterward?", note: "If yes, was that disclosed? Giglio." },
+            { text: "Were there jailhouse informants? What was their deal?" },
+            { text: "Have any witnesses since recanted or given inconsistent statements?" },
+            { text: "Are there new witnesses who have come forward since trial?" },
+          ]
+        },
+        {
+          title: "🚨 Witness & Expert Credibility",
+          color: red,
+          items: [
+            { text: "Was a law enforcement officer central to the case? Check for disciplinary history, sustained misconduct findings, terminations in other cases." },
+            { text: "Were expert witnesses used by the state? Has the underlying science been challenged or discredited?", note: "Arson science, bite marks, hair microscopy, blood spatter — all have been challenged." },
+            { text: "Were any experts later sanctioned, decertified, or found to have given false testimony in other cases?" },
+            { text: "Did any eyewitnesses have identification issues? (lighting, distance, cross-race identification, suggestive lineup)" },
+          ]
+        },
+        {
+          title: "⚖️ Harmless Error Assessment",
+          color: tealLight,
+          items: [
+            { text: "For each error identified: could the same outcome have been reached without it?" },
+            { text: "For sentencing errors: could the judge have imposed the same sentence on a corrected scoresheet?" },
+            { text: "For sentencing errors: would THIS judge, on THIS record, actually have sentenced the same way?", note: "Look for departure findings, judge's on-record statements, sentencing memoranda." },
+            { text: "Is there any error so fundamental it could be structural? (denial of counsel, biased judge, etc.)" },
+          ]
+        },
+      ];
+
+      return (
+        <>
+          <div className="section">
+            <p>Most cases that come to PCP are out of time on the general 3.850 window. That doesn't mean they're hopeless — it means you have to dig. This checklist walks you through a cold case review from the ground up: start with the client's own account, work through the record, and build toward identifying what — if anything — still has a path forward.</p>
+            <div className="callout">
+              <div className="callout-label">📌 How to use this</div>
+              <p>Work through the steps in order. Steps 1–5 are investigative — they tell you what happened and what might have gone wrong. Step 6 is the legal posture check — it tells you what vehicles are still available to do something about it. Check items off as you complete them, not just when you find an issue. A completed review with nothing actionable is still a completed review.</p>
+            </div>
+            <div className="reality-check">
+              <div className="rc-label">⚠️ The Cold Case Reality</div>
+              <p>The client has usually been living with this case for years. They have theories. Some of them are right. Some of them are wishful thinking. Your job isn't to validate or dismiss — it's to go find out. Start with their account, then go see if the record supports it.</p>
+            </div>
+          </div>
+
+          {sections.map((section, si) => (
+            <div key={si} className="section">
+              <h3 style={{color: section.color}}>{section.title}</h3>
+              {section.items.map((item, ii) => {
+                const key = `${si}-${ii}`;
+                const isChecked = !!checklistState[key];
+                return (
+                  <div key={ii} className={`checklist-item ${isChecked ? "checked" : ""}`} onClick={() => toggleCheck(si, ii)}>
+                    <div className="checkbox">{isChecked ? "✓" : ""}</div>
+                    <div>
+                      <p>{item.text}</p>
+                      {item.note && <p className="ci-note">{item.note}</p>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+
+          <div className="card card-amber" style={{marginTop:16}}>
+            <h4>⬆️ Always Escalate Immediately If:</h4>
+            <p>
+              Any deadline is within 60 days · Client is in imminent danger · You've identified what looks like an actual innocence claim · The case involves a juvenile life sentence · A law enforcement officer central to the case has been found to have engaged in misconduct
+            </p>
+          </div>
+        </>
+      );
+    }
+  }
+];
+
+// ─── MAIN APP ───
+export default function App() {
+  const [activeModule, setActiveModule] = useState(0);
+  const [quizAnswers, setQuizAnswers] = useState({});
+  const [completedModules, setCompletedModules] = useState(new Set());
+
+  const quizCounts = {
+    0: 1, 1: 4, 2: 3, 3: 3, 4: 0
+  };
+
+  const handleAnswer = (id, isCorrect) => {
+    setQuizAnswers(prev => ({ ...prev, [id]: { answered: true, correct: isCorrect } }));
+  };
+
+  const totalQuestions = Object.values(quizCounts).reduce((a,b) => a+b, 0);
+  const answeredCount = Object.keys(quizAnswers).length;
+  const correctCount = Object.values(quizAnswers).filter(a => a.correct).length;
+
+  const goNext = () => {
+    setCompletedModules(prev => new Set([...prev, activeModule]));
+    if (activeModule < modules.length - 1) setActiveModule(activeModule + 1);
+  };
+
+  const progress = Math.round((answeredCount / totalQuestions) * 100);
+
+  const mod = modules[activeModule];
+  const ModContent = mod.content;
+
+  return (
+    <div className="app">
+      <style>{styles}</style>
+
+      <div className="hero">
+        <div className="hero-badge">Post Conviction Project · Volunteer Training</div>
+        <h1>Florida Post-Conviction<br/><span>Crash Course</span></h1>
+        <p>Rules 3.850 and 3.800 — what to look for, how the clock works, and when to escalate</p>
+        <div className="progress-bar-wrap">
+          <div className="progress-label">
+            <span>Quiz Progress</span>
+            <span>{correctCount}/{totalQuestions} correct</span>
+          </div>
+          <div className="progress-track">
+            <div className="progress-fill" style={{width: `${progress}%`}} />
+          </div>
+        </div>
+      </div>
+
+      <div className="nav-tabs">
+        {modules.map((m, i) => (
+          <button
+            key={i}
+            className={`nav-tab ${activeModule === i ? "active" : ""} ${completedModules.has(i) ? "completed" : ""}`}
+            onClick={() => setActiveModule(i)}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="content">
+        <div className="module-header">
+          <div className="module-number">Module {activeModule + 1} of {modules.length}</div>
+          <div className="module-title">{mod.title}</div>
+          <div className="module-intro">{mod.subtitle}</div>
+        </div>
+
+        <ModContent quiz={quizAnswers} onAnswer={handleAnswer} />
+
+        <div className="module-nav">
+          {activeModule > 0 ? (
+            <button className="btn btn-secondary" onClick={() => setActiveModule(activeModule - 1)}>← Previous</button>
+          ) : <div />}
+          {activeModule < modules.length - 1 ? (
+            <button className="btn btn-primary" onClick={goNext}>Next Module →</button>
+          ) : (
+            <div style={{textAlign:"center", flex:1}}>
+              <div className="score-banner">
+                <div className="score-num">{correctCount}/{totalQuestions}</div>
+                <p>Quiz questions answered correctly</p>
+                {correctCount === totalQuestions && <p style={{color: green, marginTop:8}}>🎉 Perfect score — you're ready to review cases.</p>}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
