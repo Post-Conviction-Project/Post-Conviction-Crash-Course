@@ -1657,6 +1657,7 @@ export default function App() {
       <style>{styles}</style>
 
       <div className="hero">
+        <img src="/logo.png" alt="Post Conviction Project" style={{height: 80, display: "block", margin: "0 auto 16px", mixBlendMode: "screen"}} />
         <div className="hero-badge">Post Conviction Project · Volunteer Training</div>
         <h1>Florida Post-Conviction<br/><span>Crash Course</span></h1>
         <p>Rules 3.850 and 3.800 — what to look for, how the clock works, and when to escalate</p>
