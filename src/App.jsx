@@ -1645,6 +1645,7 @@ export default function App() {
   const goNext = () => {
     setCompletedModules(prev => new Set([...prev, activeModule]));
     if (activeModule < modules.length - 1) setActiveModule(activeModule + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const progress = Math.round((answeredCount / totalQuestions) * 100);
@@ -1677,7 +1678,7 @@ export default function App() {
           <button
             key={i}
             className={`nav-tab ${activeModule === i ? "active" : ""} ${completedModules.has(i) ? "completed" : ""}`}
-            onClick={() => setActiveModule(i)}
+            onClick={() => { setActiveModule(i); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           >
             {m.label}
           </button>
@@ -1695,7 +1696,7 @@ export default function App() {
 
         <div className="module-nav">
           {activeModule > 0 ? (
-            <button className="btn btn-secondary" onClick={() => setActiveModule(activeModule - 1)}>← Previous</button>
+            <button className="btn btn-secondary" onClick={() => { setActiveModule(activeModule - 1); window.scrollTo({ top: 0, behavior: "smooth" }); }}>← Previous</button>
           ) : <div />}
           {activeModule < modules.length - 1 ? (
             <button className="btn btn-primary" onClick={goNext}>Next Module →</button>
