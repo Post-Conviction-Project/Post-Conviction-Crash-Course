@@ -1,0 +1,35 @@
+<div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">⚠️</span> Caution: The Vacated-Count Resentencing Split</h3>
+          <p>Everything above about the "could-have-been-imposed" standard applies to ordinary scoresheet errors — a miscalculation, a wrong score, a point that never should have been there. But there's a wrinkle Florida courts haven't fully resolved: <strong>what happens when a conviction is vacated after sentencing and the defendant seeks resentencing on a corrected scoresheet?</strong></p>
+          <p>This comes up when a client had multiple counts, one gets reversed or vacated in postconviction, and they then file a 3.800(a) arguing the scoresheet needs to be recalculated without that count. The State's typical response is that the same sentence could still have been imposed on the remaining convictions — so no relief. Some courts agree. Others don't.</p>
+
+          <div className="reality-check">
+            <div className="rc-label">⚖️ The District Split</div>
+            <p>Florida's district courts are not uniform here. The <strong>4th and 5th DCAs</strong> have held that vacatur of a conviction changes the sentencing foundation and requires resentencing on a corrected scoresheet — it's not treated like a harmless arithmetic error. The <strong>2nd DCA</strong> has gone both ways depending on the procedural vehicle: if the motion is styled under 3.800(a) and the same sentence could still legally have been imposed, some panels deny relief; other 2nd DCA panels have treated vacatur as requiring resentencing regardless.</p>
+          </div>
+
+          <div className="callout" style={{marginTop:16}}>
+            <div className="callout-label">📌 Background Rules</div>
+            <p>
+              <strong>Rule 3.850 scoresheet errors</strong> (timely): "would-have-been-imposed" standard — more defendant-friendly. <em>State v. Anderson</em>, 905 So. 2d 111 (Fla. 2005).<br/><br/>
+              <strong>Rule 3.800(a) scoresheet errors</strong> (untimely/facial record): "could-have-been-imposed" standard — stricter. <em>Brooks v. State</em>, 969 So. 2d 238 (Fla. 2007).<br/><br/>
+              <strong>Vacatur cases — 4th DCA:</strong> Resentencing required after a conviction is vacated. <em>Cox v. State</em>, 192 So. 3d 581 (Fla. 4th DCA 2016).<br/><br/>
+              <strong>Vacatur cases — 5th DCA:</strong> Same approach. <em>Pierce v. State</em>, 281 So. 3d 569 (Fla. 5th DCA 2019).<br/><br/>
+              <strong>Vacatur cases — 2nd DCA:</strong> Split. Compare <em>Fernandez v. State</em>, 199 So. 3d 500 (Fla. 2d DCA 2016) (resentencing required) with <em>Negron Gil de Rubio v. State</em>, 272 So. 3d 811 (Fla. 2d DCA 2019) (could-have-been-imposed test applied under 3.800(a)).
+            </p>
+          </div>
+
+          <div className="card card-teal" style={{marginTop:16}}>
+            <h4>What to flag in a case review</h4>
+            <p>This issue is worth flagging any time all four of these are true:</p>
+            <ul style={{marginTop:8, paddingLeft:20}}>
+              <li>A conviction was vacated, reversed, or nolle prossed <em>after</em> the original sentencing</li>
+              <li>The remaining convictions would produce a different — lower — scoresheet</li>
+              <li>The client hasn't yet sought resentencing on the corrected scoresheet</li>
+              <li>The 3.850 window is closed, meaning any motion would have to go through 3.800(a)</li>
+            </ul>
+            <p style={{marginTop:8}}>Which DCA has jurisdiction matters. Flag it and let the attorney assess which line of cases controls.</p>
+          </div>
+        </div>
