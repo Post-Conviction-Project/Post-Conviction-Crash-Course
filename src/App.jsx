@@ -872,7 +872,7 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">🔍</span> What Counts as "Newly Discovered"?</h3>
-          <p>Not just "new to you." The standard (from <span className="tag tag-case">Jones v. State</span>) requires:</p>
+          <p>Not just "new to you." The standard (from <a href="/jones-v-state.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Jones v. State</a>) requires:</p>
           <ul className="list-items">
             <li>The evidence must have been <strong>unknown</strong> at trial to the defendant or counsel</li>
             <li>It could <strong>not have been discovered</strong> through due diligence</li>
