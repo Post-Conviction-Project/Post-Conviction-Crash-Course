@@ -818,7 +818,7 @@ const modules = [
           </div>
           <div className="callout">
             <div className="callout-label">⏱️ Why this order matters</div>
-            <p>The federal court won't touch a case until every state avenue has been tried. And while those state motions are pending, the federal clock is paused — but it doesn't reset. More on that in Module 5.</p>
+            <p>The federal court won't touch a case until every state avenue has been tried. And while those state motions are pending, the federal clock is paused — but it doesn't reset. More on that in Module 4.</p>
           </div>
         </div>
       </>
