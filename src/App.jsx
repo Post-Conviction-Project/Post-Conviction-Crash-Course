@@ -1010,7 +1010,7 @@ const modules = [
           </div>
 
           <ul className="list-items">
-            <li><strong>Attorney gave wrong advice about the immigration consequences of a plea</strong> — <span className="tag tag-case">Padilla v. Kentucky</span> says that's IAC. Big one for non-citizen clients.</li>
+            <li><strong>Attorney gave wrong advice about the immigration consequences of a plea</strong> — <a href="/padilla-v-kentucky.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Padilla v. Kentucky</a> says that's IAC. Big one for non-citizen clients.</li>
             <li><strong>Attorney failed to explain the elements of the charge</strong> — client didn't understand what they were admitting to</li>
             <li><strong>Attorney never conveyed the state's plea offer</strong> — client pled to worse terms not knowing a better deal was on the table</li>
             <li><strong>Attorney gave incorrect sentencing advice</strong> — told client they'd get probation, client got 10 years</li>
