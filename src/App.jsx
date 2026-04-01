@@ -784,7 +784,7 @@ const modules = [
         <div className="section">
           <p>You've probably heard the phrase "all appeals have been exhausted." In real life, that phrase is doing a <em>lot</em> of heavy lifting — and it's often wrong.</p>
           <p>Post-conviction relief is what happens <strong>after</strong> the direct appeal. It's a separate legal track that allows defendants to challenge their conviction or sentence based on things that either weren't in the trial record, or weren't known at the time.</p>
-          <p>In Florida, the two main tools for this are <a href="/rule-3850.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-rule" style={{textDecoration:"none",cursor:"pointer"}}>Rule 3.850</a> and <span className="tag tag-rule">Rule 3.800</span>. Think of them as two different doors into the same building. We'll walk through both.</p>
+          <p>In Florida, the two main tools for this are <a href="/rule-3850.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-rule" style={{textDecoration:"none",cursor:"pointer"}}>Rule 3.850</a> and <a href="/rule-3800.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-rule" style={{textDecoration:"none",cursor:"pointer"}}>Rule 3.800</a>. Think of them as two different doors into the same building. We'll walk through both.</p>
         </div>
 
         <div className="section">
