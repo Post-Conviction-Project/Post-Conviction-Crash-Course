@@ -1036,7 +1036,7 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">🚨</span> Brady/Giglio Violations</h3>
-          <p><span className="tag tag-case">Brady v. Maryland</span> says the state must disclose evidence favorable to the defendant. <span className="tag tag-case">Giglio v. United States</span> extends that to deals made with witnesses — if a key witness got a deal for their testimony, you're entitled to know.</p>
+          <p><a href="/brady-v-maryland.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Brady v. Maryland</a> says the state must disclose evidence favorable to the defendant. <span className="tag tag-case">Giglio v. United States</span> extends that to deals made with witnesses — if a key witness got a deal for their testimony, you're entitled to know.</p>
 
           <ul className="list-items">
             <li><strong>Brady:</strong> State hid exculpatory evidence — DNA, inconsistent statements, alibi information</li>
