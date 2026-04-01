@@ -917,7 +917,7 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">⚖️</span> Strickland — The IAC Test</h3>
-          <p>Ineffective Assistance of Counsel (IAC) is one of the most common 3.850 claims. The standard comes from <span className="tag tag-case">Strickland v. Washington</span> (1984), and it has three working parts. All three must be met — and courts make this deliberately hard.</p>
+          <p>Ineffective Assistance of Counsel (IAC) is one of the most common 3.850 claims. The standard comes from <a href="/strickland-v-washington.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Strickland v. Washington</a> (1984), and it has three working parts. All three must be met — and courts make this deliberately hard.</p>
 
           <div className="strickland-grid">
             <div className="strickland-row">
