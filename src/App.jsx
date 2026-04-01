@@ -1235,7 +1235,7 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">🇺🇸</span> Federal Habeas — The Last Stop</h3>
-          <p>Once state remedies are exhausted, a defendant can file a federal habeas petition under <strong>28 U.S.C. § 2254</strong>. This is the federal court saying: did the state court violate the U.S. Constitution?</p>
+          <p>Once state remedies are exhausted, a defendant can file a federal habeas petition under <a href="/28-usc-2254.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-rule" style={{textDecoration:"none",cursor:"pointer"}}>28 U.S.C. § 2254</a>. This is the federal court saying: did the state court violate the U.S. Constitution?</p>
 
           <div className="card card-amber">
             <h4>The AEDPA Deadline</h4>
