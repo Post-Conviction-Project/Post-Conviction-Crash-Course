@@ -1310,7 +1310,162 @@ const modules = [
   },
 
   {
-    id: 4,
+    id: 5,
+    label: "IAAC",
+    title: "Ineffective Assistance of Appellate Counsel",
+    subtitle: "Rule 9.141(d) — A different animal from trial IAC",
+    content: ({ quiz, onAnswer }) => (
+      <>
+        <div className="section">
+          <p>You already know the <em>Strickland</em> test for trial IAC. Appellate IAC is the same two-prong test — deficiency plus prejudice — but the context is completely different. Your appellate attorney's job isn't to win at trial. It's to identify and argue the best issues on appeal. That changes what "screwing up" looks like.</p>
+          <p>In Florida, claims of ineffective assistance of appellate counsel (IAAC) are governed by <span className="tag tag-rule">Fla. R. App. P. 9.141(d)</span>. These are filed as petitions — not motions — and they go to the <strong>appellate court that heard the direct appeal</strong>, not the trial court.</p>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">⚖️</span> The Strickland Test — Appellate Edition</h3>
+          <p>Same two prongs. Different application.</p>
+
+          <div className="card card-teal">
+            <h4>Prong 1 — Deficiency</h4>
+            <p>Did appellate counsel fail to raise an issue that was <em>obvious from the record</em> and clearly stronger than the issues that were raised? Courts give appellate attorneys wide deference — they're supposed to make strategic choices about which arguments to pursue. A bad strategic call isn't deficiency. Completely missing a glaring error usually is.</p>
+          </div>
+
+          <div className="card card-teal" style={{marginTop:12}}>
+            <h4>Prong 2 — Prejudice</h4>
+            <p>Would the outcome of the appeal have been different if counsel had raised the omitted issue? This means you need to show the issue had merit — that if it had been raised, there's a reasonable probability the appellate court would have ruled differently.</p>
+          </div>
+
+          <div className="reality-check" style={{marginTop:16}}>
+            <div className="rc-label">⚠️ The Hard Truth</div>
+            <p>IAAC claims are notoriously difficult. Appellate courts are reviewing the work of their own bar — attorneys who appeared before them. The deference is real. Only about 3% of IAAC petitions succeed. But when you have a clear, preserved issue that counsel simply never raised? That's where it lives.</p>
+          </div>
+        </div>
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">📋</span> What IAAC Looks Like in Practice</h3>
+          <p>The most common IAAC claims involve appellate counsel's failure to raise or properly argue issues that were <strong>preserved at trial</strong>. Remember — appellate courts only review what's in the record. If trial counsel objected to something and the issue was preserved, appellate counsel had the raw material to work with. If they didn't use it, that's the claim.</p>
+
+          <ul className="list-items">
+            <li><strong>Failed to raise a preserved constitutional issue</strong> — trial counsel objected on constitutional grounds, it was denied, and appellate counsel never argued it on appeal</li>
+            <li><strong>Failed to argue improper jury instructions</strong> — counsel objected at trial, instructions were given over objection, never raised on direct appeal</li>
+            <li><strong>Failed to challenge an illegal sentence on direct appeal</strong> — scoresheet error or statutory maximum issue visible in the record, never briefed</li>
+            <li><strong>Failed to raise a Brady violation that was apparent from the record</strong> — the suppressed evidence issue surfaced during trial and was documented, but not argued</li>
+            <li><strong>Filed a no-merit brief (Anders brief) when there were arguable issues</strong> — counsel essentially told the court there was nothing worth appealing, but there clearly was</li>
+            <li><strong>Failed to raise an IAC claim that was already in the record</strong> — rare, but if trial IAC was documented during the proceedings and appellate counsel ignored it</li>
+          </ul>
+
+          <div className="callout">
+            <div className="callout-label">🔎 Key distinction for reviewers</div>
+            <p>IAAC is about issues that were <strong>available in the record</strong> but not raised. If the issue wasn't preserved at trial, appellate counsel usually can't raise it anyway — so that's not IAAC, that's a separate problem. When you're reviewing a file, compare what trial counsel preserved to what appellate counsel actually argued. The gap is where IAAC lives.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q5_1"
+          question="Trial counsel objected to a jury instruction as an incorrect statement of the law. The objection was overruled. Appellate counsel's brief addressed three other issues but never mentioned the jury instruction. The conviction was affirmed. This is a potential:"
+          options={[
+            "3.850 IAC claim against trial counsel — the objection wasn't good enough",
+            "Rule 9.141(d) IAAC claim against appellate counsel — preserved issue not raised on appeal",
+            "Brady violation — the state withheld the correct jury instruction",
+            "Not a viable claim — appellate attorneys get to choose which issues to raise"
+          ]}
+          correctIndex={1}
+          explanation="The issue was preserved — trial counsel objected, it's in the record. Appellate counsel had the material and didn't use it. That's the textbook IAAC scenario under Rule 9.141(d). The deference point in option D is real, but doesn't protect counsel who ignores a clearly preserved, meritorious issue."
+          onAnswer={onAnswer}
+          answered={quiz["q5_1"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">⏰</span> The Deadline — Read This Carefully</h3>
+          <p>IAAC petitions under Rule 9.141(d) have their own timing rules, separate from 3.850 and AEDPA. Get this wrong and the claim is gone.</p>
+
+          <div className="card card-teal">
+            <h4>Standard Window: 2 Years</h4>
+            <p>A petition alleging IAAC <strong>must be filed within 2 years</strong> of the judgment and sentence becoming final on <em>direct review</em>. That means 2 years from when the direct appeal was decided — not from when the conviction was entered.</p>
+          </div>
+
+          <div className="card card-amber" style={{marginTop:12}}>
+            <h4>Exception: Affirmative Misadvice by Counsel</h4>
+            <p>If appellate counsel actively misled the client about the results of the appeal, the 2-year window can be extended — but the absolute outer limit is <strong>4 years</strong> from when the judgment became final on direct review. No exceptions beyond that.</p>
+          </div>
+
+          <div className="card card-red" style={{marginTop:12}}>
+            <h4>Hard Cutoff: 4 Years</h4>
+            <p>In no case can an IAAC petition be filed more than <strong>4 years</strong> after the judgment and sentence became final on direct review. This is a firm cap. No exceptions, no equitable tolling beyond this point.</p>
+          </div>
+
+          <div className="reality-check" style={{marginTop:16}}>
+            <div className="rc-label">⚠️ Why This Matters for Your Review</div>
+            <p>When you're calculating deadlines on a case, you need to run IAAC separately from the 3.850 clock. The 3.850 clock starts when the conviction is final. The IAAC clock starts when the <em>direct appeal</em> is final — which is later. They're measuring from different events. Don't confuse them.</p>
+          </div>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">📬</span> Where It Gets Filed — This Is Different</h3>
+          <p>This is one of the most commonly missed procedural points. A 3.850 goes to the <strong>trial court</strong>. An IAAC petition goes to the <strong>appellate court that heard the direct appeal</strong>.</p>
+
+          <ul className="list-items">
+            <li>If the direct appeal went to the 2nd DCA, the IAAC petition goes to the 2nd DCA</li>
+            <li>If it went to the 1st DCA, it goes to the 1st DCA — and so on</li>
+            <li>The petition is treated as an <strong>original proceeding</strong> under Rule 9.100 — it's not an appeal of anything, it's a new petition in the appellate court</li>
+            <li>It must be filed in proper petition form, sworn, and must include detailed factual allegations of the specific acts that constitute the deficient performance</li>
+          </ul>
+
+          <div className="callout">
+            <div className="callout-label">📌 What the petition must include</div>
+            <p>The date and nature of the lower court's order · The name of the lower court · The nature, disposition, and dates of all prior proceedings · Detailed factual allegations of what appellate counsel did or failed to do · Why the omitted issue had merit · Why there's a reasonable probability the appeal would have come out differently</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q5_2"
+          question="A client's conviction was affirmed on direct appeal. The mandate issued on March 1, 2021. Appellate counsel failed to raise what appears to be a strong preserved sentencing error. When is the last possible date to file an IAAC petition, assuming no misadvice by counsel?"
+          options={[
+            "March 1, 2022 — one year from the mandate",
+            "March 1, 2023 — two years from the mandate",
+            "March 1, 2025 — four years from the mandate",
+            "There is no deadline — IAAC petitions can be filed at any time"
+          ]}
+          correctIndex={1}
+          explanation="The standard window under Rule 9.141(d) is 2 years from when the judgment became final on direct review — which is when the mandate issued. March 1, 2023 is the deadline without any misadvice exception. The 4-year hard cap only applies when there's affirmative misadvice by counsel that might justify extending past the 2-year window."
+          onAnswer={onAnswer}
+          answered={quiz["q5_2"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🗺️</span> How IAAC Fits Into the Bigger Picture</h3>
+          <p>Here's how to think about IAAC in relation to everything else you've learned:</p>
+
+          <div className="card card-teal">
+            <h4>Trial IAC (3.850) vs. Appellate IAC (9.141(d))</h4>
+            <p><strong>Trial IAC:</strong> What happened in the trial court — attorney failures during the case itself. Filed in the trial court as a 3.850 motion.<br/><br/>
+            <strong>Appellate IAC:</strong> What happened during the direct appeal — attorney failures in arguing the appeal. Filed in the appellate court as a 9.141(d) petition.<br/><br/>
+            These are separate claims, separate vehicles, separate courts, separate deadlines. A case can have both.</p>
+          </div>
+
+          <div className="callout" style={{marginTop:16}}>
+            <div className="callout-label">⚡ Quick Reference</div>
+            <p>
+              <strong>Vehicle:</strong> Fla. R. App. P. 9.141(d) petition<br/>
+              <strong>Filed in:</strong> The appellate court that heard the direct appeal<br/>
+              <strong>Standard:</strong> Strickland — deficiency + prejudice<br/>
+              <strong>Deadline:</strong> 2 years from direct review final (4-year hard cap with misadvice)<br/>
+              <strong>What to look for:</strong> Preserved trial issues that appellate counsel never raised
+            </p>
+          </div>
+        </div>
+      </>
+    )
+  },
+
+  {
+    id: 6,
     label: "Case Checklist",
     title: "Case Review Checklist",
     subtitle: "A step-by-step cold case review — from the client's account to legal posture",
@@ -1631,7 +1786,7 @@ export default function App() {
   const [completedModules, setCompletedModules] = useState(new Set());
 
   const quizCounts = {
-    0: 0, 1: 4, 2: 3, 3: 3, 4: 0
+    0: 0, 1: 4, 2: 3, 3: 3, 4: 2, 5: 0
   };
 
   const handleAnswer = (id, isCorrect) => {
