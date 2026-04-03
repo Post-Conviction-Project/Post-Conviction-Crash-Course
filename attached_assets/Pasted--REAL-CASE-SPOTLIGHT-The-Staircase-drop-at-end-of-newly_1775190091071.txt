@@ -1,0 +1,65 @@
+{/* REAL CASE SPOTLIGHT: The Staircase — drop at end of newly discovered evidence section in Module 2 */}
+
+<div className="reality-check" style={{marginTop: '24px'}}>
+  <div className="rc-label">⚖️ Hypothetical: The Expert Who Wasn't</div>
+  <p>
+    A defendant is convicted of first-degree murder in 2003 and sentenced to life without parole.
+    The prosecution's case rested heavily on a state crime lab analyst who testified as a blood
+    spatter expert — describing patterns on the walls and stairs that he said proved the victim
+    was beaten to death. The defense challenged his conclusions at trial, but the jury convicted.
+    Direct appeal was denied.
+  </p>
+  <p style={{marginTop: '10px'}}>
+    Years later, investigative reporting and an unrelated wrongful conviction case triggered a
+    statewide audit of the same crime lab. The audit revealed the analyst had misrepresented his
+    qualifications in court — his degree was in zoology, he had completed only two training courses
+    in bloodstain analysis, and he had testified as an "expert" in only four bloodstain cases total,
+    not the hundreds he implied. The audit found he had falsified or misstated evidence in
+    <strong> 34 separate cases</strong> over his career. A judge later ruled he had committed perjury
+    at this defendant's trial.
+  </p>
+  <p style={{marginTop: '10px'}}>
+    In 2011 — <strong>eight years after conviction</strong> — the trial judge vacated the conviction
+    and granted a new trial. The defendant was released on bail. Five more years of litigation followed.
+    In 2017, facing retrial with the state's key witness disqualified and other evidence now
+    inadmissible, the prosecution offered a plea to voluntary manslaughter. The defendant entered
+    an <strong>Alford plea</strong> — maintaining innocence while acknowledging the prosecution had
+    enough evidence to risk conviction — and was released on time served after <strong>15 years</strong>.
+  </p>
+</div>
+
+<Quiz
+  id="q2_nde_staircase"
+  question="When you're reviewing a post-conviction case that lost at trial on forensic evidence, what should you be looking for beyond the four corners of the trial record?"
+  options={[
+    "Nothing — if the evidence was admitted at trial, it's been tested and validated",
+    "Whether the defense hired a competing expert at trial",
+    "Whether the state's expert witness has been discredited, disciplined, or found to have falsified evidence in other cases after the conviction",
+    "Whether the forensic evidence was the only basis for conviction"
+  ]}
+  correctIndex={2}
+  explanation={
+    <>
+      <span>
+        Expert witnesses don't get disqualified at trial — they get exposed years later, often in
+        unrelated cases. Your job during case review is to ask: <em>what happened to this witness
+        after the trial?</em> Has the analyst been fired? Disciplined? Implicated in a lab audit?
+        Had their methodology rejected in subsequent cases? That's newly discovered evidence — and
+        it can be the entire basis for post-conviction relief even decades after conviction.
+      </span>
+      <span style={{display:'block', marginTop:'10px', padding:'10px 12px',
+        background:'rgba(4,104,120,0.15)', borderRadius:'6px', borderLeft:'3px solid #046878'}}>
+        <strong>This was a real case.</strong> The scenario above is <em>State v. Peterson</em> (Durham,
+        NC, 2003) — known publicly as "The Staircase." Blood spatter analyst Duane Deaver was the
+        state's key expert. He was later fired after an audit found he falsified evidence in 34 cases
+        and committed perjury in Peterson's trial. Peterson was released in 2017 after 15 years via
+        Alford plea to voluntary manslaughter. The North Carolina SBI's broader misconduct affected
+        over 200 cases. It's one of the most documented examples in recent American criminal justice
+        of a conviction unraveling because a forensic expert was exposed — not at trial, but years
+        later, in somebody else's case.
+      </span>
+    </>
+  }
+  onAnswer={onAnswer}
+  answered={answered}
+/>
