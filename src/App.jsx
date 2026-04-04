@@ -184,11 +184,31 @@ const styles = `
     margin-bottom: 12px;
   }
 
+  .module-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
   .module-intro {
     font-size: 16px;
     color: ${textMuted};
     border-left: 3px solid ${teal};
     padding-left: 16px;
+  }
+
+  .time-estimate {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: ${textMuted};
+    background: rgba(255,255,255,0.05);
+    border: 1px solid ${darkBorder};
+    border-radius: 20px;
+    padding: 3px 10px;
   }
 
   .section {
@@ -312,32 +332,28 @@ const styles = `
 
   .reality-check p:last-child { margin-bottom: 0; }
 
-  .video-placeholder {
-    background: linear-gradient(135deg, #0d1f2d, #1a2f40);
-    border: 2px dashed rgba(4,104,120,0.4);
+  .warning-card {
+    background: rgba(127,29,29,0.3);
+    border: 1px solid rgba(255,80,80,0.25);
     border-radius: 12px;
-    padding: 40px 24px;
-    text-align: center;
-    margin: 24px 0;
+    padding: 20px 24px;
+    margin: 16px 0;
   }
 
-  .video-placeholder .vp-icon {
-    font-size: 40px;
-    margin-bottom: 12px;
-    display: block;
+  .warning-card .wc-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,200,200,0.8);
+    margin-bottom: 8px;
   }
 
-  .video-placeholder h4 {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    color: ${tealLight};
-    margin-bottom: 6px;
-  }
-
-  .video-placeholder p {
-    font-size: 13px;
-    color: ${textMuted};
+  .warning-card p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
     margin: 0;
+    line-height: 1.6;
   }
 
   .strickland-grid {
@@ -774,11 +790,15 @@ function Checklist({ items }) {
 // ─── MODULES ───
 
 const modules = [
+  // ─────────────────────────────────────────
+  // MODULE 1: INTRO
+  // ─────────────────────────────────────────
   {
     id: 0,
     label: "Intro",
     title: "Welcome to Post-Conviction Land",
     subtitle: "What this is, what it isn't, and why it matters",
+    estimatedTime: "5 min",
     content: ({ quiz, onAnswer }) => (
       <>
         <div className="section">
@@ -821,15 +841,25 @@ const modules = [
             <p>The federal court won't touch a case until every state avenue has been tried. And while those state motions are pending, the federal clock is paused — but it doesn't reset. More on that in Module 4.</p>
           </div>
         </div>
+
+        {/* EASTER EGG — Module 1 */}
+        <div className="callout" style={{marginTop: '24px', borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)'}}>
+          <div className="callout-label" style={{color: textMuted}}>📽️ From the Archives</div>
+          <p style={{color: textMuted, fontStyle: 'italic'}}>"What we've got here is a failure to communicate." — <em>Cool Hand Luke</em> (1967). Keep this in mind every time you're writing up a case summary. Clarity saves cases.</p>
+        </div>
       </>
     )
   },
 
+  // ─────────────────────────────────────────
+  // MODULE 2: RULE 3.850
+  // ─────────────────────────────────────────
   {
     id: 1,
     label: "Rule 3.850",
     title: "Rule 3.850 — The Swiss Army Knife",
     subtitle: "Constitutional violations, IAC, plea claims, and newly discovered evidence",
+    estimatedTime: "20 min",
     content: ({ quiz, onAnswer }) => (
       <>
         <div className="section">
@@ -898,20 +928,71 @@ const modules = [
           </div>
         </div>
 
+        {/* STAIRCASE CASE EXAMPLE */}
+        <div className="reality-check" style={{marginTop: '24px'}}>
+          <div className="rc-label">⚖️ Hypothetical: The Expert Who Wasn't</div>
+          <p>
+            A defendant is convicted of first-degree murder in 2003 and sentenced to life without parole.
+            The prosecution's case rested heavily on a state crime lab analyst who testified as a blood
+            spatter expert — describing patterns on the walls and stairs that he said proved the victim
+            was beaten to death. The defense challenged his conclusions at trial, but the jury convicted.
+            Direct appeal was denied.
+          </p>
+          <p style={{marginTop: '10px'}}>
+            Years later, investigative reporting and an unrelated wrongful conviction case triggered a
+            statewide audit of the same crime lab. The audit revealed the analyst had misrepresented his
+            qualifications in court — his degree was in zoology, he had completed only two training courses
+            in bloodstain analysis, and he had testified as an "expert" in only four bloodstain cases total,
+            not the hundreds he implied. The audit found he had falsified or misstated evidence in
+            <strong> 34 separate cases</strong> over his career. A judge later ruled he had committed perjury
+            at this defendant's trial.
+          </p>
+          <p style={{marginTop: '10px'}}>
+            In 2011 — <strong>eight years after conviction</strong> — the trial judge vacated the conviction
+            and granted a new trial. The defendant was released on bail. Five more years of litigation followed.
+            In 2017, facing retrial with the state's key witness disqualified and other evidence now
+            inadmissible, the prosecution offered a plea to voluntary manslaughter. The defendant entered
+            an <strong>Alford plea</strong> — maintaining innocence while acknowledging the prosecution had
+            enough evidence to risk conviction — and was released on time served after <strong>15 years</strong>.
+          </p>
+        </div>
+
         <Quiz
-          id="q1_2"
-          question="The lead detective in your client's 1998 murder conviction was fired in 2022 for fabricating evidence in three other cases. This was just discovered. Which of the following is NOT required for this to support a 3.850 motion?"
+          id="q1_5"
+          question="When reviewing a post-conviction case that lost at trial on forensic evidence, what should you be looking for beyond the four corners of the trial record?"
           options={[
-            "The misconduct wasn't known and couldn't have been found before",
-            "The detective's role was significant — not just a side witness",
-            "The defendant must have been completely innocent",
-            "The new evidence would probably change the outcome at a new trial"
+            "Nothing — if the evidence was admitted at trial, it has been tested and validated",
+            "Whether the defense hired a competing expert at trial",
+            "Whether the state's expert witness has been discredited, disciplined, or found to have falsified evidence in other cases after the conviction",
+            "Whether the forensic evidence was the only basis for conviction"
           ]}
           correctIndex={2}
-          explanation="You don't have to prove actual innocence to file a 3.850 — you have to show the new evidence would probably produce an acquittal. Those are different standards. Actual innocence is a much higher bar used in narrow federal contexts."
+          explanation={
+            <span>
+              Expert witnesses don't get disqualified at trial — they get exposed years later, often in
+              unrelated cases. Your job during case review is to ask: <em>what happened to this witness
+              after the trial?</em> Has the analyst been fired? Disciplined? Implicated in a lab audit?
+              Had their methodology rejected in subsequent cases? That's newly discovered evidence — and
+              it can be the entire basis for post-conviction relief even decades after conviction.
+              <span style={{display:'block', marginTop:'10px', padding:'10px 12px',
+                background:'rgba(4,104,120,0.15)', borderRadius:'6px', borderLeft:'3px solid #046878'}}>
+                <strong>This was a real case.</strong> The scenario above is <em>State v. Peterson</em> (Durham,
+                NC, 2003) — known publicly as "The Staircase." Blood spatter analyst Duane Deaver was the
+                state's key expert. He was later fired after an audit found he falsified evidence in 34 cases
+                and committed perjury in Peterson's trial. Peterson was released in 2017 after 15 years via
+                Alford plea to voluntary manslaughter.
+              </span>
+            </span>
+          }
           onAnswer={onAnswer}
-          answered={quiz["q1_2"]}
+          answered={quiz["q1_5"]}
         />
+
+        {/* EASTER EGG — Module 2 */}
+        <div className="callout" style={{marginTop: '24px', borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)'}}>
+          <div className="callout-label" style={{color: textMuted}}>📽️ From the Archives</div>
+          <p style={{color: textMuted, fontStyle: 'italic'}}>"However, in 1964, the correct ignition timing would be four degrees before top-dead-center." — <em>My Cousin Vinny</em> (1992). Know your subject cold. Specificity wins.</p>
+        </div>
 
         <div className="divider" />
 
@@ -991,6 +1072,21 @@ const modules = [
           </ul>
         </div>
 
+        <Quiz
+          id="q1_2"
+          question="The lead detective in your client's 1998 murder conviction was fired in 2022 for fabricating evidence in three other cases. This was just discovered. Which of the following is NOT required for this to support a 3.850 motion?"
+          options={[
+            "The misconduct wasn't known and couldn't have been found before",
+            "The detective's role was significant — not just a side witness",
+            "The defendant must have been completely innocent",
+            "The new evidence would probably change the outcome at a new trial"
+          ]}
+          correctIndex={2}
+          explanation="You don't have to prove actual innocence to file a 3.850 — you have to show the new evidence would probably produce an acquittal. Those are different standards. Actual innocence is a much higher bar used in narrow federal contexts."
+          onAnswer={onAnswer}
+          answered={quiz["q1_2"]}
+        />
+
         <div className="divider" />
 
         <div className="section">
@@ -1006,7 +1102,7 @@ const modules = [
             <div className="rc-label">⚠️ Why This Is Harder Than It Sounds</div>
             <p>The client almost always says "I never would have pled guilty if I'd known X." Courts are skeptical of that claim made years later from a prison cell. You need more than just the client's word.</p>
             <p>What helps: evidence that the client was actively asking about trial options, that the attorney gave provably wrong legal advice (e.g., told the client a charge was a misdemeanor when it was a felony), or that the client pled immediately after the bad advice with no gap to reconsider.</p>
-            <p>What also helps: the state's offer was objectively good, or the alternative (trial) was objectively risky — that cuts <em>against</em> the claim that they'd have gone to trial. Flag this when you see it.</p>
+            <p>What makes it harder: the state's offer was objectively good, or the alternative (trial) was objectively risky — that cuts <em>against</em> the claim that they'd have gone to trial. Flag this when you see it.</p>
           </div>
 
           <ul className="list-items">
@@ -1068,11 +1164,15 @@ const modules = [
     )
   },
 
+  // ─────────────────────────────────────────
+  // MODULE 3: RULE 3.800
+  // ─────────────────────────────────────────
   {
     id: 2,
     label: "Rule 3.800",
     title: "Rule 3.800 — When the Sentence Is Just Wrong",
     subtitle: "Illegal sentences, no time bar, and the errors that sneak through",
+    estimatedTime: "15 min",
     content: ({ quiz, onAnswer }) => (
       <>
         <div className="section">
@@ -1171,6 +1271,84 @@ const modules = [
           answered={quiz["q2_2"]}
         />
 
+        <div className="divider" />
+
+        {/* DISTRICT SPLIT SECTION */}
+        <div className="section">
+          <h3><span className="icon">⚠️</span> When Counts Get Vacated — The District Split</h3>
+          <p>One of the most dangerous traps in 3.800 practice involves cases where a conviction on one or more counts is vacated after sentencing — either through a successful appeal or a post-conviction motion. You might assume that vacating a count automatically triggers resentencing. In some Florida districts, you'd be right. In others, you'd lose.</p>
+
+          <div className="callout">
+            <div className="callout-label">📋 Fact Pattern — Read Carefully</div>
+            <p>
+              A defendant is convicted of three separate counts and sentenced as a
+              Habitual Felony Offender (HFO). Count 1: 50 years as an HFO (first degree
+              felony). Count 2: 50 years as an HFO with a 15-year minimum mandatory.
+              Count 3: 15 years. All sentences run concurrent.
+            </p>
+            <p style={{marginTop: '8px'}}>
+              On direct appeal, all convictions and sentences are affirmed. Defendant
+              then files a post-conviction IAC claim, which is denied at the trial court
+              level. On appeal, the denial is reversed in part — the conviction on
+              Count 3 is stricken. Subsequently, in response to a separate 3.850 motion,
+              the trial court vacates the conviction and sentence on Count 2. An amended
+              judgment and sentence is entered reflecting a single HFO conviction on
+              Count 1 only. No new scoresheet is calculated. Defendant is not brought
+              back for resentencing. Defendant does not appeal the amended judgment
+              and sentence.
+            </p>
+            <p style={{marginTop: '8px'}}>
+              Defendant is now serving 50 years on Count 1 alone — a first degree
+              felony — with no new scoresheet and no resentencing hearing.
+            </p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q2_4"
+          question="Two of the defendant's three convictions are gone. He's serving 50 years on Count 1 with no new scoresheet. His attorney files a Rule 3.800 motion arguing he's entitled to resentencing. Is he right?"
+          options={[
+            "Yes — when convictions are vacated the defendant is automatically entitled to resentencing",
+            "No — 50 years is within the HFO range for a first degree felony so there's nothing to challenge",
+            "It depends on which Florida district the case is in",
+            "Only if the scoresheet error would have changed the guidelines range"
+          ]}
+          correctIndex={2}
+          explanation="This is the district split. In the Second DCA, courts apply a harmless error analysis under the 'could-have-been-imposed' standard — if the sentence could still legally have been imposed on the remaining conviction, resentencing is denied. A 50-year HFO sentence on a first degree felony is within the permissible range, so the 2d DCA would likely affirm. In the Fourth DCA, vacatur of a conviction requires resentencing with a corrected scoresheet, full stop — no harmless error analysis. Cox v. State, 192 So. 3d 581 (Fla. 4th DCA 2016). Where your client's case sits geographically determines which framework applies. This is not academic — it is the difference between a resentencing hearing and a denial."
+          onAnswer={onAnswer}
+          answered={quiz["q2_4"]}
+        />
+
+        <Quiz
+          id="q2_5"
+          question="The defendant didn't appeal the amended judgment and sentence. His attorney now wants to pursue resentencing through a 3.850 motion. Is that still available?"
+          options={[
+            "No — by not appealing the amended judgment and sentence he waived all future relief",
+            "Yes — 3.850 is always available after a conviction",
+            "It depends on when the amended judgment and sentence became final and whether the two-year clock has run",
+            "Only if he can show newly discovered evidence"
+          ]}
+          correctIndex={2}
+          explanation="When an amended judgment and sentence is entered, it can reset the finality clock for 3.850 purposes — but only if the two-year window hasn't closed. This is not a minor procedural detail. In Negron Gil de Rubio v. State, 272 So. 3d 811 (Fla. 2d DCA 2019), the court's analysis turned in part on whether the judgment and sentence had been formally entered and whether the 3.850 timeframe had run. A co-defendant in that same underlying matter received a different outcome precisely because the procedural posture on his amended judgment and sentence differed — the paperwork timing determined who got relief and who didn't. When you're reviewing a case with vacated counts and an amended J&S, the first thing you do is find out exactly when that document was entered and whether it was appealed."
+          onAnswer={onAnswer}
+          answered={quiz["q2_5"]}
+        />
+
+        <Quiz
+          id="q2_6"
+          question="You're reviewing this case. You're in the Second DCA. The amended judgment and sentence was entered two and a half years ago and was never appealed. The 3.850 clock has run. The defendant is serving 50 years on a first degree felony with no new scoresheet. What's your honest assessment?"
+          options={[
+            "Strong case — untested scoresheet error is always grounds for relief",
+            "File a 3.800 motion — the 2d DCA will order resentencing because the scoresheet was never recalculated",
+            "Difficult posture — the 2d DCA's harmless error framework will likely defeat the 3.800 claim, the 3.850 clock has run, and without a vehicle to get this in front of the 4th DCA or the Florida Supreme Court your options are limited",
+            "File in federal court under habeas — the district split creates a constitutional due process violation"
+          ]}
+          correctIndex={2}
+          explanation="This is the hard truth volunteers need to understand about the district split. In the 2d DCA, the harmless error analysis under the could-have-been-imposed standard is a real wall. If 50 years is within the HFO range for a first degree felony — and it is — the court will likely affirm even without a new scoresheet. With the 3.850 clock expired and no appeal of the amended J&S, your procedural options are severely limited. The right answer isn't 'file everything and see what sticks' — it's an honest case assessment that tells the client where they actually stand. Identifying a case as a difficult or closed avenue is just as important as identifying a viable claim. Not every case has a path forward, and part of your job in case review is knowing the difference."
+          onAnswer={onAnswer}
+          answered={quiz["q2_6"]}
+        />
+
         <Quiz
           id="q2_3"
           question="Which of the following is NOT a valid 3.800 claim?"
@@ -1185,15 +1363,25 @@ const modules = [
           onAnswer={onAnswer}
           answered={quiz["q2_3"]}
         />
+
+        {/* EASTER EGG — Module 3 */}
+        <div className="callout" style={{marginTop: '24px', borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)'}}>
+          <div className="callout-label" style={{color: textMuted}}>📽️ From the Archives</div>
+          <p style={{color: textMuted, fontStyle: 'italic'}}>"Get busy living, or get busy dying." — <em>The Shawshank Redemption</em> (1994). Find the path forward, or document honestly that there isn't one. Both matter.</p>
+        </div>
       </>
     )
   },
 
+  // ─────────────────────────────────────────
+  // MODULE 4: THE CLOCK
+  // ─────────────────────────────────────────
   {
     id: 3,
     label: "The Clock",
     title: "Time Rules — The Clock Is Not Your Friend",
     subtitle: "Filing windows, tolling, exhaustion, and the federal deadline",
+    estimatedTime: "10 min",
     content: ({ quiz, onAnswer }) => (
       <>
         <div className="section">
@@ -1305,15 +1493,102 @@ const modules = [
           onAnswer={onAnswer}
           answered={quiz["q3_3"]}
         />
+
+        <div className="divider" />
+
+        {/* RETROACTIVITY SECTION */}
+        <div className="section">
+          <h3><span className="icon">⏪</span> When New Law Helps — and When It Doesn't</h3>
+          <p>One of the most common and most painful situations in post-conviction work is this: a major new court decision comes down, it looks like it directly applies to your client's sentence or conviction, and then you find out it doesn't help them because it doesn't apply retroactively.</p>
+          <p>Understanding retroactivity is not optional. Before you tell a client that a new case helps them, you need to know whether that case can even be raised in a post-conviction proceeding.</p>
+
+          <div className="callout">
+            <div className="callout-label">🔑 The Core Distinction</div>
+            <p>New legal rules fall into two categories for retroactivity purposes:</p>
+            <div className="card card-teal" style={{marginTop: '10px'}}>
+              <strong>Substantive rules</strong> — change what conduct can be punished or what punishment can be imposed. These generally apply retroactively because they go to whether the state had the right to punish at all. Example: <em>Miller v. Alabama</em> (mandatory life without parole for juveniles is unconstitutional) — made retroactive by <em>Montgomery v. Louisiana</em>, 577 U.S. 190 (2016).
+            </div>
+            <div className="card card-amber" style={{marginTop: '8px'}}>
+              <strong>Procedural rules</strong> — change how facts are determined or how trials are conducted. These generally do <em>not</em> apply retroactively because the process that led to conviction is not invalidated just because the rules of that process later changed. Example: <em>Erlinger v. United States</em> (jury must find sentencing enhancement facts beyond a reasonable doubt) — not retroactive.
+            </div>
+          </div>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">⚖️</span> The Federal Framework — Teague</h3>
+          <p>The federal baseline comes from <em>Teague v. Lane</em>, 489 U.S. 288 (1989). Under <em>Teague</em>, new constitutional rules of criminal procedure do not apply retroactively on collateral review unless they fall into one of two narrow exceptions:</p>
+          <ul className="list-items">
+            <li><strong>Exception 1:</strong> The rule places certain conduct beyond the reach of criminal law entirely — i.e., the state cannot punish this at all</li>
+            <li><strong>Exception 2:</strong> The rule is a watershed rule of criminal procedure without which the likelihood of an accurate conviction is seriously diminished — this exception is extremely narrow and rarely applied</li>
+          </ul>
+          <p>Most new rules don't meet either exception. That's the point — <em>Teague</em> was designed to limit the flood of post-conviction litigation that would follow every new Supreme Court decision.</p>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">🌴</span> Florida's Framework — Witt</h3>
+          <p>Florida applies its own retroactivity analysis under <em>Witt v. State</em>, 387 So. 2d 922 (Fla. 1980). Florida's test asks whether the new rule constitutes a development of fundamental significance — meaning it either places beyond the authority of the state to proscribe the conduct, or is a watershed change in constitutional protection — and was not available to the defendant at the time of trial or direct appeal.</p>
+          <p>Florida's <em>Witt</em> framework is sometimes more favorable than federal <em>Teague</em> analysis — but not reliably so. The Florida Supreme Court applies it case by case and the outcomes are not always predictable.</p>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">📋</span> Case Study: Erlinger and Wainwright</h3>
+          <div className="reality-check">
+            <div className="rc-label">📅 What Happened</div>
+            <p>In June 2024, the U.S. Supreme Court decided <em>Erlinger v. United States</em>, 602 U.S. 821 (2024). The Court held that the Fifth and Sixth Amendments require a unanimous jury to determine beyond a reasonable doubt whether a defendant's prior offenses were committed on separate occasions for sentencing enhancement purposes.</p>
+            <p style={{marginTop: '10px'}}>For Florida practitioners, this was immediately significant. Florida's sentencing enhancement statutes — HFO, PRR, HVO, VCC — all allow judges, not juries, to find facts beyond the mere existence of a prior conviction (release dates, offense dates, qualifying prior convictions). Under <em>Erlinger</em>, those judicial fact-findings looked unconstitutional. Prisoners throughout Florida began filing motions.</p>
+            <p style={{marginTop: '10px'}}>In June 2025, the Florida Supreme Court answered: <strong>no.</strong> <em>Wainwright v. State</em>, 411 So. 3d 392 (Fla. 2025). The Court held that <em>Erlinger</em> is a procedural rule — it governs <em>how</em> facts are found, not <em>whether</em> the state can punish the conduct at all. Procedural rules do not apply retroactively. Every client already sentenced as an HFO, PRR, HVO, or VCC was left where they were.</p>
+          </div>
+
+          <div className="warning-card" style={{marginTop: '16px'}}>
+            <div className="wc-label">⚠️ The Lesson</div>
+            <p>When a new case comes down that looks like it helps your clients, your first question before saying anything to anyone is: <strong>is this substantive or procedural?</strong> If it's procedural, it almost certainly does not help clients who are already sentenced. Getting a client's hopes up about a new case that turns out not to apply retroactively is one of the most damaging things you can do in this work.</p>
+          </div>
+        </div>
+
+        <div className="section">
+          <h3><span className="icon">🔍</span> How to Quickly Assess a New Case</h3>
+          <ul className="list-items">
+            <li><strong>What did the court actually hold?</strong> Read the holding, not the headlines. Legal news coverage of criminal decisions is frequently inaccurate or overstated.</li>
+            <li><strong>Is it substantive or procedural?</strong> Does it say the state cannot punish this conduct, or does it say the process by which the punishment was imposed was flawed?</li>
+            <li><strong>Has retroactivity been addressed?</strong> Search for the case name plus "retroactive" or "retroactivity." Courts often address this quickly after a major decision.</li>
+            <li><strong>Has Florida addressed it specifically?</strong> Federal retroactivity analysis under <em>Teague</em> and Florida retroactivity analysis under <em>Witt</em> can produce different results. Check both.</li>
+            <li><strong>What's the vehicle?</strong> Even if a rule is retroactive, you need a procedural mechanism to raise it — 3.850, 3.800, habeas. Make sure the clock hasn't run and the right rule applies.</li>
+          </ul>
+        </div>
+
+        {/* EASTER EGG — Module 4 */}
+        <div className="callout" style={{marginTop: '24px', borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)'}}>
+          <div className="callout-label" style={{color: textMuted}}>📽️ From the Archives</div>
+          <p style={{color: textMuted, fontStyle: 'italic'}}>"You can't handle the truth." — <em>A Few Good Men</em> (1992). In post-conviction work, the truth about retroactivity is often the hardest conversation you will have with a client. Your job is to deliver it anyway, clearly and honestly, before hope becomes expectation.</p>
+        </div>
+
+        <Quiz
+          id="q3_4"
+          question="The U.S. Supreme Court issues a landmark decision holding that a particular sentencing enhancement procedure is unconstitutional because it allows judges rather than juries to find key facts. Your client was sentenced under that exact procedure five years ago. Their direct appeal is long over. Can they raise this in a 3.850 motion?"
+          options={[
+            "Yes — any unconstitutional sentence can be challenged at any time",
+            "Yes — Supreme Court decisions always apply retroactively",
+            "Not necessarily — the critical question is whether the new rule is substantive or procedural, and procedural rules generally do not apply retroactively on collateral review",
+            "No — 3.850 only covers ineffective assistance of counsel claims"
+          ]}
+          correctIndex={2}
+          explanation="This is exactly the Erlinger situation. A rule governing how facts must be found at sentencing — by a jury rather than a judge — is procedural, not substantive. It changes the process, not whether the state can punish the conduct. Under both the federal Teague framework and Florida's Witt analysis, procedural rules do not apply retroactively on collateral review. The Florida Supreme Court confirmed this in Wainwright v. State, 411 So. 3d 392 (Fla. 2025), holding that Erlinger does not apply retroactively to defendants already sentenced under Florida's enhancement statutes. Before raising any new case in post-conviction proceedings, always determine whether it is substantive or procedural — that single classification determines whether it can help your client at all."
+          onAnswer={onAnswer}
+          answered={quiz["q3_4"]}
+        />
       </>
     )
   },
 
+  // ─────────────────────────────────────────
+  // MODULE 5: IAAC
+  // ─────────────────────────────────────────
   {
-    id: 5,
+    id: 4,
     label: "IAAC",
     title: "Ineffective Assistance of Appellate Counsel",
     subtitle: "Rule 9.141(d) — A different animal from trial IAC",
+    estimatedTime: "15 min",
     content: ({ quiz, onAnswer }) => (
       <>
         <div className="section">
@@ -1440,8 +1715,6 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">🗺️</span> How IAAC Fits Into the Bigger Picture</h3>
-          <p>Here's how to think about IAAC in relation to everything else you've learned:</p>
-
           <div className="card card-teal">
             <h4>Trial IAC (3.850) vs. Appellate IAC (9.141(d))</h4>
             <p><strong>Trial IAC:</strong> What happened in the trial court — attorney failures during the case itself. Filed in the trial court as a 3.850 motion.<br/><br/>
@@ -1460,15 +1733,182 @@ const modules = [
             </p>
           </div>
         </div>
+
+        {/* EASTER EGG — Module 5 */}
+        <div className="callout" style={{marginTop: '24px', borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)'}}>
+          <div className="callout-label" style={{color: textMuted}}>📽️ From the Archives</div>
+          <p style={{color: textMuted, fontStyle: 'italic'}}>"I am the one who knocks." — <em>Breaking Bad</em>. When you find a preserved issue appellate counsel never raised, you are the one who found it. Now flag it.</p>
+        </div>
       </>
     )
   },
 
+  // ─────────────────────────────────────────
+  // MODULE 6: RULE 3.853 — DNA TESTING
+  // ─────────────────────────────────────────
+  {
+    id: 5,
+    label: "Rule 3.853",
+    title: "Rule 3.853 — Postconviction DNA Testing",
+    subtitle: "When DNA can open the door — and when it can't",
+    estimatedTime: "10 min",
+    content: ({ quiz, onAnswer }) => (
+      <>
+        <div className="section">
+          <h3><span className="icon">🧬</span> What Is Rule 3.853?</h3>
+          <p>Florida Rule of Criminal Procedure 3.853 creates a post-conviction procedure for obtaining DNA testing of physical evidence. It exists because DNA science has advanced dramatically since many convictions — evidence that was never tested, or was tested with inconclusive results, may now yield definitive answers.</p>
+
+          <div className="callout">
+            <div className="callout-label">Rule 3.853 — Purpose</div>
+            <p>This rule provides procedures for obtaining DNA testing under sections 925.11 and 925.12, Florida Statutes. Unlike Rule 3.850, there is <strong>no time limit</strong> — a 3.853 motion may be filed at any time after the judgment and sentence becomes final.</p>
+          </div>
+        </div>
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">📋</span> What the Motion Must Include</h3>
+          <p>The motion must be under oath and must include all of the following:</p>
+          <ul className="list-items">
+            <li>A description of the physical evidence containing DNA to be tested, its present or last known location, and how it was originally obtained</li>
+            <li>A statement that the evidence was <strong>not previously tested</strong> for DNA — or that prior results were <strong>inconclusive</strong> and that subsequent scientific developments would likely produce a definitive result establishing the movant is not the person who committed the crime</li>
+            <li>A statement that the movant is innocent and <strong>how the DNA testing will exonerate the movant</strong> of the crime or mitigate the sentence</li>
+            <li>A statement that <strong>identification of the movant is a genuinely disputed issue</strong> in the case — and why</li>
+          </ul>
+
+          <div className="callout">
+            <div className="callout-label">💡 Key Distinction</div>
+            <p>The motion must explain the connection between the requested testing and the movant's guilt or innocence with reference to <em>specific facts about the crime</em>. Courts have consistently held that 3.853 is not a "fishing expedition." <em>Hitchcock v. State</em>, 856 So. 2d 23 (Fla. 2004). The burden is on the movant to show how testing matters to their specific case.</p>
+          </div>
+        </div>
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">⚖️</span> What the Court Must Find</h3>
+          <p>Before ordering testing, the court must make three findings:</p>
+          <div className="card card-teal"><strong>(A)</strong> Physical evidence that may contain DNA still exists</div>
+          <div className="card card-teal" style={{marginTop: '8px'}}><strong>(B)</strong> Results of DNA testing would likely be admissible at trial, and there exists reliable proof the evidence is authentic</div>
+          <div className="card card-teal" style={{marginTop: '8px'}}><strong>(C)</strong> There is a <strong>reasonable probability</strong> that the movant would have been acquitted or would have received a lesser sentence if the DNA evidence had been admitted at trial</div>
+          <p style={{marginTop: '16px'}}>Note the standard carefully: <strong>reasonable probability of acquittal or lesser sentence</strong>. That is the rule language. Not "would exonerate," not "proves innocence" — reasonable probability. It is a meaningful threshold but it is not certainty.</p>
+        </div>
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🚪</span> The Identity Gate</h3>
+          <p>The single most important threshold in 3.853 practice is whether <strong>identification is a genuinely disputed issue</strong>. Courts have repeatedly denied testing where identity was not genuinely disputed at trial — regardless of what the DNA might show.</p>
+          <p>Think through these three scenarios carefully. They come up constantly in case review:</p>
+
+          <div className="card card-teal" style={{marginTop: '12px'}}>
+            <strong>✅ Scenario 1 — Identity genuinely disputed</strong>
+            <p style={{marginTop: '8px', fontWeight: 'normal'}}>Client was convicted of murder as the shooter. Client denied being present at all. The gun was never tested for DNA. Testing that excludes the client's DNA from the gun goes directly to whether they were the person who pulled the trigger. Identity is genuinely disputed. Testing is appropriate.</p>
+          </div>
+
+          <div className="card card-amber" style={{marginTop: '8px'}}>
+            <strong>⚠️ Scenario 2 — Identity not genuinely disputed</strong>
+            <p style={{marginTop: '8px', fontWeight: 'normal'}}>Client was convicted under a felony murder theory as a co-defendant. The state's theory was that the client was present but did not fire the weapon. Testing the gun for the client's DNA would not exonerate them — they were never alleged to have held it. Identity was never in dispute as to their role. Testing is likely futile.</p>
+          </div>
+
+          <div className="card card-red" style={{marginTop: '8px'}}>
+            <strong>🚫 Scenario 3 — Confession in evidence</strong>
+            <p style={{marginTop: '8px', fontWeight: 'normal'}}>Client confessed at the time of arrest. The confession was admitted at trial. Client now recants and wants DNA testing. The recanted confession makes identity difficult to characterize as "genuinely disputed" — the client's own prior statement placed them at the scene and admitted participation. Courts are highly skeptical of 3.853 motions in this posture. Testing may still be pursued but expect significant resistance.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q6_1"
+          question="Your client was convicted of sexual battery. He denied being the perpetrator at trial and was convicted on circumstantial evidence. A rape kit was collected but never tested for DNA. He files a 3.853 motion. What is the most critical threshold issue the court will examine first?"
+          options={[
+            "Whether the client can afford the cost of DNA testing",
+            "Whether the rape kit still exists and whether identification was genuinely disputed at trial",
+            "Whether the client has already filed a 3.850 motion",
+            "Whether the original defense attorney requested DNA testing at trial"
+          ]}
+          correctIndex={1}
+          explanation="The court must first find that physical evidence still exists (the rape kit) and that identification is genuinely disputed. In a sexual battery case where the defendant denied being the perpetrator, identity is clearly at issue — making this a strong 3.853 candidate if the kit still exists. Evidence preservation is a real problem; rape kits are sometimes destroyed after a period of years, which is why locating the evidence is the first practical step in case review."
+          onAnswer={onAnswer}
+          answered={quiz["q6_1"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🔬</span> Previously Tested vs. Inconclusive Results</h3>
+          <p>Many clients assume that because DNA was tested at trial, 3.853 is off the table. That's not correct. The rule allows a second bite if prior results were <strong>inconclusive</strong> and subsequent scientific developments in DNA testing techniques would likely produce a definitive result.</p>
+
+          <div className="reality-check">
+            <div className="rc-label">📅 Why This Matters Now</div>
+            <p>DNA technology has advanced significantly since the 1990s and early 2000s. Touch DNA, low copy number testing, and improved mixture interpretation methods can now yield results from samples that were previously untestable. A case that had inconclusive DNA results in 2001 may be a strong 3.853 candidate today. Always check when the prior testing occurred and what methods were available at the time.</p>
+          </div>
+        </div>
+
+        <Quiz
+          id="q6_2"
+          question="DNA testing was performed on evidence in your client's 1998 murder case. The results were inconclusive. Your client wants to file a 3.853 motion for retesting. Is this viable?"
+          options={[
+            "No — evidence was already tested so 3.853 does not apply",
+            "Only if the client can show the original lab made an error",
+            "Yes — if subsequent scientific developments in DNA testing would likely produce a definitive result that the prior testing could not",
+            "Only if the prosecution agrees to retesting"
+          ]}
+          correctIndex={2}
+          explanation="The rule explicitly contemplates this scenario. Prior inconclusive testing does not bar a 3.853 motion — the movant must show that advances in DNA science since the original testing would likely now produce a definitive result. A 1998 inconclusive result tested with the methods available then may be highly testable with modern technology. This is worth flagging in every old case where DNA evidence exists."
+          onAnswer={onAnswer}
+          answered={quiz["q6_2"]}
+        />
+
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">🔗</span> How 3.853 Connects to 3.850</h3>
+          <p>Rule 3.853 is a standalone procedure — but it rarely ends the case on its own. A favorable DNA result is <strong>newly discovered evidence</strong> that opens the door to a full Rule 3.850 motion for postconviction relief.</p>
+          <p>Think of 3.853 as the key and 3.850 as the door. Testing gets you the evidence. The 3.850 motion is how you use that evidence to vacate the conviction.</p>
+
+          <div className="callout">
+            <div className="callout-label">⚙️ Procedural Flow</div>
+            <p>3.853 motion filed → court orders testing if criteria met → FDLE or accredited lab conducts testing → results provided to court, movant, and prosecution → if favorable, results become the basis for a 3.850 newly discovered evidence claim → 3.850 motion filed arguing reasonable probability of acquittal</p>
+          </div>
+
+          <div className="callout">
+            <div className="callout-label">💰 Cost</div>
+            <p>If the movant is indigent, the <strong>state bears the cost</strong> of court-ordered DNA testing. If not indigent, cost may be assessed against the movant. Testing is conducted by FDLE by default, or another lab accredited by ASCLD/LAB upon good cause shown.</p>
+          </div>
+        </div>
+
+        {/* EASTER EGG — Module 6 */}
+        <div className="reality-check" style={{marginTop: '24px'}}>
+          <div className="rc-label">🎬 From the Files</div>
+          <p>As the legal thriller <em>The Star Chamber</em> warned: <strong>"Innocence is no protection."</strong> Rule 3.853 exists precisely because the system recognized that truth. Actual innocence, without a procedural mechanism to prove it, is just a claim. DNA testing is one of the few tools that can turn a claim into evidence.</p>
+        </div>
+
+        <Quiz
+          id="q6_3"
+          question="You are reviewing a case where your client was convicted of armed robbery. The client admitted at trial to being present but claimed a co-defendant was the one who brandished the weapon. The weapon was never tested for DNA. Your client wants to file a 3.853 motion to test the weapon. You're thinking this looks like a strong 3.853 candidate. Are you right?"
+          options={[
+            "Yes — untested weapon, client claims innocence, textbook 3.853",
+            "Yes — any untested DNA evidence supports a motion",
+            "Not necessarily — depends on the evidence presented at trial",
+            "No — armed robbery cases are categorically ineligible for DNA testing"
+          ]}
+          correctIndex={2}
+          explanation="This is the trap. Everything on the surface screams 3.853 — untested evidence, innocence claim, biological material. But before you file anything, you need to look at the evidence presented at trial. If the evidence established the client was present and participating regardless of who held the weapon, excluding the client's DNA from the weapon doesn't negate their role in the crime. Identity as a participant may not be genuinely disputed no matter what the DNA shows. Option A is the trap most people fall into. Option D is the obvious wrong answer no one picks. The right answer requires you to actually look at the trial record before drawing conclusions."
+          onAnswer={onAnswer}
+          answered={quiz["q6_3"]}
+        />
+      </>
+    )
+  },
+
+  // ─────────────────────────────────────────
+  // MODULE 7: CASE CHECKLIST
+  // ─────────────────────────────────────────
   {
     id: 6,
     label: "Case Checklist",
     title: "Case Review Checklist",
     subtitle: "A step-by-step cold case review — from the client's account to legal posture",
+    estimatedTime: "10 min",
     content: ({ quiz, onAnswer }) => {
       const [checklistState, setChecklistState] = useState({});
       const toggleCheck = (section, i) => {
@@ -1640,6 +2080,12 @@ const modules = [
             </div>
           ))}
 
+          {/* EASTER EGG — Module 7 */}
+          <div className="callout" style={{marginTop: '24px', borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)'}}>
+            <div className="callout-label" style={{color: textMuted}}>📽️ From the Archives</div>
+            <p style={{color: textMuted, fontStyle: 'italic'}}>"It's not who I am underneath, but what I do that defines me." — <em>Batman Begins</em> (2005). The review is done. Now do something with it.</p>
+          </div>
+
           <div className="card card-amber" style={{marginTop:16}}>
             <h4>🚩 Flag to PCP Staff Immediately If:</h4>
             <p>
@@ -1664,17 +2110,9 @@ function downloadChecklist(sections) {
   const stripEmoji = (str) => str.replace(/[\u{1F000}-\u{1FFFF}|\u{2600}-\u{27FF}|\u{FE00}-\u{FEFF}|\u{1F900}-\u{1F9FF}|\u{231A}-\u{27FF}|\u00A9|\u00AE]/gu, "").trim();
 
   const sectionColors = {
-    0: "#7c3aed",
-    1: "#0284c7",
-    2: "#046878",
-    3: "#dc2626",
-    4: "#f0a500",
-    5: "#374151",
-    6: "#f0a500",
-    7: "#a78bfa",
-    8: "#2ecc71",
-    9: "#e74c3c",
-    10: "#0a8fa5",
+    0: "#7c3aed", 1: "#0284c7", 2: "#046878", 3: "#dc2626",
+    4: "#f0a500", 5: "#374151", 6: "#f0a500", 7: "#a78bfa",
+    8: "#2ecc71", 9: "#e74c3c", 10: "#0a8fa5",
   };
 
   const html = `<!DOCTYPE html>
@@ -1727,15 +2165,12 @@ function downloadChecklist(sections) {
       For volunteer use only
     </div>
   </div>
-
   <div class="name-line">
     <div class="name-field"><label>Volunteer Name</label><div class="line"></div></div>
     <div class="name-field"><label>Client / Case</label><div class="line"></div></div>
     <div class="name-field"><label>Date</label><div class="line"></div></div>
   </div>
-
   <div style="height:20px"></div>
-
   ${sections.map((section, si) => {
     const bgColor = sectionColors[si] || "#046878";
     const title = stripEmoji(section.title);
@@ -1753,12 +2188,10 @@ function downloadChecklist(sections) {
       `).join("")}
     </div>`;
   }).join("")}
-
   <div class="escalate">
     <h4>🚩 Flag to PCP Staff Immediately If:</h4>
     <p>You find a deadline approaching that wasn't flagged before the case came to you &nbsp;·&nbsp; The case involves a juvenile life sentence &nbsp;·&nbsp; You've identified what looks like an actual innocence claim &nbsp;·&nbsp; You find evidence of law enforcement misconduct not previously raised &nbsp;·&nbsp; The case involves minor victims or witnesses that require additional handling considerations</p>
   </div>
-
   <div class="footer">
     <span>Post Conviction Project, Inc. &nbsp;·&nbsp; Elisabeth G. Whitmire, Esq., CEO &amp; Director of Legal Services</span>
     <span>This checklist is for volunteer reference only and does not constitute legal advice.</span>
@@ -1771,11 +2204,7 @@ function downloadChecklist(sections) {
   const url = URL.createObjectURL(blob);
   const win = window.open(url, "_blank");
   if (win) {
-    win.onload = () => {
-      setTimeout(() => {
-        win.print();
-      }, 800);
-    };
+    win.onload = () => { setTimeout(() => { win.print(); }, 800); };
   }
 }
 
@@ -1786,7 +2215,13 @@ export default function App() {
   const [completedModules, setCompletedModules] = useState(new Set());
 
   const quizCounts = {
-    0: 0, 1: 4, 2: 3, 3: 3, 4: 2, 5: 0
+    0: 0,  // Intro
+    1: 5,  // Rule 3.850 (q1_1 through q1_5)
+    2: 6,  // Rule 3.800 (q2_1 through q2_6)
+    3: 4,  // The Clock (q3_1 through q3_4)
+    4: 2,  // IAAC (q5_1, q5_2)
+    5: 3,  // Rule 3.853 (q6_1 through q6_3)
+    6: 0,  // Case Checklist
   };
 
   const handleAnswer = (id, isCorrect) => {
@@ -1797,13 +2232,15 @@ export default function App() {
   const answeredCount = Object.keys(quizAnswers).length;
   const correctCount = Object.values(quizAnswers).filter(a => a.correct).length;
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   const goNext = () => {
     setCompletedModules(prev => new Set([...prev, activeModule]));
     if (activeModule < modules.length - 1) setActiveModule(activeModule + 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToTop();
   };
 
-  const progress = Math.round((answeredCount / totalQuestions) * 100);
+  const progress = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
 
   const mod = modules[activeModule];
   const ModContent = mod.content;
@@ -1816,7 +2253,7 @@ export default function App() {
         <img src="/logo.png" alt="Post Conviction Project" style={{height: 80, display: "block", margin: "0 auto 16px", mixBlendMode: "screen"}} />
         <div className="hero-badge">Post Conviction Project · Volunteer Training</div>
         <h1>Florida Post-Conviction<br/><span>Crash Course</span></h1>
-        <p>Rules 3.850 and 3.800 — what to look for, how the clock works, and when to escalate</p>
+        <p>Rules 3.850, 3.800, 3.853, and more — what to look for, how the clock works, and when to escalate</p>
         <div className="progress-bar-wrap">
           <div className="progress-label">
             <span>Quiz Progress</span>
@@ -1833,7 +2270,7 @@ export default function App() {
           <button
             key={i}
             className={`nav-tab ${activeModule === i ? "active" : ""} ${completedModules.has(i) ? "completed" : ""}`}
-            onClick={() => { setActiveModule(i); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+            onClick={() => { setActiveModule(i); scrollToTop(); }}
           >
             {m.label}
           </button>
@@ -1844,6 +2281,11 @@ export default function App() {
         <div className="module-header">
           <div className="module-number">Module {activeModule + 1} of {modules.length}</div>
           <div className="module-title">{mod.title}</div>
+          <div className="module-meta">
+            {mod.estimatedTime && (
+              <span className="time-estimate">⏱ {mod.estimatedTime}</span>
+            )}
+          </div>
           <div className="module-intro">{mod.subtitle}</div>
         </div>
 
@@ -1851,7 +2293,7 @@ export default function App() {
 
         <div className="module-nav">
           {activeModule > 0 ? (
-            <button className="btn btn-secondary" onClick={() => { setActiveModule(activeModule - 1); window.scrollTo({ top: 0, behavior: "smooth" }); }}>← Previous</button>
+            <button className="btn btn-secondary" onClick={() => { setActiveModule(activeModule - 1); scrollToTop(); }}>← Previous</button>
           ) : <div />}
           {activeModule < modules.length - 1 ? (
             <button className="btn btn-primary" onClick={goNext}>Next Module →</button>
@@ -1861,6 +2303,12 @@ export default function App() {
                 <div className="score-num">{correctCount}/{totalQuestions}</div>
                 <p>Quiz questions answered correctly</p>
                 {correctCount === totalQuestions && <p style={{color: green, marginTop:8}}>🎉 Perfect score — you're ready to review cases.</p>}
+                <p style={{marginTop: 16, fontSize: 13, color: textMuted}}>
+                  📬 Email your completion code to <strong style={{color: tealLight}}>eg.whitmire@postconvictionproject.org</strong>
+                </p>
+                <p style={{fontSize: 12, color: textMuted, marginTop: 8}}>
+                  As you worked through each module, you may have noticed a few quotes tucked into the content. Collect them all and include them in your email — they're your proof of completion.
+                </p>
               </div>
             </div>
           )}
