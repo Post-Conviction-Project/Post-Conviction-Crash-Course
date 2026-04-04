@@ -829,20 +829,10 @@ const modules = [
         </div>
 
         <div className="section">
-          <h3><span className="icon">🧭</span> Your Role as a Volunteer</h3>
-          <p>You are <strong>not</strong> practicing law. You are reviewing, flagging, researching, and organizing. Think of yourself as the person who figures out whether there's something worth looking at — then the attorneys take it from there.</p>
-
           <div className="card card-amber">
             <h4>🚩 Flag to PCP staff immediately if you find:</h4>
             <p>A deadline that is approaching that was not flagged before the case came to you · A case involving a juvenile life sentence · Evidence of law enforcement misconduct that hasn't been previously raised · Anything that looks like an actual innocence claim · Cases involving minor victims or witnesses that raise additional sensitivity concerns</p>
           </div>
-
-          <ul className="list-items">
-            <li><span className="li-desc">You can read case files, court records, and transcripts</span></li>
-            <li><span className="li-desc">You can research case law and statutes</span></li>
-            <li><span className="li-desc">You can summarize what you found and flag potential issues</span></li>
-            <li><span className="li-desc">You do <strong>not</strong> give legal advice to clients — ever</span></li>
-          </ul>
         </div>
 
         <div className="divider" />
