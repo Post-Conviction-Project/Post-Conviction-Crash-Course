@@ -2167,17 +2167,14 @@ const modules = [
           summary: "Financial components of the sentence may be unsupported, improperly calculated, or imposed without adequate findings.",
           whyMatters: "These issues matter even if incarceration is unaffected.",
           whatToLookFor: "Restitution imposed without hearing; loss amount unsupported; fees imposed by rote.",
-          cases: ""
+          cases: "Fla. Stat. § 775.089"
         },
         {
           issue: "Discovery / Testing Deficiencies",
           summary: "Physical evidence may not have been tested, or testing may have been incomplete or outdated.",
           whyMatters: "Advances in forensic science can reveal exculpatory evidence and support postconviction testing.",
           whatToLookFor: "Untested DNA, prints, firearm evidence, or trace evidence; older serology instead of modern testing.",
-          cases: ""
-        },
-        {
-          issue: "Informant Reliability / Jailhouse Witness Issues",
+          cases: "Hitchcock v. State, 866 So. 2d 23 (Fla. 2004)"
           summary: "Jailhouse informants or cooperating witnesses may have received benefits or have serious credibility problems.",
           whyMatters: "These witnesses are often central in close cases and can be fertile impeachment sources.",
           whatToLookFor: "Unrecorded deal; sentence reduction after testimony; multiple inconsistent statements; pattern of cooperating in other cases.",
@@ -2794,6 +2791,7 @@ function ReferenceFooter() {
     { name: "Florida Rule of Criminal Procedure 3.800", citation: "Fla. R. Crim. P. 3.800", holding: "Provides relief for illegal sentences — sentences the court had no legal authority to impose. No time bar. Covers sentences exceeding the statutory maximum, scoresheet errors, upward departures without written findings, merger and double jeopardy violations, and retroactive case law changes affecting sentencing.", module: "Module 3 — Rule 3.800" },
     { name: "Florida Rule of Criminal Procedure 3.853", citation: "Fla. R. Crim. P. 3.853", holding: "Provides procedures for obtaining post-conviction DNA testing of physical evidence. No time bar — may be filed at any time after judgment becomes final. Requires showing that identification was genuinely disputed, that physical evidence still exists, and that there is a reasonable probability of acquittal or lesser sentence if DNA results had been admitted at trial.", module: "Module 6 — Rule 3.853" },
     { name: "Florida Rule of Appellate Procedure 9.141(d)", citation: "Fla. R. App. P. 9.141(d)", holding: "Governs petitions alleging ineffective assistance of appellate counsel (IAAC). Filed as a petition in the appellate court that heard the direct appeal — not a motion in the trial court. Two-year filing deadline from when judgment became final on direct review, with a four-year hard cap even where counsel gave affirmative misadvice.", module: "Module 5 — IAAC" },
+    { name: "Fla. Stat. § 775.089 — Restitution", citation: "Fla. Stat. § 775.089", holding: "Florida's primary restitution statute. Requires the court to order restitution to victims for damage or loss caused directly or indirectly by the defendant's offense. Restitution must be supported by competent evidence of actual loss. The court must consider the defendant's ability to pay, and restitution imposed without an adequate evidentiary basis or hearing is error.", module: "Module 7 — Other Issues (Restitution)" },
     { name: "28 U.S.C. § 2254 / AEDPA", citation: "28 U.S.C. § 2254; Antiterrorism and Effective Death Penalty Act of 1996, Pub. L. No. 104-132", holding: "The federal habeas corpus statute for state prisoners. Requires full exhaustion of state remedies before federal review. One-year filing deadline from when the state conviction becomes final on direct review, tolled but not reset while properly filed state post-conviction motions are pending.", module: "Module 4 — The Clock" },
   ];
 
