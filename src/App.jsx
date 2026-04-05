@@ -740,6 +740,34 @@ const styles = `
     .could-would-grid { grid-template-columns: 1fr; }
     .strickland-row { grid-template-columns: 1fr; }
   }
+
+  .reference-footer {
+    background: #0f1923;
+    border-top: 2px solid #2a3a4a;
+    padding: 40px 24px 60px;
+  }
+  .reference-footer-inner { max-width: 760px; margin: 0 auto; }
+  .reference-footer h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .reference-footer .ref-subtitle { font-size: 13px; color: #8a9bb0; margin-bottom: 24px; line-height: 1.6; }
+  .ref-tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid #2a3a4a; }
+  .ref-tab { padding: 8px 20px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; color: #8a9bb0; border-bottom: 2px solid transparent; margin-bottom: -1px; font-family: 'Poppins', sans-serif; transition: all 0.2s; }
+  .ref-tab.active { color: #0a8fa5; border-bottom-color: #046878; }
+  .ref-tab:hover:not(.active) { color: #e8eef4; }
+  .ref-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .ref-card { background: #1e2a38; border: 1px solid #2a3a4a; border-radius: 12px; padding: 16px 20px; }
+  .ref-card-name { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 4px; }
+  .ref-card-citation { font-size: 11px; color: #0a8fa5; font-style: italic; margin-bottom: 8px; }
+  .ref-card-holding { font-size: 13px; color: #e8eef4; line-height: 1.6; opacity: 0.88; }
+  .ref-card-module { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #8a9bb0; background: rgba(255,255,255,0.05); border: 1px solid #2a3a4a; border-radius: 20px; padding: 2px 10px; margin-top: 10px; }
+  .ref-section-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #046878; margin: 24px 0 12px; }
+  .district-card { background: #1e2a38; border: 1px solid #2a3a4a; border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+  .district-card-header { padding: 12px 20px; font-size: 13px; font-weight: 700; color: #fff; border-bottom: 1px solid #2a3a4a; }
+  .district-card-body { padding: 14px 20px; display: flex; flex-direction: column; gap: 8px; }
+  .district-row { display: flex; flex-direction: column; gap: 2px; }
+  .district-case { font-size: 12px; font-weight: 600; color: #0a8fa5; font-style: italic; }
+  .district-standard { font-size: 12px; color: #8a9bb0; }
+  .district-result { font-size: 13px; color: #e8eef4; line-height: 1.5; }
+  .ref-download-row { margin-top: 28px; text-align: center; }
 `;
 
 // ─── QUIZ COMPONENT ───
@@ -825,13 +853,17 @@ const modules = [
         <div className="section">
           <p>You've probably heard the phrase "all appeals have been exhausted." In real life, that phrase is doing a <em>lot</em> of heavy lifting — and it's often wrong.</p>
           <p>Post-conviction relief is what happens <strong>after</strong> the direct appeal. It's a separate legal track that allows defendants to challenge their conviction or sentence based on things that either weren't in the trial record, or weren't known at the time.</p>
-          <p>In Florida, the two main tools for this are <a href="/rule-3850.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-rule" style={{textDecoration:"none",cursor:"pointer"}}>Rule 3.850</a> and <a href="/rule-3800.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-rule" style={{textDecoration:"none",cursor:"pointer"}}>Rule 3.800</a>. Think of them as two different doors into the same building. We'll walk through both.</p>
+          <p>In Florida, the two main tools for this are <span className="tag tag-rule">Rule 3.850</span> and <span className="tag tag-rule">Rule 3.800</span>. Think of them as two different doors into the same building. We'll walk through both.</p>
         </div>
 
         <div className="section">
+          <h3><span className="icon">🧭</span> How to Use This Training</h3>
+          <p>This crash course is designed for everyone who touches a case at PCP — volunteers, paralegals, law students, and new staff alike. The goal is to give you enough framework to read a file intelligently, spot what matters, and know when to escalate.</p>
+          <p>Your specific role will determine what you do with what you find. But everyone needs to understand the legal landscape before they can be useful in it.</p>
+
           <div className="card card-amber">
-            <h4>🚩 Flag to PCP staff immediately if you find:</h4>
-            <p>A deadline that is approaching that was not flagged before the case came to you · A case involving a juvenile life sentence · Evidence of law enforcement misconduct that hasn't been previously raised · Anything that looks like an actual innocence claim · Cases involving minor victims or witnesses that raise additional sensitivity concerns</p>
+            <h4>🚩 Always escalate immediately if you find:</h4>
+            <p>A deadline approaching that was not previously flagged · A case involving a juvenile life sentence · Evidence of law enforcement misconduct not previously raised · Anything that looks like an actual innocence claim · Cases involving minor victims or witnesses that require additional handling considerations</p>
           </div>
         </div>
 
@@ -844,12 +876,18 @@ const modules = [
             <p><strong>1. Trial</strong> → Conviction and sentence<br/>
             <strong>2. Direct Appeal</strong> → Did the trial court make a legal error? (Record-based only)<br/>
             <strong>3. Rule 3.850 / 3.800</strong> → Constitutional violations, new evidence, illegal sentences<br/>
+            <strong>3a. Rule 3.853</strong> → DNA testing — no time bar, can be filed at any time alongside other remedies<br/>
+            <strong>3b. Rule 9.141(d)</strong> → Ineffective assistance of appellate counsel — filed in the DCA that heard the direct appeal, separate 2/4-year clock<br/>
             <strong>4. Florida Appellate Courts</strong> → If the trial court denies the motion, you appeal to the next level up — which Florida appellate court depends on which county the case came from<br/>
             <strong>5. Federal Habeas (§2254)</strong> → Last stop, and only after state remedies are fully exhausted</p>
           </div>
           <div className="callout">
             <div className="callout-label">⏱️ Why this order matters</div>
             <p>The federal court won't touch a case until every state avenue has been tried. And while those state motions are pending, the federal clock is paused — but it doesn't reset. More on that in Module 4.</p>
+          </div>
+          <div className="callout">
+            <div className="callout-label">📎 About case and rule references in this training</div>
+            <p>Throughout each module, case names and rule citations appear as highlighted tags. Use the <strong>Case & Rule Reference</strong> appendix at the bottom of this page to look up the full text of any authority cited — it includes holdings, citations, and module references for every case and rule in the training.</p>
           </div>
         </div>
 
@@ -913,7 +951,7 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">🔍</span> What Counts as "Newly Discovered"?</h3>
-          <p>Not just "new to you." The standard (from <a href="/jones-v-state.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Jones v. State</a>) requires:</p>
+          <p>Not just "new to you." The standard (from <span className="tag tag-case">Jones v. State</span>) requires:</p>
           <ul className="list-items">
             <li><span className="li-label">Unknown at trial</span><span className="li-desc">The evidence must have been unknown to the defendant or counsel at the time of trial.</span></li>
             <li><span className="li-label">Could not have been discovered</span><span className="li-desc">Not findable through due diligence before trial.</span></li>
@@ -1009,7 +1047,7 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">⚖️</span> Strickland — The IAC Test</h3>
-          <p>Ineffective Assistance of Counsel (IAC) is one of the most common 3.850 claims. The standard comes from <a href="/strickland-v-washington.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Strickland v. Washington</a> (1984), and it has three working parts. All three must be met — and courts make this deliberately hard.</p>
+          <p>Ineffective Assistance of Counsel (IAC) is one of the most common 3.850 claims. The standard comes from <span className="tag tag-case">Strickland v. Washington</span> (1984), and it has three working parts. All three must be met — and courts make this deliberately hard.</p>
 
           <div className="strickland-grid">
             <div className="strickland-row">
@@ -1089,7 +1127,7 @@ const modules = [
               <span className="li-desc">If the client told their attorney "I was somewhere else and here's who can prove it," and counsel never followed up, that's textbook IAC on Prong 1. Whether it survives Prong 3 depends on how strong the alibi was.</span>
             </li>
             <li>
-              <span className="li-label">Failed to communicate a plea offer <a href="/missouri-v-frye.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Missouri v. Frye</a> <a href="/lafler-v-cooper.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Lafler v. Cooper</a></span>
+              <span className="li-label">Failed to communicate a plea offer <span className="tag tag-case">Missouri v. Frye</span> <span className="tag tag-case">Lafler v. Cooper</span></span>
               <span className="li-desc">The state extended a plea deal and the attorney never told the client, or told them too late. Defendants have a Sixth Amendment right to be informed of plea offers. This is a big one.</span>
             </li>
             <li>
@@ -1142,7 +1180,7 @@ const modules = [
 
           <ul className="list-items">
             <li>
-              <span className="li-label">Wrong advice about immigration consequences <a href="/padilla-v-kentucky.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Padilla v. Kentucky</a></span>
+              <span className="li-label">Wrong advice about immigration consequences <span className="tag tag-case">Padilla v. Kentucky</span></span>
               <span className="li-desc">That's IAC. Big one for non-citizen clients.</span>
             </li>
             <li>
@@ -1179,15 +1217,15 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">🚨</span> Brady/Giglio Violations</h3>
-          <p><a href="/brady-v-maryland.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Brady v. Maryland</a> says the state must disclose evidence favorable to the defendant. <a href="/giglio-v-united-states.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Giglio v. United States</a> extends that to deals made with witnesses — if a key witness got a deal for their testimony, you're entitled to know.</p>
+          <p><span className="tag tag-case">Brady v. Maryland</span> says the state must disclose evidence favorable to the defendant. <span className="tag tag-case">Giglio v. United States</span> extends that to deals made with witnesses — if a key witness got a deal for their testimony, you're entitled to know.</p>
 
           <ul className="list-items">
             <li>
-              <span className="li-label">Brady <a href="/brady-v-maryland.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Brady v. Maryland</a></span>
+              <span className="li-label">Brady <span className="tag tag-case">Brady v. Maryland</span></span>
               <span className="li-desc">State hid exculpatory evidence — DNA, inconsistent statements, alibi information.</span>
             </li>
             <li>
-              <span className="li-label">Giglio <a href="/giglio-v-united-states.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-case" style={{textDecoration:"none",cursor:"pointer"}}>Giglio v. United States</a></span>
+              <span className="li-label">Giglio <span className="tag tag-case">Giglio v. United States</span></span>
               <span className="li-desc">Witness lied about getting a deal, or the state didn't disclose the deal existed.</span>
             </li>
             <li>
@@ -1332,7 +1370,74 @@ const modules = [
         {/* DISTRICT SPLIT SECTION */}
         <div className="section">
           <h3><span className="icon">⚠️</span> When Counts Get Vacated — The District Split</h3>
-          <p>One of the most dangerous traps in 3.800 practice involves cases where a conviction on one or more counts is vacated after sentencing — either through a successful appeal or a post-conviction motion. You might assume that vacating a count automatically triggers resentencing. In some Florida districts, you'd be right. In others, you'd lose.</p>
+          <p>One of the most dangerous traps in 3.800 practice involves cases where a conviction on one or more counts is vacated after sentencing. You might assume that vacating a count automatically triggers resentencing. In some Florida districts, you'd be right. In others, you'd lose. The framework depends entirely on which DCA your case is in and which procedural vehicle you're using.</p>
+
+          <div className="ref-section-label">Background Rules — Florida Supreme Court</div>
+
+          <div className="district-card">
+            <div className="district-card-header" style={{borderLeft: `4px solid ${teal}`}}>Florida Supreme Court — Rule 3.850 Scoresheet Errors</div>
+            <div className="district-card-body">
+              <div className="district-row">
+                <span className="district-case">State v. Anderson, 905 So. 2d 111 (Fla. 2005)</span>
+                <span className="district-result">Timely Rule 3.850 scoresheet-error motions use the "would-have-been-imposed" standard — more favorable to defendants. The question is whether this judge would actually have sentenced differently on a corrected scoresheet.</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="district-card">
+            <div className="district-card-header" style={{borderLeft: `4px solid ${accent}`}}>Florida Supreme Court — Rule 3.800(a) Scoresheet Errors</div>
+            <div className="district-card-body">
+              <div className="district-row">
+                <span className="district-case">Brooks v. State, 969 So. 2d 238 (Fla. 2007)</span>
+                <span className="district-result">Rule 3.800(a) scoresheet-error motions use the stricter "could-have-been-imposed" standard. If the same sentence could legally have been imposed on a corrected scoresheet, relief is denied. This is the wall most 3.800 clients hit.</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="ref-section-label" style={{marginTop: '24px'}}>District Court Split — Vacatur and Resentencing</div>
+
+          <div className="district-card">
+            <div className="district-card-header" style={{borderLeft: `4px solid #38bdf8`}}>Second District</div>
+            <div className="district-card-body">
+              <div className="district-row">
+                <span className="district-case">Negron Gil de Rubio v. State, 272 So. 3d 811 (Fla. 2d DCA 2019)</span>
+                <span className="district-standard">Untimely 3.850 / 3.800(a) motion → "could-have-been-imposed"</span>
+                <span className="district-result">If the motion is styled under Rule 3.800(a) and the same sentence could legally still have been imposed on remaining convictions, relief is denied. The 2d DCA applies the stricter Brooks framework in this posture.</span>
+              </div>
+              <div className="district-row" style={{marginTop: '8px', paddingTop: '8px', borderTop: `1px solid ${darkBorder}`}}>
+                <span className="district-case">Fernandez v. State, 199 So. 3d 500 (Fla. 2d DCA 2016)</span>
+                <span className="district-standard">Vacatur changes scoresheet → resentencing generally required</span>
+                <span className="district-result">Where vacating a conviction changes the scoresheet, the defendant is generally entitled to resentencing on a corrected scoresheet. The key distinction from Negron is procedural timing and which vehicle is used.</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="district-card">
+            <div className="district-card-header" style={{borderLeft: `4px solid ${green}`}}>Fourth District</div>
+            <div className="district-card-body">
+              <div className="district-row">
+                <span className="district-case">Cox v. State, 192 So. 3d 581 (Fla. 4th DCA 2016)</span>
+                <span className="district-standard">Vacatur → resentencing required, no harmless error analysis</span>
+                <span className="district-result">Vacatur of a conviction requires resentencing with a corrected scoresheet. The 4th DCA does not apply the "could-have-been-imposed" framework to vacatur situations. The defendant gets resentenced because the sentence is built on a now-invalid conviction.</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="district-card">
+            <div className="district-card-header" style={{borderLeft: `4px solid ${accent}`}}>Fifth District</div>
+            <div className="district-card-body">
+              <div className="district-row">
+                <span className="district-case">Pierce v. State, 281 So. 3d 569 (Fla. 5th DCA 2019)</span>
+                <span className="district-standard">Vacatur → resentencing required (aligns with 4th DCA)</span>
+                <span className="district-result">Resentencing is required after postconviction vacatur because the sentence must be based on remaining valid convictions. The 5th DCA aligns with the 4th DCA approach — not the stricter 2d DCA framework.</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="reality-check" style={{marginTop: '16px'}}>
+            <div className="rc-label">⚠️ The Practical Takeaway</div>
+            <p>The same facts can produce opposite outcomes depending on which DCA has jurisdiction. A client in the 4th or 5th DCA whose conviction was vacated likely gets resentencing. The same client in the 2d DCA — using a 3.800(a) motion after the 3.850 clock has run — faces the "could-have-been-imposed" wall. Geography and procedural timing are everything.</p>
+          </div>
 
           <div className="callout">
             <div className="callout-label">📋 Fact Pattern — Read Carefully</div>
@@ -1479,7 +1584,7 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">🇺🇸</span> Federal Habeas — The Last Stop</h3>
-          <p>Once state remedies are exhausted, a defendant can file a federal habeas petition under <a href="/28-usc-2254.pdf" target="_blank" rel="noopener noreferrer" className="tag tag-rule" style={{textDecoration:"none",cursor:"pointer"}}>28 U.S.C. § 2254</a>. This is the federal court saying: did the state court violate the U.S. Constitution?</p>
+          <p>Once state remedies are exhausted, a defendant can file a federal habeas petition under <span className="tag tag-rule">28 U.S.C. § 2254</span>. This is the federal court saying: did the state court violate the U.S. Constitution?</p>
 
           <div className="card card-amber">
             <h4>The AEDPA Deadline</h4>
@@ -1592,7 +1697,7 @@ const modules = [
             <div className="rc-label">📅 What Happened</div>
             <p>In June 2024, the U.S. Supreme Court decided <em>Erlinger v. United States</em>, 602 U.S. 821 (2024). The Court held that the Fifth and Sixth Amendments require a unanimous jury to determine beyond a reasonable doubt whether a defendant's prior offenses were committed on separate occasions for sentencing enhancement purposes.</p>
             <p style={{marginTop: '10px'}}>For Florida practitioners, this was immediately significant. Florida's sentencing enhancement statutes — HFO, PRR, HVO, VCC — all allow judges, not juries, to find facts beyond the mere existence of a prior conviction (release dates, offense dates, qualifying prior convictions). Under <em>Erlinger</em>, those judicial fact-findings looked unconstitutional. Prisoners throughout Florida began filing motions.</p>
-            <p style={{marginTop: '10px'}}>In June 2025, the Florida Supreme Court answered: <strong>no.</strong> <em>Wainwright v. State</em>, 411 So. 3d 392 (Fla. 2025). The Court held that <em>Erlinger</em> is a procedural rule — it governs <em>how</em> facts are found, not <em>whether</em> the state can punish the conduct at all. Procedural rules do not apply retroactively. Every client already sentenced as an HFO, PRR, HVO, or VCC was left where they were.</p>
+            <p style={{marginTop: '10px'}}>In June 2025, the Florida Supreme Court answered: <strong>no.</strong> <em>Wainwright v. State</em>, 411 So. 3d 392 (Fla. 2025). The Court held that <em>Erlinger</em> announced a procedural rule — it governs <em>how</em> facts are found, not <em>whether</em> the state can punish the conduct at all. Procedural rules do not apply retroactively. Although <em>Wainwright</em> arose in the capital postconviction context, its retroactivity analysis is not limited to capital-rule practice and should be treated as highly relevant to any Rule 3.850 litigation raising the same <em>Erlinger</em>-based claim. Every client already sentenced as an HFO, PRR, HVO, or VCC was left where they were.</p>
           </div>
 
           <div className="warning-card" style={{marginTop: '16px'}}>
@@ -1618,6 +1723,39 @@ const modules = [
           <p style={{color: textMuted, fontStyle: 'italic'}}>"You can't handle the truth." — <em>A Few Good Men</em> (1992). In post-conviction work, the truth about retroactivity is often the hardest conversation you will have with a client. Your job is to deliver it anyway, clearly and honestly, before hope becomes expectation.</p>
         </div>
 
+        <div className="divider" />
+
+        <div className="section">
+          <h3><span className="icon">📅</span> Always Look at the Law That Applied Then</h3>
+          <p>
+            This is one of the most common research mistakes in post-conviction work — looking up a statute or rule as it reads <em>today</em> when what matters is what it said at the time of the offense, the plea, or the sentencing.
+          </p>
+          <div className="warning-card">
+            <div className="wc-label">⚠️ Critical Practice Note</div>
+            <p>
+              When researching any statute relevant to your client's case, always identify the version that was in effect at the time of the relevant event — typically the date of the offense for substantive criminal law, and the date of sentencing for sentencing provisions. If the law has changed since then and the change is not retroactive, the current version does not help your client and may not even be relevant to their case.
+            </p>
+          </div>
+          <div className="callout">
+            <div className="callout-label">💡 Why This Matters in Practice</div>
+            <p>
+              Florida statutes are amended regularly. Sentencing ranges, enhancement criteria, minimum mandatory provisions, and gain time calculations have all changed over the years. A statute that looks favorable today may have been more restrictive — or more punitive — at the time your client was sentenced. Conversely, a provision that might help your client may have been enacted after their offense, making retroactivity the threshold question before anything else.
+            </p>
+            <p style={{marginTop: '10px'}}>
+              <strong>Always ask:</strong> What did this statute say on the date of the offense? On the date of sentencing? Has it changed since then? If so, is the change retroactive — and under what framework?
+            </p>
+          </div>
+          <div className="card card-teal">
+            <h4>Where to Find Historical Statute Versions</h4>
+            <p>
+              <strong>Florida Online Sunshine (leg.state.fl.us)</strong> — Florida statutes archive by year going back to the 1990s. Use the session law history at the bottom of each statute to trace amendments.<br/><br/>
+              <strong>Westlaw / Lexis</strong> — both maintain historical versions of statutes with effective dates.<br/><br/>
+              <strong>Fastcase / vLex</strong> — searchable Florida statutory history.<br/><br/>
+              <strong>The session laws themselves</strong> — if you need to pin down exactly when an amendment took effect, the enrolled bill and chapter law are the primary sources.
+            </p>
+          </div>
+        </div>
+
         <Quiz
           id="q3_4"
           question="The U.S. Supreme Court issues a landmark decision holding that a particular sentencing enhancement procedure is unconstitutional because it allows judges rather than juries to find key facts. Your client was sentenced under that exact procedure five years ago. Their direct appeal is long over. Can they raise this in a 3.850 motion?"
@@ -1628,7 +1766,7 @@ const modules = [
             "No — 3.850 only covers ineffective assistance of counsel claims"
           ]}
           correctIndex={2}
-          explanation="This is exactly the Erlinger situation. A rule governing how facts must be found at sentencing — by a jury rather than a judge — is procedural, not substantive. It changes the process, not whether the state can punish the conduct. Under both the federal Teague framework and Florida's Witt analysis, procedural rules do not apply retroactively on collateral review. The Florida Supreme Court confirmed this in Wainwright v. State, 411 So. 3d 392 (Fla. 2025), holding that Erlinger does not apply retroactively to defendants already sentenced under Florida's enhancement statutes. Before raising any new case in post-conviction proceedings, always determine whether it is substantive or procedural — that single classification determines whether it can help your client at all."
+          explanation="This is exactly the Erlinger situation. A rule governing how facts must be found at sentencing — by a jury rather than a judge — is procedural, not substantive. It changes the process, not whether the state can punish the conduct. Under both the federal Teague framework and Florida's Witt analysis, procedural rules do not apply retroactively on collateral review. The Florida Supreme Court confirmed this in Wainwright v. State, 411 So. 3d 392 (Fla. 2025), holding that Erlinger does not apply retroactively to defendants already sentenced under Florida's enhancement statutes. Although Wainwright arose in the capital postconviction context, its retroactivity analysis applies equally to Rule 3.850 litigation raising the same Erlinger-based claim. Before raising any new case in post-conviction proceedings, always determine whether it is substantive or procedural — that single classification determines whether it can help your client at all."
           onAnswer={onAnswer}
           answered={quiz["q3_4"]}
         />
@@ -1834,7 +1972,7 @@ const modules = [
 
           <div className="callout">
             <div className="callout-label">💡 Key Distinction</div>
-            <p>The motion must explain the connection between the requested testing and the movant's guilt or innocence with reference to <em>specific facts about the crime</em>. Courts have consistently held that 3.853 is not a "fishing expedition." <em>Hitchcock v. State</em>, 856 So. 2d 23 (Fla. 2004). The burden is on the movant to show how testing matters to their specific case.</p>
+            <p>The motion must explain the connection between the requested testing and the movant's guilt or innocence with reference to <em>specific facts about the crime</em>. Courts have consistently held that 3.853 is not a "fishing expedition." <em>Hitchcock v. State</em>, 866 So. 2d 23 (Fla. 2004). The burden is on the movant to show how testing matters to their specific case.</p>
           </div>
         </div>
 
@@ -1957,10 +2095,267 @@ const modules = [
   },
 
   // ─────────────────────────────────────────
-  // MODULE 7: CASE CHECKLIST
+  // MODULE 7: OTHER ISSUES
   // ─────────────────────────────────────────
   {
     id: 6,
+    label: "Other Issues",
+    title: "Other Issues to Screen For",
+    subtitle: "Beyond the primary rules — broader case-level flags that often signal a viable claim",
+    estimatedTime: "15 min",
+    content: ({ quiz, onAnswer }) => {
+
+      const issues = [
+        {
+          issue: "Involuntary or Unknowing Plea",
+          summary: "The plea may be invalid if the client was misadvised about sentencing exposure, mandatory minimums, or key consequences, or if the plea was not knowing and voluntary.",
+          whyMatters: "A plea-based conviction can be attacked if the plea colloquy or counsel's advice was defective.",
+          whatToLookFor: "Plea transcript missing key advisements; client says counsel promised a specific sentence; written plea and oral colloquy conflict; misunderstanding about minimum mandatory exposure.",
+          cases: "State v. Green, 944 So. 2d 208 (Fla. 2006); State v. Leroux, 689 So. 2d 235 (Fla. 1996); Peart v. State, 756 So. 2d 42 (Fla. 2000)"
+        },
+        {
+          issue: "Competency / Mental Health Issues",
+          summary: "The client may have been incompetent at trial, plea, or sentencing, or unable to assist counsel because of mental illness, intellectual disability, or medication effects.",
+          whyMatters: "Competency is fundamental; a conviction or plea entered while incompetent may be invalid.",
+          whatToLookFor: "Psychiatric history; psychotropic meds; suicide watch; bizarre behavior; repeated requests for evaluation; jail mental-health records.",
+          cases: "Dougherty v. State, 149 So. 3d 672 (Fla. 2014); Nelson v. State, 43 So. 3d 20 (Fla. 2010); Porter v. State, 788 So. 2d 917 (Fla. 2001)"
+        },
+        {
+          issue: "Brady / Giglio / Napue Problems",
+          summary: "The State may have suppressed favorable evidence, failed to disclose impeachment material, or allowed false testimony to stand uncorrected.",
+          whyMatters: "These claims can be case-dispositive and often turn on witness deals, undisclosed reports, or credibility impeachment.",
+          whatToLookFor: "Undisclosed cooperation agreement; missing police or lab reports; witness later recants; testimony inconsistent with records.",
+          cases: "Mordenti v. State, 894 So. 2d 161 (Fla. 2004); Rogers v. State, 782 So. 2d 373 (Fla. 2001)"
+        },
+        {
+          issue: "Newly Discovered Evidence",
+          summary: "Evidence unavailable at trial may later emerge, including recantations, third-party confessions, or new forensic results.",
+          whyMatters: "Newly discovered evidence can support relief even when ordinary deadlines have passed, if diligence and materiality are shown.",
+          whatToLookFor: "New witness; recanting affidavit; updated DNA or fingerprint results; newly obtained records or recordings.",
+          cases: "Jones v. State, 591 So. 2d 911 (Fla. 1991); Swafford v. State, 679 So. 2d 736 (Fla. 1996)"
+        },
+        {
+          issue: "Ineffective Assistance of Appellate Counsel",
+          summary: "Appellate counsel may have omitted a stronger preserved issue or failed to challenge a reversible error.",
+          whyMatters: "This is a separate avenue from trial counsel IAC and may be the only remaining route where the trial record is fixed.",
+          whatToLookFor: "Strong issue preserved below but not raised on appeal; brief ignores obvious sentencing error.",
+          cases: "Rutherford v. Moore, 774 So. 2d 637 (Fla. 2000); Morrison v. State, 818 So. 2d 432 (Fla. 2002)"
+        },
+        {
+          issue: "Conflict of Interest / Breakdown in Representation",
+          summary: "Counsel may have had divided loyalties or a conflict that affected strategy or performance.",
+          whyMatters: "Conflicts can require relief without the same showing as ordinary Strickland claims, depending on the facts.",
+          whatToLookFor: "Counsel represented codefendant, witness, or victim; client repeatedly complained of loyalty problems; attorney refused to pursue certain defenses.",
+          cases: "Porter v. State, 788 So. 2d 917 (Fla. 2001)"
+        },
+        {
+          issue: "Sentencing Enhancements and Eligibility Errors",
+          summary: "The sentence may be affected by incorrect habitualization, minimum mandatory terms, PRR/VCC classification, or scoresheet mistakes.",
+          whyMatters: "Even where the conviction stands, a sentencing error can produce resentencing or sentence correction.",
+          whatToLookFor: "Scoresheet math wrong; enhancement applied without support; wrong offense level; oral pronouncement differs from written sentence.",
+          cases: "Young v. State, 699 So. 2d 624 (Fla. 1997); State v. Iacovone, 660 So. 2d 1371 (Fla. 1995)"
+        },
+        {
+          issue: "Jail Credit / Time Credit / Gain Time Problems",
+          summary: "The defendant may not have received all credit due for time served, or DOC may be calculating dates incorrectly.",
+          whyMatters: "These issues can shorten custody and often present a quicker remedy than broader collateral litigation.",
+          whatToLookFor: "Missing jail credit; overlap in concurrent sentences; DOC records differ from sentencing sheet.",
+          cases: "Daniels v. State, 491 So. 2d 543 (Fla. 1986); State v. Mancino, 714 So. 2d 429 (Fla. 1998)"
+        },
+        {
+          issue: "Restitution, Fines, and Costs",
+          summary: "Financial components of the sentence may be unsupported, improperly calculated, or imposed without adequate findings.",
+          whyMatters: "These issues matter even if incarceration is unaffected.",
+          whatToLookFor: "Restitution imposed without hearing; loss amount unsupported; fees imposed by rote.",
+          cases: ""
+        },
+        {
+          issue: "Discovery / Testing Deficiencies",
+          summary: "Physical evidence may not have been tested, or testing may have been incomplete or outdated.",
+          whyMatters: "Advances in forensic science can reveal exculpatory evidence and support postconviction testing.",
+          whatToLookFor: "Untested DNA, prints, firearm evidence, or trace evidence; older serology instead of modern testing.",
+          cases: ""
+        },
+        {
+          issue: "Informant Reliability / Jailhouse Witness Issues",
+          summary: "Jailhouse informants or cooperating witnesses may have received benefits or have serious credibility problems.",
+          whyMatters: "These witnesses are often central in close cases and can be fertile impeachment sources.",
+          whatToLookFor: "Unrecorded deal; sentence reduction after testimony; multiple inconsistent statements; pattern of cooperating in other cases.",
+          cases: "Way v. State, 760 So. 2d 903 (Fla. 2000)"
+        },
+        {
+          issue: "Jury Selection / Fair Cross-Section Problems",
+          summary: "Jury composition or peremptory strike issues may undermine the fairness of the verdict.",
+          whyMatters: "Some claims must be preserved, but they can identify reversible error or broader constitutional problems.",
+          whatToLookFor: "Batson objections; jury pool composition complaints; strike notes reflecting race- or gender-based reasons.",
+          cases: "Melbourne v. State, 679 So. 2d 759 (Fla. 1996); State v. Neil, 457 So. 2d 481 (Fla. 1984)"
+        },
+        {
+          issue: "Double Jeopardy / Merger Issues",
+          summary: "Multiple convictions or punishments may have been imposed for the same offense conduct.",
+          whyMatters: "A double jeopardy problem can lead to vacatur of a count or resentencing.",
+          whatToLookFor: "Same act charged in multiple counts; lesser-included offense overlap; multiple sentences for one criminal episode.",
+          cases: "State v. Paul, 934 So. 2d 1167 (Fla. 2006); Grant v. State, 770 So. 2d 655 (Fla. 2000)"
+        },
+        {
+          issue: "Speedy Trial / Pretrial Delay",
+          summary: "Excessive delay may have prejudiced the defense or created a viable procedural issue.",
+          whyMatters: "While often litigated pretrial, delay can reveal deeper breakdowns or support related due process claims.",
+          whatToLookFor: "Repeated continuances; long arrest-to-trial gap; missing witness due to delay; stale evidence.",
+          cases: "State v. Nelson, 26 So. 3d 570 (Fla. 2010); State v. Williams, 791 So. 2d 1088 (Fla. 2001)"
+        },
+        {
+          issue: "Collateral Consequences",
+          summary: "Counsel may have failed to advise about deportation, registration, civil commitment, firearm loss, or other serious consequences.",
+          whyMatters: "These consequences can be decisive in plea decisions and may support relief where misinformation affected the plea.",
+          whatToLookFor: "Noncitizen client; sex offender registration; firearm prohibition; civil commitment exposure.",
+          cases: "Peart v. State, 756 So. 2d 42 (Fla. 2000); State v. Green, 944 So. 2d 208 (Fla. 2006)"
+        },
+        {
+          issue: "Successive-Petition and Procedural-Bar Problems",
+          summary: "A meritorious issue may be blocked if previously raised, could have been raised, or does not fit an exception.",
+          whyMatters: "Early screening prevents wasted effort and helps determine whether to frame the issue as newly discovered or jurisdictional.",
+          whatToLookFor: "Same claim in prior motion; record shows issue was known earlier; motion lacks explanation for lateness.",
+          cases: "Swafford v. State, 679 So. 2d 736 (Fla. 1996); Harvey v. Dugger, 656 So. 2d 1253 (Fla. 1995)"
+        },
+      ];
+
+      const downloadIssuesTable = () => {
+        const html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>PCP — Additional Post-Conviction Issues Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Poppins', sans-serif; color: #1e293b; background: #fff; font-size: 9pt; }
+  .page { max-width: 960px; margin: 0 auto; padding: 28px 36px; }
+  .header { border-bottom: 3px solid #046878; padding-bottom: 14px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .header-left h1 { font-size: 16pt; font-weight: 700; color: #046878; line-height: 1.1; }
+  .header-left p { font-size: 8.5pt; color: #64748b; margin-top: 3px; }
+  .header-right { font-size: 7.5pt; color: #94a3b8; text-align: right; line-height: 1.6; }
+  .intro { font-size: 9pt; color: #334155; line-height: 1.6; margin-bottom: 18px; padding: 10px 14px; background: #f0f9ff; border-left: 3px solid #046878; border-radius: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  thead tr { background: #046878; color: #fff; }
+  thead th { padding: 8px 10px; text-align: left; font-weight: 600; letter-spacing: 0.3px; }
+  tbody tr { border-bottom: 1px solid #e2e8f0; }
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody td { padding: 8px 10px; vertical-align: top; line-height: 1.45; color: #1e293b; }
+  .issue-name { font-weight: 700; color: #046878; }
+  .cases { font-style: italic; color: #64748b; font-size: 7.5pt; }
+  .note { margin-top: 16px; font-size: 7.5pt; color: #94a3b8; font-style: italic; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+  .footer { margin-top: 20px; padding-top: 10px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; font-size: 7pt; color: #94a3b8; }
+  @media print {
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    thead tr { background: #046878 !important; -webkit-print-color-adjust: exact; }
+    tr { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-left">
+      <h1>Additional Post-Conviction Issues</h1>
+      <p>Post Conviction Project, Inc. · PCP Staff & Volunteer Reference</p>
+    </div>
+    <div class="header-right">postconvictionproject.org<br/>Florida Post-Conviction Crash Course<br/>For reference only — not legal advice</div>
+  </div>
+
+  <div class="intro">
+    In addition to the rule-specific remedies covered in the core modules, reviewers should screen for broader case-level issues that often signal a viable postconviction claim or a different procedural path. Many of these issues are not obvious from the judgment alone and require comparing the client's account, transcripts, discovery, and prior filings. Case citations are starting points — controlling authority will depend on the posture of the case, the rule invoked, and the district.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:17%">Issue</th>
+        <th style="width:22%">Summary</th>
+        <th style="width:18%">Why It Matters</th>
+        <th style="width:22%">What to Look For in the File</th>
+        <th style="width:21%">Florida Cases</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${issues.map(item => `
+      <tr>
+        <td><span class="issue-name">${item.issue}</span></td>
+        <td>${item.summary}</td>
+        <td>${item.whyMatters}</td>
+        <td>${item.whatToLookFor}</td>
+        <td class="cases">${item.cases}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>
+
+  <div class="note">
+    Case citations above are provided as starting points. The precise controlling authority will depend on the posture of the case, the procedural rule invoked, and the district. Always verify citations in Westlaw, Lexis, Google Scholar, or Fastcase/vLex before relying on them.
+  </div>
+
+  <div class="footer">
+    <span>Post Conviction Project, Inc. · Elisabeth G. Whitmire, Esq., CEO & Director of Legal Services</span>
+    <span>For reference only — not legal advice.</span>
+  </div>
+</div>
+</body>
+</html>`;
+        const blob = new Blob([html], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+        const win = window.open(url, "_blank");
+        if (win) { win.onload = () => { setTimeout(() => { win.print(); }, 800); }; }
+      };
+
+      return (
+        <>
+          <div className="section">
+            <p>In addition to the rule-specific remedies discussed in the preceding modules, reviewers should also screen for broader case-level issues that often signal a viable postconviction claim or a different procedural path. These include plea validity, competency, discovery violations, newly discovered evidence, witness credibility problems, sentencing enhancement errors, jail credit issues, and collateral consequences that may have affected the client's decision-making.</p>
+            <p>Many of these issues are not obvious from the judgment alone and require comparing the client's account, transcripts, discovery, and prior filings.</p>
+            <div className="callout">
+              <div className="callout-label">📌 How to use this module</div>
+              <p>Each issue below includes a brief summary, why it matters in post-conviction practice, what to look for in the file, and Florida cases to research. These are starting points — the precise controlling authority will depend on the posture of the case, the rule invoked, and the district. Always verify before relying.</p>
+            </div>
+          </div>
+
+          <div className="section">
+            {issues.map((item, i) => (
+              <div key={i} className="card card-teal" style={{marginBottom: '12px'}}>
+                <h4 style={{color: tealLight, marginBottom: '8px'}}>{item.issue}</h4>
+                <p style={{marginBottom: '6px'}}>{item.summary}</p>
+                <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '10px'}}>
+                  <div>
+                    <div style={{fontSize: '10px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase', color: accent, marginBottom: '4px'}}>Why It Matters</div>
+                    <p style={{fontSize: '13px', opacity: '0.85'}}>{item.whyMatters}</p>
+                  </div>
+                  <div>
+                    <div style={{fontSize: '10px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase', color: accent, marginBottom: '4px'}}>What to Look For</div>
+                    <p style={{fontSize: '13px', opacity: '0.85'}}>{item.whatToLookFor}</p>
+                  </div>
+                </div>
+                <div style={{marginTop: '10px', paddingTop: '8px', borderTop: `1px solid ${darkBorder}`}}>
+                  <div style={{fontSize: '10px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase', color: textMuted, marginBottom: '4px'}}>Florida Cases</div>
+                  <p style={{fontSize: '12px', color: textMuted, fontStyle: 'italic'}}>{item.cases}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{marginTop: '32px', textAlign: 'center'}}>
+            <p style={{fontSize: 14, color: textMuted, marginBottom: 16}}>Download this issue reference table as a print-ready PDF.</p>
+            <button className="btn btn-primary" style={{fontSize: 15, padding: '14px 32px'}} onClick={downloadIssuesTable}>
+              ⬇ Download Issues Reference Table
+            </button>
+          </div>
+        </>
+      );
+    }
+  },
+
+  // ─────────────────────────────────────────
+  // MODULE 8: CASE CHECKLIST
+  // ─────────────────────────────────────────
+  {
+    id: 7,
     label: "Case Checklist",
     title: "Case Review Checklist",
     subtitle: "A step-by-step cold case review — from the client's account to legal posture",
@@ -2101,6 +2496,83 @@ const modules = [
             { text: "Is there any error so fundamental it could be structural? (denial of counsel, biased judge, etc.)" },
           ]
         },
+        {
+          title: "🤝 Plea-Related Issues",
+          color: "#818cf8",
+          items: [
+            { text: "Did the client enter a plea?" },
+            { text: "If so, was the plea knowing, voluntary, and intelligent?", note: "Rule 3.850 expressly authorizes relief where the plea was involuntary." },
+            { text: "Were the client's understanding of the range of punishment, minimum mandatory terms, habitual offender exposure, or restitution accurate?" },
+            { text: "Were there undisclosed promises, threats, or misrepresentations made to induce the plea?" },
+            { text: "Did counsel correctly advise on immigration consequences where applicable?", note: "Padilla v. Kentucky requires counsel to advise noncitizen clients about deportation risk. Failure to do so is IAC." },
+          ]
+        },
+        {
+          title: "🧠 Competency and Mental Health",
+          color: "#c084fc",
+          items: [
+            { text: "Was there any history of mental illness, intellectual disability, head injury, psychotropic medication, or suicide watch?" },
+            { text: "Did the client appear to understand the charges, the plea, the trial proceedings, and the sentencing?", note: "A defendant must be able to understand the proceedings and assist counsel — if there are signs they could not, that's a flag." },
+            { text: "Was a competency evaluation requested or conducted? If so, what were the findings?" },
+            { text: "Were there signs the client could not assist counsel effectively during any phase of the proceedings?" },
+            { text: "Were psychotropic medications being administered during trial or at the time of plea?", note: "Involuntary medication or medication-induced impairment can affect the voluntariness of a plea and competency to stand trial." },
+          ]
+        },
+        {
+          title: "🚨 Brady, Giglio, and False Testimony",
+          color: red,
+          items: [
+            { text: "Was any favorable police, lab, jail, or witness information withheld from the defense?" },
+            { text: "Were any witnesses incentivized with undisclosed deals, leniency, sentence reductions, or other benefits?" },
+            { text: "Did any key witness recant, admit perjury, or materially change their story after trial?" },
+            { text: "Did the prosecutor know of the falsity or have reason to know?", note: "Knowledge of falsity is not required for Brady — suppression alone is sufficient. Giglio violations require knowledge or constructive knowledge." },
+            { text: "Were jailhouse informant deals disclosed? What happened to their charges after they testified?" },
+          ]
+        },
+        {
+          title: "📌 Preservation and Procedural Posture",
+          color: teal,
+          items: [
+            { text: "What claims were preserved by timely objection at trial?" },
+            { text: "Which claims are procedurally barred because they were or should have been raised on direct appeal?", note: "Issues that could have been raised on direct appeal generally cannot be raised in a 3.850 motion." },
+            { text: "Is there a factual basis for a newly discovered evidence exception to the 2-year rule?" },
+            { text: "Is there a retroactive constitutional rule that resets timeliness under Rule 3.850?" },
+            { text: "Is the motion cognizable under Rule 3.850 — or does it belong under Rule 3.800 for a sentence illegal on its face?", note: "Mixing vehicles can result in dismissal or denial on wrong-vehicle grounds." },
+            { text: "Is the motion sworn and factually detailed enough to survive summary denial?", note: "Rule 3.850 requires sworn, specific allegations. Witness-dependent claims must identify the witness and what they would have said." },
+          ]
+        },
+        {
+          title: "👥 Counsel Performance — All Phases",
+          color: "#a78bfa",
+          items: [
+            { text: "Plea counsel — did counsel accurately advise on the plea, its consequences, and available defenses?", note: "A separate IAC analysis applies to plea counsel distinct from trial counsel." },
+            { text: "Trial counsel — deficient performance and prejudice under Strickland?" },
+            { text: "Sentencing counsel — did counsel present available mitigation? Object to scoresheet errors or improper enhancements?" },
+            { text: "Appellate counsel — were preserved issues raised? File Rule 9.141(d) petition in the DCA that heard the direct appeal.", note: "2-year deadline from mandate; 4-year hard cap with misadvice." },
+            { text: "Postconviction counsel — if a prior 3.850 was filed, did prior counsel raise all available claims?", note: "Failure by postconviction counsel may itself support a successive motion if claims were omitted without strategic reason." },
+          ]
+        },
+        {
+          title: "📊 Sentencing Enhancement and Classification",
+          color: accent,
+          items: [
+            { text: "Was a habitual offender (HFO), PRR, violent career criminal (VCC), or other enhancement applied?" },
+            { text: "Were the predicate convictions valid, qualifying, and correctly identified?", note: "Check the actual prior judgment and sentences — not just what appears on the scoresheet." },
+            { text: "Was the offense correctly ranked and classified on the scoresheet?" },
+            { text: "Were minimum mandatory findings orally pronounced at sentencing and supported by the record?" },
+            { text: "Were enhancement findings made by the judge rather than a jury?", note: "Post-Erlinger, this is a developing area — document the findings and the vehicle used." },
+          ]
+        },
+        {
+          title: "💰 Restitution and Financial Sanctions",
+          color: green,
+          items: [
+            { text: "Was restitution imposed? If so, was it supported by an evidentiary hearing and competent evidence of loss?" },
+            { text: "Are the fines, costs, and surcharges imposed lawful and specifically authorized by statute?" },
+            { text: "Were any fees assessed that should not have been imposed given the offense, disposition, or indigency of the defendant?" },
+            { text: "Does the written judgment match what was orally pronounced at sentencing?", note: "Discrepancies between oral pronouncement and written judgment are correctable — and oral pronouncement controls." },
+          ]
+        },
       ];
 
       return (
@@ -2169,6 +2641,8 @@ function downloadChecklist(sections) {
     0: "#7c3aed", 1: "#0284c7", 2: "#046878", 3: "#dc2626",
     4: "#f0a500", 5: "#374151", 6: "#f0a500", 7: "#a78bfa",
     8: "#2ecc71", 9: "#e74c3c", 10: "#0a8fa5",
+    11: "#818cf8", 12: "#c084fc", 13: "#dc2626", 14: "#046878",
+    15: "#a78bfa", 16: "#f0a500", 17: "#2ecc71",
   };
 
   const html = `<!DOCTYPE html>
@@ -2213,12 +2687,12 @@ function downloadChecklist(sections) {
   <div class="header">
     <div class="header-left">
       <h1>Case Review Checklist</h1>
-      <p>Post Conviction Project, Inc. &nbsp;·&nbsp; Volunteer Reference Guide</p>
+      <p>Post Conviction Project, Inc. &nbsp;·&nbsp; PCP Staff & Volunteer Reference</p>
     </div>
     <div class="header-right">
       postconvictionproject.org<br/>
       Florida Post-Conviction Crash Course<br/>
-      For volunteer use only
+      PCP Internal Reference
     </div>
   </div>
   <div class="name-line">
@@ -2250,7 +2724,7 @@ function downloadChecklist(sections) {
   </div>
   <div class="footer">
     <span>Post Conviction Project, Inc. &nbsp;·&nbsp; Elisabeth G. Whitmire, Esq., CEO &amp; Director of Legal Services</span>
-    <span>This checklist is for volunteer reference only and does not constitute legal advice.</span>
+    <span>This checklist is for reference only and does not constitute legal advice.</span>
   </div>
 </div>
 </body>
@@ -2262,6 +2736,232 @@ function downloadChecklist(sections) {
   if (win) {
     win.onload = () => { setTimeout(() => { win.print(); }, 800); };
   }
+}
+
+// ─── REFERENCE FOOTER ───
+function ReferenceFooter() {
+  const [activeTab, setActiveTab] = useState("cases");
+
+  const cases = [
+    { name: "Strickland v. Washington", citation: "466 U.S. 668 (1984)", holding: "Established the two-prong test for ineffective assistance of counsel: (1) deficient performance — counsel's representation fell below an objective standard of reasonableness; and (2) prejudice — a reasonable probability that but for counsel's errors, the outcome would have been different. Both prongs must be satisfied.", module: "Module 2 — Rule 3.850" },
+    { name: "Brady v. Maryland", citation: "373 U.S. 83 (1963)", holding: "The prosecution must disclose evidence favorable to the accused when that evidence is material to guilt or punishment. Suppression of material exculpatory evidence violates due process regardless of the prosecution's good or bad faith.", module: "Module 2 — Rule 3.850" },
+    { name: "Giglio v. United States", citation: "405 U.S. 150 (1972)", holding: "Extends Brady to require disclosure of impeachment evidence, including promises, deals, or inducements made to prosecution witnesses. If a key witness received a benefit in exchange for testimony and that was not disclosed, it is a Giglio violation.", module: "Module 2 — Rule 3.850" },
+    { name: "Missouri v. Frye", citation: "566 U.S. 134 (2012)", holding: "Defense counsel has a duty to communicate formal plea offers to the defendant before they lapse. Failure to inform a client of a plea offer constitutes deficient performance under Strickland. The Sixth Amendment right to counsel extends to the plea bargaining process.", module: "Module 2 — Rule 3.850" },
+    { name: "Lafler v. Cooper", citation: "566 U.S. 156 (2012)", holding: "Where defense counsel's deficient advice caused a defendant to reject a plea offer and proceed to trial, resulting in a harsher sentence, the defendant may be entitled to post-conviction relief. Companion case to Missouri v. Frye.", module: "Module 2 — Rule 3.850" },
+    { name: "Padilla v. Kentucky", citation: "559 U.S. 356 (2010)", holding: "Defense counsel must advise non-citizen clients about the deportation consequences of a guilty plea. Failure to provide accurate immigration advice constitutes deficient performance under Strickland. Critical for any case involving a non-citizen client.", module: "Module 2 — Rule 3.850" },
+    { name: "Jones v. State", citation: "591 So. 2d 911 (Fla. 1991)", holding: "Established the Florida standard for newly discovered evidence claims. The evidence must have been unknown at trial and not discoverable through due diligence, must not be merely cumulative or impeaching, and must probably produce an acquittal at a new trial.", module: "Module 2 — Rule 3.850" },
+    { name: "Miller v. Alabama", citation: "567 U.S. 460 (2012)", holding: "Mandatory sentences of life without parole for juvenile offenders violate the Eighth Amendment's prohibition on cruel and unusual punishment. Courts must consider the mitigating circumstances of youth before imposing life without parole on a juvenile.", module: "Module 3 — Rule 3.800" },
+    { name: "Montgomery v. Louisiana", citation: "577 U.S. 190 (2016)", holding: "Miller v. Alabama announced a substantive rule of constitutional law that applies retroactively on collateral review. Defendants serving mandatory life without parole for offenses committed as juveniles may seek relief in post-conviction proceedings.", module: "Module 3 — Rule 3.800" },
+    { name: "State v. Anderson", citation: "905 So. 2d 111 (Fla. 2005)", holding: "Timely Rule 3.850 motions raising scoresheet errors are governed by the 'would-have-been-imposed' standard — whether the sentencing judge would actually have imposed the same sentence on a corrected scoresheet. More favorable to defendants than the 3.800(a) standard.", module: "Module 3 — Rule 3.800 (District Split)" },
+    { name: "Brooks v. State", citation: "969 So. 2d 238 (Fla. 2007)", holding: "Rule 3.800(a) scoresheet-error motions are governed by the stricter 'could-have-been-imposed' standard. If the same sentence could legally have been imposed on a corrected scoresheet, relief is denied regardless of what the judge might actually have done.", module: "Module 3 — Rule 3.800 (District Split)" },
+    { name: "Negron Gil de Rubio v. State", citation: "272 So. 3d 811 (Fla. 2d DCA 2019)", holding: "Second DCA: When a 3.850 motion is untimely and the issue is raised under 3.800(a), the stricter 'could-have-been-imposed' standard applies. If the sentence could still legally have been imposed on remaining convictions, relief is denied.", module: "Module 3 — Rule 3.800 (District Split)" },
+    { name: "Fernandez v. State", citation: "199 So. 3d 500 (Fla. 2d DCA 2016)", holding: "Second DCA: When vacating a conviction changes the scoresheet, the defendant is generally entitled to resentencing on a corrected scoresheet. Key distinction from Negron is procedural timing — whether timely 3.850 relief was available.", module: "Module 3 — Rule 3.800 (District Split)" },
+    { name: "Cox v. State", citation: "192 So. 3d 581 (Fla. 4th DCA 2016)", holding: "Fourth DCA: Vacatur of a conviction requires resentencing with a corrected scoresheet. The court does not apply the 'could-have-been-imposed' harmless error framework to vacatur situations. The defendant gets resentenced because the sentence is built on a now-invalid conviction.", module: "Module 3 — Rule 3.800 (District Split)" },
+    { name: "Pierce v. State", citation: "281 So. 3d 569 (Fla. 5th DCA 2019)", holding: "Fifth DCA: Aligns with the Fourth District. Resentencing is required after postconviction vacatur because the sentence must be based on remaining valid convictions. The 5th DCA does not apply the stricter 2d DCA framework in vacatur cases.", module: "Module 3 — Rule 3.800 (District Split)" },
+    { name: "Teague v. Lane", citation: "489 U.S. 288 (1989)", holding: "New constitutional rules of criminal procedure generally do not apply retroactively on collateral review unless they fall into one of two narrow exceptions: rules placing conduct beyond criminal punishment, or watershed rules of criminal procedure essential to accuracy. Most new rules fail both exceptions.", module: "Module 4 — The Clock" },
+    { name: "Witt v. State", citation: "387 So. 2d 922 (Fla. 1980)", holding: "Florida's retroactivity framework. A new legal rule applies retroactively if it constitutes a development of fundamental significance — either placing conduct beyond the state's authority to punish or representing a watershed change in constitutional protection. Sometimes more favorable than Teague.", module: "Module 4 — The Clock" },
+    { name: "Erlinger v. United States", citation: "602 U.S. 821 (2024)", holding: "The Fifth and Sixth Amendments require a unanimous jury to determine beyond a reasonable doubt whether a defendant's prior offenses were committed on separate occasions for sentencing enhancement purposes. Directly implicates Florida's HFO, PRR, HVO, and VCC enhancement statutes.", module: "Module 4 — The Clock" },
+    { name: "Wainwright v. State", citation: "411 So. 3d 392 (Fla. 2025)", holding: "Held that Erlinger v. United States announced a procedural rule that is not retroactive under Florida retroactivity principles. Although Wainwright arose in the capital postconviction context, its retroactivity analysis is not limited to capital-rule practice and should be treated as highly relevant to Rule 3.850 litigation raising the same Erlinger-based claim. Procedural rules — those governing how facts are found rather than whether the state can punish the conduct — do not apply retroactively on collateral review.", module: "Module 4 — The Clock" },
+    { name: "Hitchcock v. State", citation: "866 So. 2d 23 (Fla. 2004)", holding: "Rule 3.853 is not intended as a 'fishing expedition.' The movant must demonstrate with specific facts how the requested DNA testing is relevant to their guilt or innocence. General or speculative requests for testing are insufficient.", module: "Module 6 — Rule 3.853" },
+    // ── Module 7: Other Issues ──
+    { name: "State v. Green", citation: "944 So. 2d 208 (Fla. 2006)", holding: "Addresses the validity of pleas and collateral consequences. A plea may be involuntary where counsel failed to advise the defendant of serious consequences closely connected to the criminal case. Also relevant to collateral consequences claims including civil commitment and registration obligations.", module: "Module 7 — Other Issues (Plea Validity / Collateral Consequences)" },
+    { name: "State v. Leroux", citation: "689 So. 2d 235 (Fla. 1996)", holding: "Florida Supreme Court case addressing the knowing and voluntary nature of guilty pleas. A plea is not constitutionally valid unless the defendant understands the nature of the charges, the range of allowable punishment, and the direct consequences of the plea.", module: "Module 7 — Other Issues (Plea Validity)" },
+    { name: "Peart v. State", citation: "756 So. 2d 42 (Fla. 2000)", holding: "Addresses the validity of pleas and the obligation to advise defendants of direct consequences. Also relevant to collateral consequences — counsel's failure to advise about serious consequences such as registration requirements or civil commitment may support post-conviction relief.", module: "Module 7 — Other Issues (Plea Validity / Collateral Consequences)" },
+    { name: "Dougherty v. State", citation: "149 So. 3d 672 (Fla. 2014)", holding: "Addresses competency standards and procedures in Florida post-conviction proceedings. A conviction or plea entered while the defendant was incompetent to proceed may be constitutionally infirm.", module: "Module 7 — Other Issues (Competency)" },
+    { name: "Nelson v. State", citation: "43 So. 3d 20 (Fla. 2010)", holding: "Florida Supreme Court case addressing competency to proceed in criminal proceedings. A defendant is incompetent if they lack the ability to understand the proceedings or to assist counsel in their own defense. Competency is a constitutional prerequisite — proceedings conducted while a defendant is incompetent are void.", module: "Module 7 — Other Issues (Competency)" },
+    { name: "Porter v. State", citation: "788 So. 2d 917 (Fla. 2001)", holding: "Addresses both competency and conflict of interest in the post-conviction context. An attorney's conflict of interest that adversely affects performance may constitute IAC without the full Strickland prejudice showing.", module: "Module 7 — Other Issues (Competency / Conflict of Interest)" },
+    { name: "Mordenti v. State", citation: "894 So. 2d 161 (Fla. 2004)", holding: "Florida Supreme Court case addressing Brady violation standards. The State's suppression of evidence favorable to the accused — including impeachment material — violates due process when the evidence is material to guilt or punishment.", module: "Module 7 — Other Issues (Brady/Giglio)" },
+    { name: "Rogers v. State", citation: "782 So. 2d 373 (Fla. 2001)", holding: "Addresses Giglio and false testimony claims in Florida post-conviction proceedings. The State's knowing use of false testimony, or failure to correct it, violates due process and can warrant a new trial.", module: "Module 7 — Other Issues (Brady/Giglio)" },
+    { name: "Swafford v. State", citation: "679 So. 2d 736 (Fla. 1996)", holding: "Addresses both newly discovered evidence standards and successive petition bars. A claim is barred if it could have been raised in a prior motion — the bar is strict, but newly discovered evidence that could not have been found earlier may overcome it.", module: "Module 7 — Other Issues (Newly Discovered Evidence / Successive Bar)" },
+    { name: "Rutherford v. Moore", citation: "774 So. 2d 637 (Fla. 2000)", holding: "Addresses ineffective assistance of appellate counsel (IAAC) standards. Appellate counsel is deficient when they omit a clearly stronger issue in favor of weaker ones. Relief requires showing both deficient performance and that the omitted issue would probably have succeeded.", module: "Module 7 — Other Issues (IAAC)" },
+    { name: "Morrison v. State", citation: "818 So. 2d 432 (Fla. 2002)", holding: "Florida IAAC case addressing the relationship between preserved trial issues and appellate counsel's obligation to raise them. Failure to raise a meritorious preserved issue may constitute deficient appellate performance.", module: "Module 7 — Other Issues (IAAC)" },
+    { name: "Young v. State", citation: "699 So. 2d 624 (Fla. 1997)", holding: "Addresses offense classification and scoresheet calculation issues in Florida sentencing. Relevant to cases where the offense was incorrectly ranked, affecting the guidelines range and potentially producing an illegal sentence.", module: "Module 7 — Other Issues (Sentencing Enhancements)" },
+    { name: "State v. Iacovone", citation: "660 So. 2d 1371 (Fla. 1995)", holding: "Florida Supreme Court case addressing minimum mandatory sentencing requirements and the oral pronouncement rule. The written sentence must conform to the oral pronouncement at sentencing — discrepancies are correctable errors.", module: "Module 7 — Other Issues (Sentencing Enhancements)" },
+    { name: "Daniels v. State", citation: "491 So. 2d 543 (Fla. 1986)", holding: "Addresses jail credit requirements in Florida. A defendant is entitled to credit for all time served in custody before sentencing. Failure to award proper credit produces an illegal sentence correctable under Rule 3.800.", module: "Module 7 — Other Issues (Jail Credit)" },
+    { name: "State v. Mancino", citation: "714 So. 2d 429 (Fla. 1998)", holding: "Florida Supreme Court case on jail credit and time-served calculations. Defendants are entitled to credit for all time spent in county jail before sentencing, including time served on related charges.", module: "Module 7 — Other Issues (Jail Credit)" },
+    { name: "Way v. State", citation: "760 So. 2d 903 (Fla. 2000)", holding: "Addresses informant witness credibility and the State's obligation to disclose benefits provided to cooperating witnesses. A pattern of cooperation in multiple cases, if undisclosed, can support a Giglio claim.", module: "Module 7 — Other Issues (Informant Issues)" },
+    { name: "Melbourne v. State", citation: "679 So. 2d 759 (Fla. 1996)", holding: "Established Florida's framework for evaluating racially discriminatory peremptory challenges under the Florida Constitution. Sets out a three-step process for trial courts to follow when a Batson/Neil objection is raised to a peremptory strike.", module: "Module 7 — Other Issues (Jury Selection)" },
+    { name: "State v. Neil", citation: "457 So. 2d 481 (Fla. 1984)", holding: "Florida Supreme Court case establishing the right to challenge peremptory strikes on racial grounds — predating the U.S. Supreme Court's Batson decision. Florida's Neil/Melbourne framework provides independent state constitutional protection.", module: "Module 7 — Other Issues (Jury Selection)" },
+    { name: "State v. Paul", citation: "934 So. 2d 1167 (Fla. 2006)", holding: "Addresses merger of offenses and double jeopardy in Florida. Where a defendant is convicted of multiple offenses arising from a single criminal act, courts must determine whether convictions on all counts are constitutionally permissible.", module: "Module 7 — Other Issues (Double Jeopardy)" },
+    { name: "Grant v. State", citation: "770 So. 2d 655 (Fla. 2000)", holding: "Florida Supreme Court case addressing double jeopardy and merger of offenses. Where multiple convictions or sentences arise from a single criminal act or episode, courts must analyze whether separate punishment is constitutionally permissible under the Blockburger test and Florida's single-act analysis.", module: "Module 7 — Other Issues (Double Jeopardy)" },
+    { name: "State v. Nelson", citation: "26 So. 3d 570 (Fla. 2010)", holding: "Florida Supreme Court speedy trial case. Addresses the right to speedy trial under Florida Rule of Criminal Procedure 3.191 and the constitutional speedy trial right, including the analysis for prejudice from pretrial delay.", module: "Module 7 — Other Issues (Speedy Trial)" },
+    { name: "State v. Williams", citation: "791 So. 2d 1088 (Fla. 2001)", holding: "Florida Supreme Court case addressing speedy trial rights and the consequences of pretrial delay. Addresses both the Florida speedy trial rule and the constitutional speedy trial right, including the Barker v. Wingo balancing factors as applied in Florida proceedings.", module: "Module 7 — Other Issues (Speedy Trial)" },
+    { name: "Harvey v. Dugger", citation: "656 So. 2d 1253 (Fla. 1995)", holding: "Florida case addressing the successive petition bar and exceptions. A second or successive Rule 3.850 motion raising claims that could have been raised in a prior motion is generally barred — the exception requires newly discovered facts or a retroactive change in law.", module: "Module 7 — Other Issues (Successive Bar)" },
+  ];
+
+  const rules = [
+    { name: "Florida Rule of Criminal Procedure 3.850", citation: "Fla. R. Crim. P. 3.850", holding: "The primary vehicle for post-conviction relief in Florida. Covers constitutional violations, ineffective assistance of counsel, newly discovered evidence, and newly applicable retroactive law. General two-year filing deadline from when judgment becomes final on direct review, with exception windows for newly discovered facts and retroactive law.", module: "Module 2 — Rule 3.850" },
+    { name: "Florida Rule of Criminal Procedure 3.800", citation: "Fla. R. Crim. P. 3.800", holding: "Provides relief for illegal sentences — sentences the court had no legal authority to impose. No time bar. Covers sentences exceeding the statutory maximum, scoresheet errors, upward departures without written findings, merger and double jeopardy violations, and retroactive case law changes affecting sentencing.", module: "Module 3 — Rule 3.800" },
+    { name: "Florida Rule of Criminal Procedure 3.853", citation: "Fla. R. Crim. P. 3.853", holding: "Provides procedures for obtaining post-conviction DNA testing of physical evidence. No time bar — may be filed at any time after judgment becomes final. Requires showing that identification was genuinely disputed, that physical evidence still exists, and that there is a reasonable probability of acquittal or lesser sentence if DNA results had been admitted at trial.", module: "Module 6 — Rule 3.853" },
+    { name: "Florida Rule of Appellate Procedure 9.141(d)", citation: "Fla. R. App. P. 9.141(d)", holding: "Governs petitions alleging ineffective assistance of appellate counsel (IAAC). Filed as a petition in the appellate court that heard the direct appeal — not a motion in the trial court. Two-year filing deadline from when judgment became final on direct review, with a four-year hard cap even where counsel gave affirmative misadvice.", module: "Module 5 — IAAC" },
+    { name: "28 U.S.C. § 2254 / AEDPA", citation: "28 U.S.C. § 2254; Antiterrorism and Effective Death Penalty Act of 1996, Pub. L. No. 104-132", holding: "The federal habeas corpus statute for state prisoners. Requires full exhaustion of state remedies before federal review. One-year filing deadline from when the state conviction becomes final on direct review, tolled but not reset while properly filed state post-conviction motions are pending.", module: "Module 4 — The Clock" },
+  ];
+
+  const districtSplit = [
+    { label: "Florida Supreme Court — Background Rules", color: teal, entries: [
+      { case: "State v. Anderson, 905 So. 2d 111 (Fla. 2005)", standard: "Rule 3.850 scoresheet errors → 'would-have-been-imposed'", result: "Timely 3.850 motions use the more defendant-friendly standard. The question is whether this judge would actually have sentenced differently on a corrected scoresheet." },
+      { case: "Brooks v. State, 969 So. 2d 238 (Fla. 2007)", standard: "Rule 3.800(a) scoresheet errors → 'could-have-been-imposed'", result: "Stricter standard applies to facial-record 3.800(a) claims. If the same sentence could legally have been imposed, relief is denied." },
+    ]},
+    { label: "Second District", color: "#38bdf8", entries: [
+      { case: "Negron Gil de Rubio v. State, 272 So. 3d 811 (Fla. 2d DCA 2019)", standard: "Untimely 3.850 / 3.800(a) motion → could-have-been-imposed", result: "Relief denied if same sentence could legally still be imposed on remaining convictions. Applies stricter Brooks framework when 3.850 is untimely." },
+      { case: "Fernandez v. State, 199 So. 3d 500 (Fla. 2d DCA 2016)", standard: "Vacatur changes scoresheet → resentencing generally required", result: "Vacatur can entitle defendant to resentencing where scoresheet changes. Procedural timing is the key distinction from Negron." },
+    ]},
+    { label: "Fourth District", color: green, entries: [
+      { case: "Cox v. State, 192 So. 3d 581 (Fla. 4th DCA 2016)", standard: "Vacatur → resentencing required, no harmless error", result: "Resentencing required with corrected scoresheet after vacatur. No could-have-been-imposed analysis in vacatur situations." },
+    ]},
+    { label: "Fifth District", color: accent, entries: [
+      { case: "Pierce v. State, 281 So. 3d 569 (Fla. 5th DCA 2019)", standard: "Vacatur → resentencing required (aligns with 4th DCA)", result: "Resentencing required after vacatur. 5th DCA aligns with 4th DCA, not the stricter 2d DCA framework." },
+    ]},
+  ];
+
+  const downloadReference = () => {
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>PCP Case & Rule Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Poppins', sans-serif; color: #1e293b; background: #fff; font-size: 10pt; }
+  .page { max-width: 750px; margin: 0 auto; padding: 32px 40px; }
+  .header { border-bottom: 3px solid #046878; padding-bottom: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; }
+  .header-left h1 { font-size: 18pt; font-weight: 700; color: #046878; }
+  .header-left p { font-size: 9pt; color: #64748b; margin-top: 4px; }
+  .header-right { font-size: 8pt; color: #94a3b8; text-align: right; line-height: 1.6; }
+  .section-label { font-size: 9pt; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #046878; margin: 20px 0 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; }
+  .entry { margin-bottom: 12px; padding: 12px 14px; border: 1px solid #e2e8f0; border-radius: 6px; background: #f8fafc; break-inside: avoid; }
+  .entry-name { font-size: 11pt; font-weight: 700; color: #1e293b; margin-bottom: 2px; }
+  .entry-citation { font-size: 9pt; color: #046878; font-style: italic; margin-bottom: 6px; }
+  .entry-holding { font-size: 9.5pt; color: #334155; line-height: 1.5; }
+  .entry-module { font-size: 8pt; color: #94a3b8; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .district-block { margin-bottom: 12px; border: 1px solid #bfdbfe; border-radius: 6px; overflow: hidden; break-inside: avoid; }
+  .district-header { padding: 8px 14px; font-size: 9pt; font-weight: 700; color: #1e3a5f; background: #eff6ff; border-bottom: 1px solid #bfdbfe; }
+  .district-entry { padding: 10px 14px; border-bottom: 1px solid #e0effe; }
+  .district-entry:last-child { border-bottom: none; }
+  .district-case { font-size: 9.5pt; font-weight: 600; color: #1d4ed8; font-style: italic; }
+  .district-standard { font-size: 8.5pt; color: #64748b; margin: 2px 0; }
+  .district-result { font-size: 9.5pt; color: #334155; line-height: 1.4; margin-top: 3px; }
+  .footer { margin-top: 28px; padding-top: 12px; border-top: 1px solid #e2e8f0; font-size: 7.5pt; color: #94a3b8; display: flex; justify-content: space-between; }
+  @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .entry, .district-block { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-left"><h1>Case & Rule Reference</h1><p>Post Conviction Project, Inc. · PCP Staff & Volunteer Reference</p></div>
+    <div class="header-right">postconvictionproject.org<br/>Florida Post-Conviction Crash Course<br/>PCP Internal Reference</div>
+  </div>
+
+  <div class="section-label">Cases</div>
+  ${cases.filter(c => !c.module.includes('District Split')).map(c => `
+  <div class="entry">
+    <div class="entry-name">${c.name}</div>
+    <div class="entry-citation">${c.citation}</div>
+    <div class="entry-holding">${c.holding}</div>
+    <div class="entry-module">${c.module}</div>
+  </div>`).join('')}
+
+  <div class="section-label">Florida District Split — Vacatur & Resentencing</div>
+  ${districtSplit.map(d => `
+  <div class="district-block">
+    <div class="district-header">${d.label}</div>
+    ${d.entries.map(e => `
+    <div class="district-entry">
+      <div class="district-case">${e.case}</div>
+      <div class="district-standard">${e.standard}</div>
+      <div class="district-result">${e.result}</div>
+    </div>`).join('')}
+  </div>`).join('')}
+
+  <div class="section-label">Rules & Statutes</div>
+  ${rules.map(r => `
+  <div class="entry">
+    <div class="entry-name">${r.name}</div>
+    <div class="entry-citation">${r.citation}</div>
+    <div class="entry-holding">${r.holding}</div>
+    <div class="entry-module">${r.module}</div>
+  </div>`).join('')}
+
+  <div class="footer">
+    <span>Post Conviction Project, Inc. · Elisabeth G. Whitmire, Esq., CEO & Director of Legal Services</span>
+    <span>For reference only — not legal advice.</span>
+  </div>
+</div>
+</body>
+</html>`;
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, "_blank");
+    if (win) { win.onload = () => { setTimeout(() => { win.print(); }, 800); }; }
+  };
+
+  return (
+    <div className="reference-footer">
+      <div className="reference-footer-inner">
+        <h2>📚 Case & Rule Reference</h2>
+        <p className="ref-subtitle">Every authority cited in this training — core modules and additional issues reference. Tap any entry to read the full summary. Download the complete reference sheet as a print-ready PDF.</p>
+
+        <div className="ref-tabs">
+          <button className={`ref-tab ${activeTab === "cases" ? "active" : ""}`} onClick={() => setActiveTab("cases")}>Cases</button>
+          <button className={`ref-tab ${activeTab === "rules" ? "active" : ""}`} onClick={() => setActiveTab("rules")}>Rules & Statutes</button>
+          <button className={`ref-tab ${activeTab === "split" ? "active" : ""}`} onClick={() => setActiveTab("split")}>District Split</button>
+        </div>
+
+        {activeTab === "cases" && (
+          <div className="ref-grid">
+            {cases.filter(c => !c.module.includes("District Split")).map((c, i) => (
+              <div key={i} className="ref-card">
+                <div className="ref-card-name">{c.name}</div>
+                <div className="ref-card-citation">{c.citation}</div>
+                <div className="ref-card-holding">{c.holding}</div>
+                <div className="ref-card-module">{c.module}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === "rules" && (
+          <div className="ref-grid">
+            {rules.map((r, i) => (
+              <div key={i} className="ref-card">
+                <div className="ref-card-name">{r.name}</div>
+                <div className="ref-card-citation">{r.citation}</div>
+                <div className="ref-card-holding">{r.holding}</div>
+                <div className="ref-card-module">{r.module}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === "split" && (
+          <div>
+            <p style={{fontSize: '13px', color: textMuted, marginBottom: '20px', lineHeight: '1.6'}}>
+              The same vacatur facts can produce opposite outcomes depending on which DCA has jurisdiction. Geography and procedural timing are everything.
+            </p>
+            {districtSplit.map((d, i) => (
+              <div key={i} className="district-card" style={{marginBottom: '8px'}}>
+                <div className="district-card-header" style={{borderLeft: `4px solid ${d.color}`}}>{d.label}</div>
+                <div className="district-card-body">
+                  {d.entries.map((e, j) => (
+                    <div key={j} className="district-row" style={j > 0 ? {marginTop: '8px', paddingTop: '8px', borderTop: `1px solid ${darkBorder}`} : {}}>
+                      <span className="district-case">{e.case}</span>
+                      <span className="district-standard">{e.standard}</span>
+                      <span className="district-result">{e.result}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="ref-download-row">
+          <button className="btn btn-primary" onClick={downloadReference}>⬇ Download Full Reference Sheet</button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // ─── MAIN APP ───
@@ -2277,7 +2977,8 @@ export default function App() {
     3: 4,  // The Clock (q3_1 through q3_4)
     4: 2,  // IAAC (q5_1, q5_2)
     5: 3,  // Rule 3.853 (q6_1 through q6_3)
-    6: 0,  // Case Checklist
+    6: 0,  // Other Issues
+    7: 0,  // Case Checklist
   };
 
   const handleAnswer = (id, isCorrect) => {
@@ -2370,6 +3071,7 @@ export default function App() {
           )}
         </div>
       </div>
+      <ReferenceFooter />
     </div>
   );
 }
