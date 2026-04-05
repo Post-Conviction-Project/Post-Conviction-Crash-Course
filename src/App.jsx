@@ -2175,6 +2175,9 @@ const modules = [
           whyMatters: "Advances in forensic science can reveal exculpatory evidence and support postconviction testing.",
           whatToLookFor: "Untested DNA, prints, firearm evidence, or trace evidence; older serology instead of modern testing.",
           cases: "Hitchcock v. State, 866 So. 2d 23 (Fla. 2004)"
+        },
+        {
+          issue: "Informant Reliability / Jailhouse Witness Issues",
           summary: "Jailhouse informants or cooperating witnesses may have received benefits or have serious credibility problems.",
           whyMatters: "These witnesses are often central in close cases and can be fertile impeachment sources.",
           whatToLookFor: "Unrecorded deal; sentence reduction after testimony; multiple inconsistent statements; pattern of cooperating in other cases.",
