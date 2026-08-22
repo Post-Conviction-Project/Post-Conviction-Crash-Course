@@ -858,7 +858,7 @@ const modules = [
 
         <div className="section">
           <h3><span className="icon">🧭</span> How to Use This Training</h3>
-          <p>This crash course is designed for everyone who touches a case at PCP — volunteers, paralegals, law students, and new staff alike. The goal is to give you enough framework to read a file intelligently, spot what matters, and know when to escalate.</p>
+          <p>This crash course is designed for everyone who touches a case at PCP — volunteers, paralegals, law students, and new staff alike. While this course does not address <em>every<em> post-conviction issue that could come up, we believe it covers most of them.</p> Whether you're learning this for the first time or just freshening up, the goal is to give you enough framework to read a file intelligently, spot what matters, and know when to escalate.</p>
           <p>Your specific role will determine what you do with what you find. But everyone needs to understand the legal landscape before they can be useful in it.</p>
 
           <div className="card card-amber">
@@ -3062,7 +3062,7 @@ export default function App() {
                 <p>Quiz questions answered correctly</p>
                 {correctCount === totalQuestions && <p style={{color: green, marginTop:8}}>🎉 Perfect score — you're ready to review cases.</p>}
                 <p style={{marginTop: 16, fontSize: 13, color: textMuted}}>
-                  📬 Email your completion code to <strong style={{color: tealLight}}>eg.whitmire@postconvictionproject.org</strong>
+                  📬 Email your completion code to <strong style={{color: tealLight}}>elisabeth@postconvictionproject.org</strong>
                 </p>
                 <p style={{fontSize: 12, color: textMuted, marginTop: 8}}>
                   As you worked through each module, you may have noticed a few quotes tucked into the content. Collect them all and include them in your email — they're your proof of completion.
